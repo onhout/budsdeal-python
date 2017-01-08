@@ -1,0 +1,22 @@
+{
+  "name": "budsdeal",
+  "authors": [
+    "Peter Liu <onhout@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "staticfiles/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "requirejs": "^2.3.2"
+  }
+}
