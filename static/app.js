@@ -5,7 +5,8 @@ requirejs.config({
 	baseUrl: 'static/components',
 	paths: {
 		jquery: 'jquery/dist/jquery',
-		bootstrap: 'bootstrap/dist/js/bootstrap'
+		bootstrap: 'bootstrap/dist/js/bootstrap',
+		bundle: '../bundle'
 	},
 	shim:{
 		bootstrap:{
@@ -15,6 +16,6 @@ requirejs.config({
 	}
 });
 
-require(['jquery','bootstrap'], function(){
-    console.log('there');
+require(['jquery','bootstrap', 'bundle'], function(){
+
 });

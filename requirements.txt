@@ -1,7 +1,15 @@
+ansicolors==1.0.2
+configparser==3.5.0
 dj-database-url==0.4.1
 Django==1.10.5
+django-gulp==2.5.0
 django-require==1.0.11
+env-tools==2.0.0
+futures==3.0.5
 gunicorn==19.6.0
 MarkupSafe==0.23
+psutil==4.3.0
 psycopg2==2.6.2
+six==1.10.0
+tini==3.0.1
 whitenoise==3.2.3
