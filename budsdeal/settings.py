@@ -31,6 +31,7 @@ DEBUG = True
 INSTALLED_APPS = [
     'django_gulp',
     'main.apps.MainConfig',
+    'user.apps.UserConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
