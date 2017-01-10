@@ -4,14 +4,17 @@
 requirejs.config({
 	baseUrl: '/static/components',
 	paths: {
-		jquery: 'jquery/dist/jquery',
-		bootstrap: 'bootstrap/dist/js/bootstrap',
+		jquery: 'jquery/dist/jquery.min',
+		bootstrap: 'bootstrap/dist/js/bootstrap.min',
 		bundle: '../bundle'
 	},
 	shim:{
 		bootstrap:{
 			deps: ['jquery'],
 			exports: 'Bootstrap'
+		},
+		bundle:{
+			deps: ['jquery']
 		}
 	}
 });

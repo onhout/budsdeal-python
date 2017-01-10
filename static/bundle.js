@@ -1,1 +1,1 @@
-var helloworld="django gulp watch working";console.log(helloworld),console.log("users loaded");
+$(function(){console.log("advas")}),console.log("users loaded");
