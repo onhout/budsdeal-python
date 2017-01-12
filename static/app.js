@@ -6,6 +6,8 @@ requirejs.config({
 	paths: {
 		jquery: 'jquery/dist/jquery.min',
 		bootstrap: 'bootstrap/dist/js/bootstrap.min',
+		react: 'react/react-with-addons',
+		reactdom:'react/react-dom.min',
 		bundle: '../bundle'
 	},
 	shim:{
@@ -13,12 +15,19 @@ requirejs.config({
 			deps: ['jquery'],
 			exports: 'Bootstrap'
 		},
+        reactdom:{
+            deps: ['react'],
+            exports: 'React'
+        },
 		bundle:{
-			deps: ['jquery']
+			deps: ['react'],
+            init: function(react){
+                window.React = react;
+            }
 		}
 	}
 });
 
-require(['jquery','bootstrap', 'bundle'], function(){
+require(['jquery','bootstrap', 'react', 'reactdom', 'bundle'], function(jquery, bootstrap, react, reactdom, bundle){
 
 });

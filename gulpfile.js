@@ -5,12 +5,16 @@ var gulp  = require('gulp'),
     gless = require('gulp-less'),
     gminifycss = require('gulp-minify-css'),
     gconcat = require('gulp-concat'),
+    gbabel = require('gulp-babel'),
     guglify = require('gulp-uglify');
 
 
 // create a default task and just log a message
 gulp.task('buildjs', function() {
   return gulp.src('**/static/js/*.js')
+      .pipe(gbabel({
+          presets:['es2015']
+      }))
       .pipe(gconcat('bundle.js'))
       .pipe(guglify())
       .pipe(gulp.dest('static'))
