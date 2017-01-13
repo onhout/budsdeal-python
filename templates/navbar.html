@@ -1,13 +1,12 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-{% load require %}
+{% load render_bundle from webpack_loader %}
 <head>
     <link href="{% static 'components/bootstrap/dist/css/bootstrap.min.css' %}" type="text/css" rel="stylesheet"/>
     <link href="{% static 'components/bootstrap/dist/css/bootstrap-theme.min.css' %}" type="text/css"
           rel="stylesheet"/>
     <link href="{% static 'styles.css' %}" type="text/css" rel="stylesheet"/>
-
     <title>{% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -38,7 +37,7 @@
 <div class="container">
     {% block content %}{% endblock %}
 </div>
-{% require_module '/app' %}
+{% render_bundle 'app' %}
 </body>
 
 </html>

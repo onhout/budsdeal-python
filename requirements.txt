@@ -4,6 +4,7 @@ dj-database-url==0.4.1
 Django==1.10.5
 django-gulp==2.5.0
 django-require==1.0.11
+django-webpack-loader==0.4.1
 env-tools==2.0.0
 futures==3.0.5
 gunicorn==19.6.0
