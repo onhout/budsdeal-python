@@ -3,7 +3,6 @@ venv
 *.pyc
 static/components
 static/dist
-webpack-stats.json
 node_modules
 .env
 .idea
