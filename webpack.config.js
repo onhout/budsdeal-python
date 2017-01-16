@@ -6,7 +6,7 @@ module.exports = {
     context: __dirname,
 
     entry: {
-        app: './static/index.js'
+        app: './client/index.js'
     }, // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
 
     output: {
