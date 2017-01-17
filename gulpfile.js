@@ -7,9 +7,18 @@ var gulp = require('gulp'),
     gminifycss = require('gulp-minify-css'),
     gconcat = require('gulp-concat'),
     gdel = require('del'),
+    gplumber = require('gulp-plumber'),
     gbabel = require('gulp-babel'),
     guglify = require('gulp-uglify');
 
+var errorHandler = function(){
+    // default appearance
+    return gplumber(function(error){
+        // output styling
+        gutil.log('|- ' + gutil.colors.bgRed.bold('Build Error in ' + error.plugin));
+        gutil.log('|- ' + gutil.colors.bgRed.bold(error.message));
+    });
+};
 
 // create a default task and just log a message
 // gulp.task('buildjs', function() {
@@ -28,6 +37,7 @@ gulp.task('clean-dist', function () {
 });
 gulp.task('webpack', function () {
     return gulp.src('./static/index.js')
+        .pipe(errorHandler())
         .pipe(gwebpack(require('./webpack.config.js')))
         .pipe(gulp.dest('static/dist/'));
 });
@@ -41,6 +51,7 @@ gulp.task('buildcss', function () {
     };
 
     return gulp.src('**/static/less/*.less')
+        .pipe(errorHandler())
         .pipe(gless(lessOptions))
         .pipe(gconcat('styles.css'))
         .pipe(gminifycss())
@@ -49,9 +60,9 @@ gulp.task('buildcss', function () {
 });
 
 gulp.task('watch', function () {
-    gulp.watch('**/static/js/*.js', []);
+    gulp.watch(['**/static/index.js', 'client/**', '**/static/js/*.jsx'], ['clean-dist', 'webpack']);
 });
 
-gulp.task('default', ['clean-dist', 'buildcss', 'webpack', 'watch',], function () {
+gulp.task('default', ['clean-dist', 'webpack', 'buildcss', 'watch'], function () {
     return gutil.log('Done')
 });

@@ -1,35 +1,56 @@
-import React from "react";
+import React, { Component } from 'react'
+import { Link } from 'react-router'
 
-class Nav extends React.Component {
-    constructor(props, context) {
-        super(props, context)
-    }
+const dark = 'hsl(200, 20%, 20%)'
+const light = '#fff'
+const styles = {}
 
-    render() {
-        return (
-            <nav className="navbar navbar-default">
-                <div className="container-fluid">
-                    <div className="navbar-header">
-                        <button type="button" className="navbar-toggle collapsed">
-                            <span className="sr-only">Toggle navigation</span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                        </button>
-                        <a className="navbar-brand" href="/">Budsdeal</a>
-                    </div>
-                    <div className="collapse navbar-collapse" id="menu-collapse">
-                        <ul className="nav navbar-nav">
-                            <li><a href="/asd/">About</a></li>
-                        </ul>
-                        <ul className="nav navbar-nav navbar-right">
-                            <li><a href="{% url 'user_login' %}">Login</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        )
-    }
+styles.wrapper = {
+  padding: '10px 20px',
+  overflow: 'hidden',
+  background: dark,
+  color: light
+};
+
+styles.link = {
+  padding: 11,
+  color: light,
+  fontWeight: 200
+};
+
+class Nav extends Component {
+
+  constructor(props, context) {
+    super(props, context)
+    this.logOut = this.logOut.bind(this)
+  }
+
+  logOut() {
+    alert('log out')
+  }
+
+  render() {
+    const { user } = this.props;
+
+    return (
+      <div style={styles.wrapper}>
+        <div style={{ float: 'left' }}>
+          <Link to="/" style={styles.link}>Home</Link>{' '}
+          <Link to="/main" style={styles.link}>Main</Link>{' '}
+        </div>
+        <div style={{ float: 'right' }}>
+          <Link style={styles.link} to="/profile">{user.name}</Link> <button onClick={this.logOut}>log out</button>
+        </div>
+      </div>
+    )
+  }
 }
 
-export default Nav;
+Nav.defaultProps = {
+  user: {
+    id: 1,
+    name: 'Ryan Florence'
+  }
+};
+
+export default Nav
