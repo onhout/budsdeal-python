@@ -1,6 +1,7 @@
 var path = require("path");
 var webpack = require('webpack');
 var BundleTracker = require('webpack-bundle-tracker');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     context: __dirname,
@@ -11,7 +12,7 @@ module.exports = {
 
     output: {
         path: path.resolve('./static/dist/'),
-        publicPath: './static/dist/',
+        publicPath: '/static/dist/',
         chunkFilename: '[id]-[hash].chunk.js',
         filename: "[name]-[hash].js",
     },
@@ -19,11 +20,17 @@ module.exports = {
     plugins: [
         // new webpack.optimize.UglifyJsPlugin(),
         new BundleTracker({filename: './webpack-stats.json'}),
+        new webpack.ProvidePlugin({
+            jQuery: 'jquery',             // bootstrap 3.x requires
+        })
     ],
+
+    devtool: 'source-map',
 
     module: {
         loaders: [
             {test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader'}, // to transform JSX into JS
+            {test: /\.less$/, loader: "style!css!autoprefixer!less"} //to transform less into CSS
         ],
     },
 

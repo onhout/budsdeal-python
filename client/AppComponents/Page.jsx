@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 class Page extends Component {
   render() {
-    const { courses } = this.props;
+    const { info } = this.props;
     return (
       <div>
         <h2>Super Scalable Apps</h2>
@@ -13,7 +13,7 @@ class Page extends Component {
           This way, a new route added deep in your app will not affect the
           initial bundle of your application
         </p>
-        <h2>Courses</h2>{courses}
+        <h2>Courses</h2>{info}
       </div>
     )
   }

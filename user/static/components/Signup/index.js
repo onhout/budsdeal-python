@@ -1,8 +1,8 @@
 export default {
-  path: 'main',
+  path: 'signup',
   getComponents(location, cb) {
     require.ensure([], (require) => {
-      cb(null, require('./components/Main').default)
+      cb(null, require('./components/Signup').default)
     })
   }
 };

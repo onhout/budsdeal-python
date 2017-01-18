@@ -1,18 +1,16 @@
 import React from 'react';
-// import AwesomeComponent from '../../user/static/js/user';
-// import MainComponent from './js/main';
-import Nav from './Nav';
+
+import GlobalNav from './GlobalNav';
 import Page from './Page';
+
 
 class App extends React.Component {
     render() {
         return (
             <div>
-                <Nav/>
-                <p> Hello React!</p>
-                <Page courses={'dawd'}/>
-                <div>
-                    {this.props.children || <h1>Free</h1>}
+                <GlobalNav/>
+                <div className="container">
+                    {this.props.children || <Page info={'dawd'}/>}
                 </div>
             </div>
         );
