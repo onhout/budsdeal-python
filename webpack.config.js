@@ -11,7 +11,7 @@ module.exports = {
     }, // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
 
     output: {
-        path: path.resolve('./static/dist/'),
+        path: path.resolve('/'),
         publicPath: '/static/dist/',
         chunkFilename: '[id]-[hash].chunk.js',
         filename: "[name]-[hash].js",
