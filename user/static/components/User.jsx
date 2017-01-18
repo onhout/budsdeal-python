@@ -2,7 +2,6 @@ import React from 'react'
 import '../less/user.less'
 
 class User extends React.Component {
-
     render() {
         return (
             <div id="user">
@@ -10,7 +9,6 @@ class User extends React.Component {
             </div>
         )
     }
-
 }
 
 export default User;
