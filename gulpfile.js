@@ -32,37 +32,37 @@ var errorHandler = function(){
 // });
 gulp.task('clean-dist', function () {
     return gdel([
-        './static/dist/*'
+        './static/*'
     ])
 });
 gulp.task('webpack', function () {
-    return gulp.src('./static/index.js')
+    return gulp.src('/client/index.js')
         .pipe(errorHandler())
         .pipe(gwebpack(require('./webpack.config.js')))
-        .pipe(gulp.dest('static/dist/'));
+        .pipe(gulp.dest('./static/'));
 });
 
-gulp.task('buildcss', function () {
-    var autoprefixerOptions = {
-        browsers: ['last 2 versions']
-    };
-    var lessOptions = {
-        paths: []
-    };
-
-    return gulp.src('**/static/less/*.less')
-        .pipe(errorHandler())
-        .pipe(gless(lessOptions))
-        .pipe(gconcat('styles.css'))
-        .pipe(gminifycss())
-        .pipe(gautoprefixer(autoprefixerOptions))
-        .pipe(gulp.dest('./static/'))
-});
+// gulp.task('buildcss', function () {
+//     var autoprefixerOptions = {
+//         browsers: ['last 2 versions']
+//     };
+//     var lessOptions = {
+//         paths: []
+//     };
+//
+//     return gulp.src('**/static/less/*.less')
+//         .pipe(errorHandler())
+//         .pipe(gless(lessOptions))
+//         .pipe(gconcat('styles.css'))
+//         .pipe(gminifycss())
+//         .pipe(gautoprefixer(autoprefixerOptions))
+//         .pipe(gulp.dest('/static/'))
+// });
 
 gulp.task('watch', function () {
     gulp.watch(['**/static/index.js', 'client/**', '**/static/js/*.jsx'], ['clean-dist', 'webpack']);
 });
 
-gulp.task('default', ['clean-dist', 'webpack', 'buildcss', 'watch'], function () {
+gulp.task('default', ['clean-dist', 'webpack', 'watch'], function () {
     return gutil.log('Done')
 });

@@ -4,7 +4,6 @@
   "description": "Budsdeals for connecting marijuana retailers and wholesalers!",
   "main": "index.js",
   "scripts": {
-    "postinstall": "bower install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

@@ -1,8 +1,7 @@
 env
 venv
 *.pyc
-static/components
-static/dist
+static
 node_modules
 .env
 .idea
