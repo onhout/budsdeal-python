@@ -7,9 +7,7 @@ var gulp = require('gulp'),
     gminifycss = require('gulp-minify-css'),
     gconcat = require('gulp-concat'),
     gdel = require('del'),
-    gplumber = require('gulp-plumber'),
-    gbabel = require('gulp-babel'),
-    guglify = require('gulp-uglify');
+    gplumber = require('gulp-plumber');
 
 var errorHandler = function(){
     // default appearance
@@ -20,16 +18,6 @@ var errorHandler = function(){
     });
 };
 
-// create a default task and just log a message
-// gulp.task('buildjs', function() {
-//   return gulp.src('**/static/js/*.js')
-//       .pipe(gbabel({
-//           presets:['es2015']
-//       }))
-//       .pipe(gconcat('bundle.js'))
-//       .pipe(guglify())
-//       .pipe(gulp.dest('static'))
-// });
 gulp.task('clean-dist', function () {
     return gdel([
         './static/*'
