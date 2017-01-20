@@ -2,7 +2,6 @@ ansicolors==1.0.2
 configparser==3.5.0
 dj-database-url==0.4.1
 Django==1.10.5
-django-gulp==2.5.0
 django-require==1.0.11
 django-webpack-loader==0.4.1
 env-tools==2.0.0

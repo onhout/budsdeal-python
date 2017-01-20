@@ -29,7 +29,6 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
-    'django_gulp',
     'main.apps.MainConfig',
     'user.apps.UserConfig',
     'django.contrib.admin',

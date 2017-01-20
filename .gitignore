@@ -1,7 +1,6 @@
 env
 venv
 *.pyc
-static
 node_modules
 .env
 .idea
