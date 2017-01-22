@@ -30,7 +30,8 @@ module.exports = {
     module: {
         loaders: [
             {test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader'}, // to transform JSX into JS
-            {test: /\.less$/, loader: "style!css!autoprefixer!less"} //to transform less into CSS
+            {test: /\.less$/, loader: "style!css!autoprefixer!less"}, //to transform less into CSS
+            { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' }
         ],
     },
 
