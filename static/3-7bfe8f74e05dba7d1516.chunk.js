@@ -1,6 +1,6 @@
-webpackJsonp([5],{
+webpackJsonp([3],{
 
-/***/ 582:
+/***/ 579:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15,8 +15,6 @@ webpackJsonp([5],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	__webpack_require__(583);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25,78 +23,36 @@ webpackJsonp([5],{
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var User = function (_React$Component) {
-	    _inherits(User, _React$Component);
+	var Login = function (_React$Component) {
+	    _inherits(Login, _React$Component);
 	
-	    function User() {
-	        _classCallCheck(this, User);
+	    function Login() {
+	        _classCallCheck(this, Login);
 	
-	        return _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).apply(this, arguments));
+	        return _possibleConstructorReturn(this, (Login.__proto__ || Object.getPrototypeOf(Login)).apply(this, arguments));
 	    }
 	
-	    _createClass(User, [{
+	    _createClass(Login, [{
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
 	                'div',
-	                { id: 'user' },
-	                this.props.children || _react2.default.createElement(
+	                null,
+	                _react2.default.createElement(
 	                    'h1',
 	                    null,
-	                    'Loading.....'
+	                    'Login Template'
 	                )
 	            );
 	        }
 	    }]);
 	
-	    return User;
+	    return Login;
 	}(_react2.default.Component);
 	
-	exports.default = User;
-
-/***/ },
-
-/***/ 583:
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-	
-	// load the styles
-	var content = __webpack_require__(584);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(315)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/autoprefixer-loader/index.js!./../../../node_modules/less-loader/index.js!./user.less", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./../../../node_modules/autoprefixer-loader/index.js!./../../../node_modules/less-loader/index.js!./user.less");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-
-/***/ 584:
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(309)();
-	// imports
-	
-	
-	// module
-	exports.push([module.id, "#user {\n  color: blue;\n}\n", ""]);
-	
-	// exports
-
+	exports.default = Login;
 
 /***/ }
 
 });
-//# sourceMappingURL=5-dadf1947162491cc6c82.chunk.js.map
+//# sourceMappingURL=3-7bfe8f74e05dba7d1516.chunk.js.map

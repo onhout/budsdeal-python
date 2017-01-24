@@ -10,14 +10,14 @@ var style = {
     position: "fixed",
     left: "0",
     bottom: "0",
-    height: "100px",
+    height: "60px",
     width: "100%",
 };
 
 var phantom = {
     display: 'block',
     padding: '20px',
-    height: '100px',
+    height: '60px',
     width: '100%',
 };
 
@@ -33,7 +33,6 @@ class GlobalFooter extends Component {
                 <div style={phantom}>
                     <div style={style}>
                         <p style={footerColor}>Copyrighted @Budsdeal 2017</p>
-                        <p>And other bunch of footers</p>
                     </div>
                 </div>
             </div>

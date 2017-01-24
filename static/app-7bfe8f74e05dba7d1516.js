@@ -73,7 +73,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "-" + "dadf1947162491cc6c82" + ".chunk.js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "-" + "7bfe8f74e05dba7d1516" + ".chunk.js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -39931,14 +39931,14 @@
 	    position: "fixed",
 	    left: "0",
 	    bottom: "0",
-	    height: "100px",
+	    height: "60px",
 	    width: "100%"
 	};
 	
 	var phantom = {
 	    display: 'block',
 	    padding: '20px',
-	    height: '100px',
+	    height: '60px',
 	    width: '100%'
 	};
 	
@@ -39971,11 +39971,6 @@
 	                            'p',
 	                            { style: footerColor },
 	                            'Copyrighted @Budsdeal 2017'
-	                        ),
-	                        _react2.default.createElement(
-	                            'p',
-	                            null,
-	                            'And other bunch of footers'
 	                        )
 	                    )
 	                )
@@ -59161,4 +59156,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=app-dadf1947162491cc6c82.js.map
+//# sourceMappingURL=app-7bfe8f74e05dba7d1516.js.map
