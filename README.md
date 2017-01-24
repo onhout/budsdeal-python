@@ -1,48 +1,67 @@
-# Heroku Django Starter Template
+# Budsdeal
 
-An utterly fantastic project starter template for Django 1.10.
+This project uses Django as backend and React as front end.
 
-## Features
+## Prerequisite
 
-- Production-ready configuration for Static Files, Database Settings, Gunicorn, etc.
-- Enhancements to Django's static file serving functionality via WhiteNoise.
-- Latest Python 3.6 runtime environment. 
+- Python, Django
+- Node, NPM
 
-## How to Use
+## How to Install
 
-To use this project, follow these steps:
+To start coding this project, follow these steps:
 
-1. Create your working environment.
-2. Install Django (`$ pip install django`)
-3. Create a new project using this template
+1. [Install Python 3 (OSX)](http://docs.python-guide.org/en/latest/starting/install3/osx/#install3-osx)
+2. Install Django 
 
-## Creating Your Project
+`$ pip install django`
 
-Using this template to create a new Django app is easy::
+3. Install VirtualEnv 
 
-    $ django-admin.py startproject --template=https://github.com/heroku/heroku-django-template/archive/master.zip --name=Procfile helloworld
+`$ pip install virtualenv`
 
-You can replace ``helloworld`` with your desired project name.
+4. While inside the project, install the environment
 
-## Deployment to Heroku
+`$ virtualenv env`
 
-    $ git init
-    $ git add -A
-    $ git commit -m "Initial commit"
+5. Activate the environment
 
-    $ heroku create
-    $ git push heroku master
+`$ source env/bin/activate`
 
-    $ heroku run python manage.py migrate
+6. Install the requirements, this will install all the needed packages
 
-See also, a [ready-made application](https://github.com/heroku/python-getting-started), ready to deploy.
+`$ pip install -r requirements.txt`
 
-## Using Python 2.7?
+7. [Install Node.js](https://nodejs.org/en/download/)
+8. Install gulp-cli globally
 
-Just update `runtime.txt` to `python-2.7.13` (no trailing spaces or newlines!).
+`$ npm install gulp-cli -g`
 
-## Further Reading
+9. While inside the project, install the npm packages
 
-- [Gunicorn](https://warehouse.python.org/project/gunicorn/)
-- [WhiteNoise](https://warehouse.python.org/project/whitenoise/)
-- [dj-database-url](https://warehouse.python.org/project/dj-database-url/)
+`$ npm install`
+
+10. Start the project, one is to host the server using Python
+`$ python manage.py runserver`
+then fire up another terminal and run 
+`$ gulp` to watch JavaScript changes
+
+## Merging your code
+
+1. Fork my shit, then:
+    
+    
+    $ git clone https://github.com/YOURGITHUB/budsdeal-python.git
+    
+2. Make your changes, then:
+
+
+    $ git add .
+    $ git commit -m "Commit message"
+    $ git push origin master
+    
+    
+3. Go to the forked repository and send a pull request by clicking "new pull request"~ Explain your shit.
+4. Then I'll do my part and merge it lol.
+
+As always, [Google](http://www.google.com) is your best friend.
