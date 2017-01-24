@@ -47,7 +47,7 @@ class Login extends React.Component {
                             onChange={this.handleValidation}
                         />
                         <FormControl.Feedback />
-                        <HelpBlock>Your username is usually your email address</HelpBlock>
+                        <HelpBlock>Enter your email address</HelpBlock>
                     </FormGroup>
                     <FormGroup
                         controlId="password"
