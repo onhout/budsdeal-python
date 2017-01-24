@@ -22,7 +22,8 @@ module.exports = {
         new BundleTracker({filename: './webpack-stats.json'}),
         new webpack.ProvidePlugin({
             jQuery: 'jquery',             // bootstrap 3.x requires
-        })
+        }),
+        new ExtractTextPlugin('[name]-[hash].css')
     ],
 
     devtool: 'source-map',
@@ -31,7 +32,9 @@ module.exports = {
         loaders: [
             {test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader'}, // to transform JSX into JS
             {test: /\.less$/, loader: "style!css!autoprefixer!less"}, //to transform less into CSS
-            { test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000' }
+            {test: /\.(jpe|jpg|png|woff|woff2|eot|ttf|svg)(\?.*$|$)/, loader: 'url-loader?limit=100000'},
+            {test: /\.css$/,loader: ExtractTextPlugin.extract('style', 'css')},
+            //changed the regex because of an issue of loading less-loader for font-awesome.
         ],
     },
 

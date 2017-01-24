@@ -48,7 +48,7 @@ gulp.task('webpack', function () {
 // });
 
 gulp.task('watch', function () {
-    gulp.watch(['**/static/index.js', 'client/**', '**/static/js/*.jsx'], ['clean-dist', 'webpack']);
+    gulp.watch(['**/static/index.js', 'client/**', '**/static/components/**'], ['clean-dist', 'webpack']);
 });
 
 gulp.task('default', ['clean-dist', 'webpack', 'watch'], function () {

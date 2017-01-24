@@ -32,7 +32,7 @@ class GlobalFooter extends Component {
             <div>
                 <div style={phantom}>
                     <div style={style}>
-                        <p style={footerColor}>Copyrighted @Budsdeal 2017</p>
+                        <p className="text-muted">Copyrighted @Budsdeal 2017</p>
                     </div>
                 </div>
             </div>
