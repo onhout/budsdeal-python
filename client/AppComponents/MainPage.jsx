@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-class Page extends Component {
+class MainPage extends Component {
     render() {
         const {info} = this.props;
         return (
@@ -19,4 +19,4 @@ class Page extends Component {
     }
 }
 
-export default Page
+export default MainPage

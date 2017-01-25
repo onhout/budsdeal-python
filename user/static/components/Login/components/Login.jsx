@@ -2,6 +2,7 @@ import React from 'react'
 import FacebookButton from '../../Facebook/Button'
 import GoogleButton from '../../Google/Button'
 import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, Button, Col} from 'react-bootstrap'
+import DjangoCSRFToken from '../../../../../client/Utils/CSRFToken'
 
 
 class Login extends React.Component {
@@ -61,7 +62,7 @@ class Login extends React.Component {
                         />
                         <FormControl.Feedback />
                     </FormGroup>
-
+                    <DjangoCSRFToken/>
                     <FormGroup className="pull-right">
                         <Button type="submit" bsSize="lg">
                             Sign in
