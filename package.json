@@ -4,7 +4,7 @@
   "description": "Budsdeals for connecting marijuana retailers and wholesalers!",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js --progress --colors"
+    "build": "webpack --config webpack.production.config.js --progress --colors"
   },
   "keywords": [
     "budsdeal"

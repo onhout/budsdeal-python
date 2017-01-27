@@ -11,8 +11,8 @@ const rootRoute = {
         path: '/',
         component: require('./AppComponents/App').default,
         childRoutes: [
-            require('../main/static').default,
-            require('../user/static').default
+            require('./Bundles/Main').default,
+            require('./Bundles/User').default
             // require('./routes/Course')
         ]
     }]

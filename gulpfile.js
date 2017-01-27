@@ -26,7 +26,7 @@ gulp.task('clean-dist', function () {
 gulp.task('webpack', function () {
     return gulp.src('/client/index.js')
         .pipe(errorHandler())
-        .pipe(gwebpack(require('./webpack.config.js')))
+        .pipe(gwebpack(require('./webpack.local.config.js')))
         .pipe(gulp.dest('./static/'));
 });
 
@@ -48,7 +48,7 @@ gulp.task('webpack', function () {
 // });
 
 gulp.task('watch', function () {
-    gulp.watch(['**/static/index.js', 'client/**', '**/static/components/**'], ['clean-dist', 'webpack']);
+    gulp.watch(['src/**'], ['clean-dist', 'webpack']);
 });
 
 gulp.task('default', ['clean-dist', 'webpack', 'watch'], function () {

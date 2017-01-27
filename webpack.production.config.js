@@ -7,7 +7,7 @@ module.exports = {
     context: __dirname,
 
     entry: {
-        app: './client/index.js'
+        app: './src/index.js'
     }, // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
 
     output: {
@@ -23,17 +23,21 @@ module.exports = {
         new webpack.ProvidePlugin({
             jQuery: 'jquery',             // bootstrap 3.x requires
         }),
-        new ExtractTextPlugin('[name]-[hash].css')
+        new ExtractTextPlugin('[name]-[hash].css'),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
+            }
+        }),
+        new webpack.optimize.UglifyJsPlugin()
     ],
-
-    devtool: 'source-map',
 
     module: {
         loaders: [
             {test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader'}, // to transform JSX into JS
             {test: /\.less$/, loader: "style!css!autoprefixer!less"}, //to transform less into CSS
             {test: /\.(jpe|jpg|png|woff|woff2|eot|ttf|svg)(\?.*$|$)/, loader: 'url-loader?limit=100000'},
-            {test: /\.css$/,loader: ExtractTextPlugin.extract('style', 'css')},
+            {test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css')},
             //changed the regex because of an issue of loading less-loader for font-awesome.
         ],
     },
