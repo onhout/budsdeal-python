@@ -1,8 +1,8 @@
 import React from 'react'
-import FacebookButton from '../../Facebook/Button'
-import GoogleButton from '../../Google/Button'
+import FacebookButton from '../../../../../GlobalComponents/Facebook/Button'
+import GoogleButton from '../../../../../GlobalComponents/Google/Button'
 import {Form, FormGroup, ControlLabel, FormControl, HelpBlock, Button, Col} from 'react-bootstrap'
-import DjangoCSRFToken from '../../../../../../src/Utils/CSRFToken'
+import DjangoCSRFToken from '../../../../../Utils/CSRFToken'
 
 
 class Login extends React.Component {

@@ -1,7 +1,7 @@
 import React from "react";
 import {render} from "react-dom";
 // import {Provider} from "react-redux";
-import {Router, Route, IndexRoute, browserHistory} from "react-router";
+import {Router, Route, IndexRoute, hashHistory} from "react-router";
 import 'jquery';
 import 'bootstrap/dist/js/bootstrap';
 import './Less/App.less';
@@ -19,5 +19,5 @@ const rootRoute = {
 
 
 render((
-    <Router history={browserHistory} routes={rootRoute}/>
+    <Router history={hashHistory} routes={rootRoute}/>
 ), document.getElementById('react-app'));
