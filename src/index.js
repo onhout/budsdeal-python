@@ -7,15 +7,14 @@ import 'bootstrap/dist/js/bootstrap';
 import './Less/App.less';
 
 const rootRoute = {
-    childRoutes: [{
-        path: '/',
-        component: require('./AppComponents/App').default,
-        childRoutes: [
-            require('./Bundles/Main').default,
-            require('./Bundles/User').default
-            // require('./routes/Course')
-        ]
-    }]
+    path: '/',
+    component: require('./AppComponents/App').default,
+    indexRoute:require ('./AppComponents/MainPage').default,
+    childRoutes: [
+        require('./Bundles/Main').default,
+        require('./Bundles/User').default
+        // require('./routes/Course')
+    ]
 };
 
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import GlobalFooter from './GlobalFooter';
 import GlobalNav from './GlobalNav';
-import MainPage from './MainPage';
 
 
 class App extends React.Component {
@@ -10,7 +9,7 @@ class App extends React.Component {
             <div>
                 <GlobalNav/>
                 <div className="container">
-                    {this.props.children || <MainPage info={'dawd'}/>}
+                    {this.props.children}
                 </div>
                 <GlobalFooter/>
             </div>
