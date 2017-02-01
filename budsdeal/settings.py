@@ -142,7 +142,7 @@ STATICFILES_DIRS = [
     os.path.join(os.path.abspath(os.path.dirname(__file__) + '/..'), 'static'),
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
 STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
