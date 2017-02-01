@@ -5,6 +5,7 @@ from . import views
 
 
 urlpatterns = [
+    url(r'^signup/', views.signup, name='user_signup'),
     url(r'^login/', views.login, name='user_login'),
-    url(r'^obtain-auth-token/', obtain_auth_token)
+    url(r'^obtain-auth-token/$', obtain_auth_token)
 ]

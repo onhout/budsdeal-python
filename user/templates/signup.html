@@ -1,0 +1,9 @@
+{% extends 'index.html' %}
+{% load render_bundle from webpack_loader %}
+{% block title %}Signup{% endblock %}
+{% block content %}
+    <h1>Sign Up</h1>
+    <div id="facebookButton" data-method="signup"></div>
+    <div id="googleButton" data-method="signup"></div>
+    {% render_bundle 'user' %}
+{% endblock %}

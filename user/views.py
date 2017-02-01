@@ -8,6 +8,10 @@ from rest_framework.response import Response
 # Create your views here.
 
 
+def signup(request):
+    return render(request, 'signup.html')
+
+
 def login(request):
     return render(request, 'login.html')
 

@@ -7,7 +7,8 @@ module.exports = {
     context: __dirname,
 
     entry: {
-        app: './src/index.js'
+        app: 'app/js/index',
+        user: 'user/js/user'
     }, // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
 
     output: {
@@ -21,7 +22,8 @@ module.exports = {
         // new webpack.optimize.UglifyJsPlugin(),
         new BundleTracker({filename: './webpack-stats.json'}),
         new webpack.ProvidePlugin({
-            jQuery: 'jquery',             // bootstrap 3.x requires
+            $: 'jquery',             // bootstrap 3.x requires
+            jQuery: 'jquery',        // bootstrap 3.x requires
         }),
         new ExtractTextPlugin('[name]-[hash].css')
     ],
@@ -40,6 +42,7 @@ module.exports = {
 
     resolve: {
         modulesDirectories: ['node_modules', 'static/components'],
+        root: path.resolve('./src'),
         extensions: ['', '.js', '.jsx']
     },
 };
