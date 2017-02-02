@@ -25,7 +25,8 @@ module.exports = {
             $: 'jquery',             // bootstrap 3.x requires
             jQuery: 'jquery',        // bootstrap 3.x requires
         }),
-        new ExtractTextPlugin('[name]-[hash].css')
+        new ExtractTextPlugin('[name]-[hash].css'),
+        new webpack.optimize.DedupePlugin(),
     ],
 
     devtool: 'cheap-module-source-map',

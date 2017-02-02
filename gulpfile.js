@@ -51,6 +51,6 @@ gulp.task('watch', function () {
     gulp.watch(['./src/**'], ['clean-dist', 'webpack']);
 });
 
-gulp.task('default', ['clean-dist', 'webpack', 'watch'], function () {
+gulp.task('default', ['watch'], function () {
     return gutil.log('Done')
 });
