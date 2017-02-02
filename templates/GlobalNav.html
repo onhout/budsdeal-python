@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% render_bundle 'vendor' %}
     <title>{% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -39,7 +40,6 @@
 </nav>
 <div class="container-fluid">
     {% block content %}{% endblock %}
-    {% render_bundle 'app' %}
     {% include 'Footer.html' %}
 </div>
 
