@@ -44,9 +44,7 @@ If you encountered the error when installing psycopg2, [Click here](http://stack
 `$ npm install`
 
 10. Start the project, one is to host the server using Python
-`$ python manage.py runserver`
-then fire up another terminal and run 
-`$ gulp` to watch JavaScript changes
+`$ python manage.py runserver`, and it will automatically run gulp
 
 ## Merging your code
 
