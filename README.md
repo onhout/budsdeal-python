@@ -32,6 +32,8 @@ To start coding this project, follow these steps:
 
 `$ pip install -r requirements.txt`
 
+If you encountered the error when installing psycopg2, [Click here](http://stackoverflow.com/questions/28253681/you-need-to-install-postgresql-server-dev-x-y-for-building-a-server-side-extensi)
+
 7. [Install Node.js](https://nodejs.org/en/download/)
 8. Install gulp-cli globally
 
