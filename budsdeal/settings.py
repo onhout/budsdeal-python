@@ -11,8 +11,9 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 import sys
-
 import dj_database_url
+
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -206,9 +207,13 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'id,name,email,gender,first_name,last_name,locale,age_range',
 }
 # SOCIAL_AUTH_USER_MODEL = 'user.User'
-
-SOCIAL_AUTH_FACEBOOK_KEY = '403705163294343'  # App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = '3378b4261c0b08140d2cf5913f7cdbd7'  # App Secret
-
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '799142006485-6fvh1nn44rdlqef9fmm5erdn3ousb0rq.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'xAscLSlTp-DjeeVFfdRlLytO'
+if 'SOCIAL_AUTH_FACEBOOK_KEY' in os.environ:
+    SOCIAL_AUTH_FACEBOOK_KEY = os.environ['SOCIAL_AUTH_FACEBOOK_KEY']  # App ID
+    SOCIAL_AUTH_FACEBOOK_SECRET = os.environ['SOCIAL_AUTH_FACEBOOK_SECRET']  # App Secret
+    SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ['SOCIAL_AUTH_GOOGLE_OAUTH2_KEY']
+    SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ['SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET']
+else:
+    SOCIAL_AUTH_FACEBOOK_KEY = config('SOCIAL_AUTH_FACEBOOK_KEY')  # App ID
+    SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET')  # App Secret
+    SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+    SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
