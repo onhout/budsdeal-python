@@ -1,18 +1,42 @@
-from django.db import models
 from datetime import datetime
-from rest_framework import serializers
-
-# Create your models here.
-
-
-class User(object):
-    def __init__(self, email, password, created=None):
-        self.email = email
-        self.password = password,
-        self.created = created or datetime.now()
+from django.contrib.auth.models import AbstractBaseUser, UserManager
+from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.models import User
+from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
-class UserSerializer(serializers.Serializer):
-    email = serializers.EmailField()
-    password = serializers.CharField(max_length=200)
-    created = serializers.DateTimeField()
+#
+#
+# # Create your models here.
+#
+#
+class UserProfile(models.Model):
+    GENDERS = (
+        ('male', 'Male'),
+        ('female', 'Female')
+    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    gender = models.CharField(max_length=20, null=True, blank=True,
+                              choices=GENDERS)
+    locale = models.CharField(max_length=10, blank=True, null=True)
+
+    facebook_id = models.CharField(max_length=255, blank=True)
+
+    profile_photo = models.ImageField(upload_to='./user_profiles_pics')
+    # TODO change the upload to AMAZON AWS
+
+    def __unicode__(self):
+        return self.user.username
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.userprofile.save()

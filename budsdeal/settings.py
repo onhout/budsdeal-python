@@ -31,8 +31,6 @@ DEBUG = True
 
 INSTALLED_APPS = [
     'django_gulp',
-    'main.apps.MainConfig',
-    'user.apps.UserConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,9 +41,11 @@ INSTALLED_APPS = [
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    'main',
+    'user',
     'webpack_loader',
-    'rest_framework',
-    'rest_framework.authtoken',
+    'social.apps.django_app.default',
+    'social_django',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -58,6 +58,8 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'budsdeal.urls'
@@ -73,6 +75,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
             ],
             'debug': DEBUG,
         },
@@ -165,9 +169,46 @@ WEBPACK_LOADER = {
     }
 }
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication'
-    )
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    # 'social.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_LOGIN_URL = '/user/login'
+SOCIAL_AUTH_LOGOUT_URL = '/user/logout'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/user/home'
+
+SOCIAL_AUTH_PIPELINE = (
+    'social.pipeline.social_auth.social_details',
+    'social.pipeline.social_auth.social_uid',
+    'social.pipeline.social_auth.auth_allowed',
+    'social.pipeline.social_auth.social_user',
+    'social.pipeline.user.get_username',
+    'social.pipeline.social_auth.associate_by_email',
+    'social.pipeline.user.create_user',
+    'social.pipeline.social_auth.associate_user',
+    'social.pipeline.social_auth.load_extra_data',
+    'social.pipeline.user.user_details',
+    'user.pipeline.get_profile_data',  # custom
+    'user.pipeline.get_profile_avatar',  # custom
+)
+
+SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'
+SOCIAL_AUTH_STORAGE = 'social.apps.django_app.default.models.DjangoStorage'
+
+SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
+
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+    'fields': 'id,name,email,gender,first_name,last_name,locale,age_range',
 }
+# SOCIAL_AUTH_USER_MODEL = 'user.User'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '403705163294343'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '3378b4261c0b08140d2cf5913f7cdbd7'  # App Secret
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '799142006485-6fvh1nn44rdlqef9fmm5erdn3ousb0rq.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'xAscLSlTp-DjeeVFfdRlLytO'
