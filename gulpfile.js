@@ -20,14 +20,14 @@ var errorHandler = function(){
 
 gulp.task('clean-dist', function () {
     return gdel([
-        './static/*'
+        './static/dist/*'
     ])
 });
 gulp.task('webpack', function () {
     return gulp.src('/client/index.js')
         .pipe(errorHandler())
         .pipe(gwebpack(require('./webpack.local.config.js')))
-        .pipe(gulp.dest('./static/'));
+        .pipe(gulp.dest('./static/dist/'));
 });
 
 // gulp.task('buildcss', function () {

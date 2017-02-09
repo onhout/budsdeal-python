@@ -1,6 +1,4 @@
-from datetime import datetime
-from django.contrib.auth.models import AbstractBaseUser, UserManager
-from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
@@ -12,7 +10,7 @@ from django.dispatch import receiver
 # # Create your models here.
 #
 #
-class UserProfile(models.Model):
+class Profile(models.Model):
     GENDERS = (
         ('male', 'Male'),
         ('female', 'Female')
@@ -24,19 +22,20 @@ class UserProfile(models.Model):
 
     facebook_id = models.CharField(max_length=255, blank=True)
 
-    profile_photo = models.ImageField(upload_to='./user_profiles_pics')
+    profile_photo = models.ImageField(upload_to='./static/media/profile_pics')
+
     # TODO change the upload to AMAZON AWS
 
-    def __unicode__(self):
+    def __str__(self):
         return self.user.username
 
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        UserProfile.objects.create(user=instance)
+        Profile.objects.create(user=instance)
 
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    instance.userprofile.save()
+    instance.profile.save()

@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 import sys
-import dj_database_url
 
+import dj_database_url
 from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'webpack_loader',
     'social.apps.django_app.default',
     'social_django',
+
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -165,7 +166,7 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 WEBPACK_LOADER = {
     'DEFAULT': {
-        'BUNDLE_DIR_NAME': '/static/',
+        'BUNDLE_DIR_NAME': '/static/dist/',
         'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
     }
 }
@@ -178,9 +179,9 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_LOGIN_URL = '/user/login'
-SOCIAL_AUTH_LOGOUT_URL = '/user/logout'
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/user/home'
+LOGIN_URL = '/user/login'
+LOGOUT_URL = '/user/logout'
+LOGIN_REDIRECT_URL = '/user/home'
 
 SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.social_details',

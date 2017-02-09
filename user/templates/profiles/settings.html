@@ -1,0 +1,5 @@
+{% extends 'Nav.html' %}
+{% block content %}
+    {{ form }}
+    <a href={% url 'user_settings_password' %}>Change password</a>
+{% endblock %}

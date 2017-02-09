@@ -5,6 +5,7 @@ dj-database-url==0.4.1
 Django==1.10.5
 django-filter==1.0.1
 django-gulp==2.5.0
+django-material==0.12.3
 django-require==1.0.11
 django-webpack-loader==0.4.1
 djangorestframework==3.5.3

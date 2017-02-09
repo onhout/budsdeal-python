@@ -7,7 +7,7 @@ from django.template.defaultfilters import slugify
 
 def get_profile_data(backend, details, response, uid, user, *args, **kwargs):
     print(response)
-    profile = user.userprofile
+    profile = user.profile
     if backend.__class__.__name__ == 'FacebookOAuth2':
         user.is_superuser = True
         if not user.email and response.get('email'):
@@ -28,7 +28,7 @@ def get_profile_data(backend, details, response, uid, user, *args, **kwargs):
 def get_profile_avatar(backend, details, response,
                        uid, user, *args, **kwargs):
     url = None
-    profile = user.userprofile
+    profile = user.profile
     if not profile.profile_photo:
         if backend.__class__.__name__ == 'FacebookOAuth2':
             url = "http://graph.facebook.com/%s/picture?type=large" % \

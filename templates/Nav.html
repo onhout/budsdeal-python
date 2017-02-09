@@ -27,10 +27,16 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if user and not user.is_anonymous %}
+                    {% if user.profile.profile_photo %}
+                        <img class="pull-left img-responsive img-rounded"
+                         style="max-height: 38px; margin-top: 5px"
+                         src="/{{ user.profile.profile_photo }}"/>
+                    {% endif %}
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false">User<span class="caret"></span></a>
+                           aria-expanded="false">{{ user.get_full_name }}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                            <li><a href={% url 'user_settings' %}>Account Profile</a></li>
                             <li><a href={% url 'user_logout' %}>Logout</a></li>
                         </ul>
                     </li>
