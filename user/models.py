@@ -1,4 +1,3 @@
-from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
@@ -19,10 +18,10 @@ class Profile(models.Model):
     gender = models.CharField(max_length=20, null=True, blank=True,
                               choices=GENDERS)
     locale = models.CharField(max_length=10, blank=True, null=True)
-
     facebook_id = models.CharField(max_length=255, blank=True)
-
     profile_photo = models.ImageField(upload_to='./static/media/profile_pics')
+
+
 
     # TODO change the upload to AMAZON AWS
 

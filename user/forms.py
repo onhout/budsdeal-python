@@ -9,7 +9,6 @@ class PasswordChangeCustomForm(PasswordChangeForm):
         super(PasswordChangeCustomForm, self).__init__(user, *args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
-            self.fields[field].help_text = None
 
 
 class AdminPasswordChangeCustomForm(AdminPasswordChangeForm):
@@ -17,7 +16,6 @@ class AdminPasswordChangeCustomForm(AdminPasswordChangeForm):
         super(AdminPasswordChangeCustomForm, self).__init__(user, *args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
-            self.fields[field].help_text = None
 
 
 class ProfileForm(ModelForm):
@@ -27,5 +25,16 @@ class ProfileForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+
+
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name']
+
+    def __init__(self, *args, **kwargs):
+        super(UserForm, self).__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'

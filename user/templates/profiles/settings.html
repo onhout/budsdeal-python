@@ -1,5 +1,21 @@
 {% extends 'Nav.html' %}
 {% block content %}
-    {{ form }}
+    <form class="form" method="post" action="{% url 'user_settings' %}">
+    {% csrf_token %}
+        {% for fields in user_form %}
+            <div class="form-group">
+                <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
+                {{ fields }}
+            </div>
+        {% endfor %}
+        {% for fields in profile_form %}
+            <div class="form-group">
+                <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
+                {{ fields }}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
     <a href={% url 'user_settings_password' %}>Change password</a>
 {% endblock %}

@@ -1,9 +1,10 @@
-from django.contrib.auth import logout as auth_logout
-from django.contrib.auth.decorators import login_required
-from . import forms
-from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+
+from . import forms
 
 
 # Create your views here.
@@ -53,5 +54,20 @@ def account_settings_password(request):
 
 @login_required
 def account_settings(request):
-    form = forms.ProfileForm(instance=request.user.profile)
-    return render(request, 'profiles/settings.html', {'form': form})
+    if request.method == 'POST':
+        user_form = forms.UserForm(request.POST, instance=request.user)
+        profile_form = forms.ProfileForm(request.POST, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            # messages.success(request, _('Your profile was successfully updated!'))
+            return redirect('user_settings')
+        # else:
+            # messages.error(request, _('Please correct the error below.'))
+    else:
+        user_form = forms.UserForm(instance=request.user)
+        profile_form = forms.ProfileForm(instance=request.user.profile)
+    return render(request, 'profiles/settings.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
