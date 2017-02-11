@@ -18,15 +18,34 @@ class Profile(models.Model):
     gender = models.CharField(max_length=20, null=True, blank=True,
                               choices=GENDERS)
     locale = models.CharField(max_length=10, blank=True, null=True)
-    facebook_id = models.CharField(max_length=255, blank=True)
+    social_id = models.CharField(max_length=255, blank=True)
+    login_type = models.CharField(max_length=10, null=True, blank=True)
+    account_type = models.CharField(max_length=10, null=True, blank=True)
     profile_photo = models.ImageField(upload_to='./static/media/profile_pics')
-
-
+    id_photo = models.ImageField(upload_to='./static/media/ID_PHOTOS', blank=True)
+    approved_as_seller = models.BooleanField(default=False)
+    updated_at = models.DateTimeField(auto_now=True)
 
     # TODO change the upload to AMAZON AWS
 
     def __str__(self):
         return self.user.username
+
+
+class Company(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50, blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
+    address2 = models.CharField(max_length=10, blank=True, null=True)
+    city = models.CharField(max_length=25, blank=True, null=True)
+    state = models.CharField(max_length=2)
+    zip = models.CharField(max_length=10)
+    phone_number = models.CharField(max_length=50)
+    TIN = models.CharField(max_length=255)  # -> Taxpayer Identification Number
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.companyName
 
 
 @receiver(post_save, sender=User)

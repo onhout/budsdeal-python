@@ -9,19 +9,24 @@ def get_profile_data(backend, details, response, uid, user, *args, **kwargs):
     print(response)
     profile = user.profile
     if backend.__class__.__name__ == 'FacebookOAuth2':
-        user.is_superuser = True
-        if not user.email and response.get('email'):
-            user.email = response.get('email')
-        if not user.first_name and response.get('first_name'):
-            user.first_name = response.get('first_name')
-        if not user.last_name and response.get('last_name'):
-            user.last_name = response.get('last_name')
+        if not profile.login_type:
+            profile.login_type = 'Facebook'
         if not profile.gender and response.get('gender'):
             profile.gender = response.get('gender')
         if not profile.locale and response.get('locale'):
             profile.locale = response.get('locale')
-        if not profile.facebook_id and response.get('id'):
-            profile.facebook_id = response.get('id')
+        if not profile.social_id and response.get('id'):
+            profile.social_id = response.get('id')
+        user.save()
+    if backend.__class__.__name__ == 'GoogleOAuth2':
+        if not profile.login_type:
+            profile.login_type = 'Google'
+        if not profile.gender and response.get('gender'):
+            profile.gender = response.get('gender')
+        if not profile.locale and response.get('locale'):
+            profile.locale = response.get('locale')
+        if not profile.social_id and response.get('id'):
+            profile.social_id = response.get('id')
         user.save()
 
 
@@ -33,6 +38,10 @@ def get_profile_avatar(backend, details, response,
         if backend.__class__.__name__ == 'FacebookOAuth2':
             url = "http://graph.facebook.com/%s/picture?type=large" % \
                   response.get('id')
+
+        if backend.__class__.__name__ == 'GoogleOAuth2':
+            url = response.get('image').get('url')
+            url = url.replace('sz=50', 'sz=200')
         if url:
             try:
                 avatar = urlopen(url)

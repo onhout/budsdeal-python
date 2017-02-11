@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 from django.forms import ModelForm
-from .models import Profile
+from .models import Profile, Company
 from django.contrib.auth.admin import User
 
 
@@ -21,7 +21,7 @@ class AdminPasswordChangeCustomForm(AdminPasswordChangeForm):
 class ProfileForm(ModelForm):
     class Meta:
         model = Profile
-        fields = ['gender', 'locale', 'facebook_id']
+        fields = ['gender']
 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
@@ -36,5 +36,16 @@ class UserForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+
+
+class CompanyForm(ModelForm):
+    class Meta:
+        model = Company
+        fields = ['name', 'address', 'address2', 'city', 'state', 'zip', 'phone_number', 'TIN']
+
+    def __init__(self, *args, **kwargs):
+        super(CompanyForm, self).__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'

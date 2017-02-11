@@ -54,12 +54,15 @@ def account_settings_password(request):
 
 @login_required
 def account_settings(request):
+    profile = request.user.profile
     if request.method == 'POST':
         user_form = forms.UserForm(request.POST, instance=request.user)
         profile_form = forms.ProfileForm(request.POST, instance=request.user.profile)
+        company_form = forms.CompanyForm(request.POST, instance=request.user.company)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
+            company_form.save()
             # messages.success(request, _('Your profile was successfully updated!'))
             return redirect('user_settings')
         # else:
@@ -67,7 +70,16 @@ def account_settings(request):
     else:
         user_form = forms.UserForm(instance=request.user)
         profile_form = forms.ProfileForm(instance=request.user.profile)
-    return render(request, 'profiles/settings.html', {
-        'user_form': user_form,
-        'profile_form': profile_form
-    })
+
+    if profile.approved_as_seller:
+        company_form = forms.CompanyForm(instance=request.user.company)
+        return render(request, 'profiles/settings.html', {
+            'user_form': user_form,
+            'profile_form': profile_form,
+            'company_form': company_form
+        })
+    else:
+        return render(request, 'profiles/settings.html', {
+            'user_form': user_form,
+            'profile_form': profile_form
+        })
