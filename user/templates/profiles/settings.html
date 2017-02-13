@@ -1,20 +1,36 @@
 {% extends 'Nav.html' %}
 {% block content %}
     <form class="form" method="post" action="{% url 'user_settings' %}">
-    {% csrf_token %}
-        {% for fields in user_form %}
-            <div class="form-group">
-                <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
-                {{ fields }}
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                {% for fields in user_form %}
+                    <div class="form-group">
+                        <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
+                        {{ fields }}
+                    </div>
+                {% endfor %}
+                {% for fields in profile_form %}
+                    <div class="form-group">
+                        <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
+                        {{ fields }}
+                    </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-        {% for fields in profile_form %}
-            <div class="form-group">
-                <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
-                {{ fields }}
-            </div>
-        {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                {% if company_form %}
+                    {% for fields in company_form %}
+                        <div class="form-group">
+                            <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
+                            {{ fields }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
 
+            </div>
+        </div>
         <button type="submit" class="btn btn-success">Submit</button>
     </form>
     <a href={% url 'user_settings_password' %}>Change password</a>

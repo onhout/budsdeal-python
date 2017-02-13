@@ -4,7 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-class Items(models.Model):
+class Item(models.Model):
     TYPE = (
         ('indica', 'Indica'),
         ('sativa', 'Sativa'),
@@ -16,7 +16,7 @@ class Items(models.Model):
     brand = models.CharField(max_length=150, blank=True, null=True)
     price = models.DecimalField(max_digits=9, decimal_places=2)
     description = models.TextField(blank=True)
-    item_pic = models.ImageField(upload_to='./static/media/item_pics')
+    item_pic = models.ImageField(upload_to='./static/media/item_pics', blank=True, null=True)
     # TODO change the upload to AMAZON AWS
 
     def __str__(self):

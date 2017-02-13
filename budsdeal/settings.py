@@ -42,8 +42,9 @@ INSTALLED_APPS = [
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    'main',
-    'user',
+    'main.apps.MainConfig',
+    'user.apps.UserConfig',
+    'products.apps.ProductsConfig',
     'webpack_loader',
     'social.apps.django_app.default',
     'social_django',
