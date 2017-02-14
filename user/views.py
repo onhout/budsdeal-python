@@ -38,7 +38,7 @@ def account_settings_password(request):
     else:
         password_form = forms.AdminPasswordChangeCustomForm
 
-    if request.method == 'POST':
+    if request.POST:
         form = password_form(request.user, request.POST)
         if form.is_valid():
             form.save()
@@ -55,21 +55,8 @@ def account_settings_password(request):
 @login_required
 def account_settings(request):
     profile = request.user.profile
-    if request.method == 'POST':
-        user_form = forms.UserForm(request.POST, instance=request.user)
-        profile_form = forms.ProfileForm(request.POST, instance=request.user.profile)
-        company_form = forms.CompanyForm(request.POST, instance=request.user.company)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            company_form.save()
-            # messages.success(request, _('Your profile was successfully updated!'))
-            return redirect('user_settings')
-        # else:
-            # messages.error(request, _('Please correct the error below.'))
-    else:
-        user_form = forms.UserForm(instance=request.user)
-        profile_form = forms.ProfileForm(instance=request.user.profile)
+    user_form = forms.UserForm(instance=request.user)
+    profile_form = forms.ProfileForm(instance=request.user.profile)
 
     if profile.approved_as_seller:
         company_form = forms.CompanyForm(instance=request.user.company)
@@ -83,3 +70,24 @@ def account_settings(request):
             'user_form': user_form,
             'profile_form': profile_form
         })
+
+
+def save_account_settings(request):
+    profile = request.user.profile
+    if request.POST:
+        if profile.approved_as_seller:
+            user_form = forms.UserForm(request.POST, instance=request.user)
+            profile_form = forms.ProfileForm(request.POST, instance=request.user.profile)
+            company_form = forms.CompanyForm(request.POST, instance=request.user.company)
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
+                company_form.save()
+                return redirect('user_settings')
+        else:
+            user_form = forms.UserForm(request.POST, instance=request.user)
+            profile_form = forms.ProfileForm(request.POST, instance=request.user.profile)
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
+                return redirect('user_settings')

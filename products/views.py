@@ -7,9 +7,11 @@ from . import forms
 
 @login_required
 def add_product(request):
-    if request.method == 'POST':
-        product_form = forms.AddProductForm(request.POST, instance=request.user)
+    if request.POST:
+        product_form = forms.AddProductForm(request.POST)
         if product_form.is_valid():
+            product_form.save(commit=False)
+            product_form.user = request.user
             product_form.save()
             # messages.success(request, _('Your profile was successfully updated!'))
             return redirect('user_settings')

@@ -1,6 +1,6 @@
 {% extends 'Nav.html' %}
 {% block content %}
-    <form class="form" method="post" action="{% url 'user_settings' %}">
+    <form class="form" method="post" action="{% url 'save_settings' %}">
         {% csrf_token %}
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
