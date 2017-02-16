@@ -2,7 +2,7 @@
 {% load render_bundle from webpack_loader %}
 {% block content %}
     <h1>Add Products</h1>
-    <form class="form" method="post" action="{% url 'add_product' %}">
+    <form class="form" method="post" action="{% url 'add_product' %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
@@ -10,6 +10,7 @@
                     <div class="form-group">
                         <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
                         {{ fields }}
+                        <span class="help-block">{{ fields.help_text }}</span>
                     </div>
                 {% endfor %}
             </div>

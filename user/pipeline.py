@@ -28,6 +28,7 @@ def get_profile_data(backend, details, response, uid, user, *args, **kwargs):
         if not profile.social_id and response.get('id'):
             profile.social_id = response.get('id')
         user.save()
+# TODO: change this algorithm to look better
 
 
 def get_profile_avatar(backend, details, response,
