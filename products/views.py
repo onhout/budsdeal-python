@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from . import forms, models
 from uuid import uuid4
 
-from django.core.files.base import ContentFile
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
+
+from . import forms, models
+
 
 # Create your views here.
 
@@ -37,4 +38,12 @@ def list_product(request):
     product_list = models.Item.objects.all().filter(user=request.user)
     return render(request, 'list_products.html', {
         'product_list': product_list
+    })
+
+
+@login_required
+def update_product(request, product_id):
+    product = models.Item.objects.get(pk=product_id)
+    return render(request, 'update_product.html', {
+        'product_list': product
     })

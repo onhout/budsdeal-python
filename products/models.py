@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.text import slugify
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from uuid import uuid4
 
 
 class Item(models.Model):
@@ -11,6 +12,7 @@ class Item(models.Model):
         ('sativa', 'Sativa'),
         ('hybrid', 'Hybrid'),
     )
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
     type = models.CharField(max_length=10, choices=TYPE)
