@@ -4,20 +4,19 @@
     <h1>Update Product</h1>
 {#    <a href="{% url 'add_product' %}" class="btn btn-success">Add Product</a>#}
     <hr>
-    {{ product_list }}
-{#    <form class="form" method="post" action="{% url 'add_product' %}" enctype="multipart/form-data">#}
-{#        {% csrf_token %}#}
-{#        <div class="row">#}
-{#            <div class="col-sm-6 col-sm-offset-3">#}
-{#                {% for fields in upda %}#}
-{#                    <div class="form-group">#}
-{#                        <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>#}
-{#                        {{ fields }}#}
-{#                        <span class="help-block">{{ fields.help_text }}</span>#}
-{#                    </div>#}
-{#                {% endfor %}#}
-{#            </div>#}
-{#        </div>#}
-{#        <button type="submit" class="btn btn-success">Submit</button>#}
-{#    </form>#}
+    <form class="form" method="post" action="{% url 'update_product' product_id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                {% for fields in edit_product_form %}
+                    <div class="form-group">
+                        <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
+                        {{ fields }}
+                        <span class="help-block">{{ fields.help_text }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Save</button>
+    </form>
 {% endblock %}

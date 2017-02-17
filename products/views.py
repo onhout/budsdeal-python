@@ -44,6 +44,24 @@ def list_product(request):
 @login_required
 def update_product(request, product_id):
     product = models.Item.objects.get(pk=product_id)
+    if request.POST and request.user.is_authenticated:
+        product_form = forms.EditProductForm(request.POST, request.FILES, instance=product)
+        if product_form.is_valid():
+            form = product_form.save(commit=False)
+            # NOTE: VARIABLES FROM FORM, SHOULD MAKE ANOTHER VARIABLES JUST FOR THE SAVE
+            # THIS IS VERY IMPORTANT!!
+            form.user = request.user
+            if request.FILES:
+                form.item_pic.save(slugify(uuid4().hex + '_i') + '.jpg', request.FILES['item_pic'])
+            form.save()
+            # messages.success(request, _('Your profile was successfully updated!'))
+            return redirect('list_product')
+            # else:
+            # messages.error(request, _('Please correct the error below.'))
+    else:
+        product_form = forms.EditProductForm(instance=product)
+
     return render(request, 'update_product.html', {
-        'product_list': product
+        'product_id': product_id,
+        'edit_product_form': product_form
     })
