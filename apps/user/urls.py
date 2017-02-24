@@ -10,5 +10,5 @@ urlpatterns = [
     url(r'^settings/$', views.account_settings, name='user_settings'),
     url(r'^settings/save/$', views.save_account_settings, name='save_settings'),
     url(r'^settings/edit_password/$', views.account_settings_password, name='user_settings_password'),
-
+    url(r'^view/(?P<social_id>[\w-]+)', views.view_profile, name='view_profile'),
 ]

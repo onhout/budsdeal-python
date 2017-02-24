@@ -1,5 +1,6 @@
 {% extends 'Nav.html' %}
 {% block content %}
+    <h1 class="text-center">Profile for {{ user.get_full_name }}</h1>
     <form class="form" method="post" action="{% url 'save_settings' %}">
         {% csrf_token %}
         <div class="row">

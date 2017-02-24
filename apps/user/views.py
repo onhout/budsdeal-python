@@ -2,9 +2,11 @@ from django.contrib import messages
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 from . import forms
+from .models import Profile
 
 
 # Create your views here.
@@ -24,6 +26,14 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect('/user/login')
+
+
+def view_profile(request, social_id):
+    user_profile = Profile.objects.get(social_id=social_id)
+    this_user = User.objects.get(id=user_profile.user_id)
+    return render(request, 'profiles/view_profile.html', {
+        'this_user': this_user
+    })
 
 
 @login_required(login_url='/user/login')
@@ -72,6 +82,7 @@ def account_settings(request):
         })
 
 
+@login_required
 def save_account_settings(request):
     profile = request.user.profile
     if request.POST:
