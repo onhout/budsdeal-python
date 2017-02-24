@@ -17,9 +17,9 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^', include('main.urls')),
-    url(r'^user/', include('user.urls')),
-    url(r'^products/', include('products.urls')),
+    url(r'^', include('apps.main.urls')),
+    url(r'^user/', include('apps.user.urls')),
+    url(r'^products/', include('apps.products.urls')),
     url(r'^admin/', admin.site.urls),
     url('', include('social.apps.django_app.urls', namespace='social')),
     url('', include('django.contrib.auth.urls', namespace='auth')),

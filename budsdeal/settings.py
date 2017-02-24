@@ -42,9 +42,9 @@ INSTALLED_APPS = [
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    'main.apps.MainConfig',
-    'user.apps.UserConfig',
-    'products.apps.ProductsConfig',
+    'apps.main.apps.MainConfig',
+    'apps.user.apps.UserConfig',
+    'apps.products.apps.ProductsConfig',
     'webpack_loader',
     'social.apps.django_app.default',
     'social_django',
@@ -195,8 +195,8 @@ SOCIAL_AUTH_PIPELINE = (
     'social.pipeline.social_auth.associate_user',
     'social.pipeline.social_auth.load_extra_data',
     'social.pipeline.user.user_details',
-    'user.pipeline.get_profile_data',  # custom
-    'user.pipeline.get_profile_avatar',  # custom
+    'apps.user.pipeline.get_profile_data',  # custom
+    'apps.user.pipeline.get_profile_avatar',  # custom
 )
 
 SOCIAL_AUTH_STRATEGY = 'social.strategies.django_strategy.DjangoStrategy'

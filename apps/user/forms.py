@@ -1,7 +1,8 @@
+from django.contrib.auth.admin import User
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 from django.forms import ModelForm
+
 from .models import Profile, Company
-from django.contrib.auth.admin import User
 
 
 class PasswordChangeCustomForm(PasswordChangeForm):

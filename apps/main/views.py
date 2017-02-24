@@ -1,6 +1,6 @@
 from django.views.generic import ListView
 
-from products import models
+from apps.products import models
 
 
 # Create your views here.
