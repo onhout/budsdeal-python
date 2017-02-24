@@ -65,3 +65,19 @@ def update_product(request, product_id):
         'product_id': product_id,
         'edit_product_form': product_form
     })
+
+
+@login_required
+def delete_product(request, product_id):
+    product = models.Item.objects.get(pk=product_id).delete()
+    if request.POST and request.user.is_authenticated:
+        product.save()
+
+    return redirect('list_product')
+
+
+def view_product(request, product_id):
+    item = models.Item.objects.get(pk=product_id)
+    return render(request, 'view_product.html', {
+        'item': item
+    })

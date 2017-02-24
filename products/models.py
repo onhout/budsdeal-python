@@ -1,9 +1,9 @@
+from uuid import uuid4
+
 from django.contrib.auth.models import User
 from django.db import models
-from django.utils.text import slugify
-from django.db.models.signals import post_save
+from django.db.models.signals import post_delete
 from django.dispatch import receiver
-from uuid import uuid4
 
 
 class Item(models.Model):
@@ -26,3 +26,10 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+
+
+@receiver(post_delete, sender=Item)
+def item_delete(sender, instance, **kwargs):
+    # Pass false so FileField doesn't save the model.
+    if instance.item_pic:
+        instance.item_pic.delete(False)

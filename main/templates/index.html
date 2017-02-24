@@ -4,5 +4,27 @@
 {% block content %}
     <h1>Main Page</h1>
     <p>Hello {{ user.email }}!</p>
+    <hr>
+    <div class="row">
+        {% if product_list %}
+            {% for items in product_list %}
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <a href="{% url 'view_product'  items.id %}">
+                            <img src="/{{ items.item_pic }}" alt="{{ items.item_pic }}">
+                        </a>
+                        <div class="caption">
+                            <h3>{{ items.name }} - ${{ items.price }}</h3>
+                            <p>Type: {{ items.type }}</p>
+                            <p>Brand: {{ items.brand }}</p>
+                            <p>Description: {{ items.description }}</p>
+                            <p>Seller: {{ items.user.get_full_name }}</p>
+                            <p>Created: {{ items.created_at|timesince }} ago</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
     {% render_bundle 'main' %}
 {% endblock %}

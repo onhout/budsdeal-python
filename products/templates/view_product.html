@@ -1,0 +1,14 @@
+{% extends 'Nav.html' %}
+{% load render_bundle from webpack_loader %}
+{% block title %}Viewing {{ item.name }}{% endblock %}
+{% block content %}
+    <h1>{{ item.name }} - ${{ item.price }}</h1>
+    <hr>
+    <div class="jumbotron">
+        <img src="/{{ item.item_pic }}" alt="{{ item.item_pic }}" class="img-responsive">
+        <p>Type: {{ item.type }}</p>
+        <p>Brand: {{ item.brand }}</p>
+        <p>Description: {{ item.description }}</p>
+        <p>Seller: {{ item.user.first_name }}</p>
+    </div>
+{% endblock %}

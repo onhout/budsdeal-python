@@ -1,4 +1,4 @@
 import "../less/main.less";
 $(function(){
-    console.log('mainjs and jquery sd!')
+    console.log('mainjs and jquery here!')
 });
