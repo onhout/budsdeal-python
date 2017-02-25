@@ -1,0 +1,20 @@
+{% extends 'view_messages.html' %}
+{% block message_form %}
+    <h1>Send Message</h1>
+    <hr>
+    <form class="form" method="post" action="{% url 'send_message' this_user.profile.social_id %}">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                {% for fields in message_form %}
+                    <div class="form-group">
+                        <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
+                        {{ fields }}
+                        <span class="help-block">{{ fields.help_text }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success">Send</button>
+    </form>
+{% endblock %}

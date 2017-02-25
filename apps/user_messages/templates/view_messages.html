@@ -1,0 +1,19 @@
+{% extends 'Nav.html' %}
+{% load render_bundle from webpack_loader %}
+{% block title %}Messages{% endblock %}
+{% block content %}
+    <h1>{{ inbox_type }} Messages</h1>
+    <a href="{% url 'view_inbox_messages' %}">Inbox</a>
+    <a href="{% url 'view_sent_messages' %}">Sent</a>
+    <hr>
+    {% for message in user_messages %}
+        <p>To: {{ message.to_user_id }}</p>
+        <p>Subject: {{ message.subject }}</p>
+        <p>Content: {{ message.content }}</p>
+        <p>Read: {{ message.read }}</p>
+        <p>{{ message.timestamp }}</p>
+        <hr>
+    {% endfor %}
+    {% block message_form %}
+    {% endblock %}
+{% endblock %}

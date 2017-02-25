@@ -31,9 +31,12 @@ def logout(request):
 def view_profile(request, social_id):
     user_profile = Profile.objects.get(social_id=social_id)
     this_user = User.objects.get(id=user_profile.user_id)
-    return render(request, 'profiles/view_profile.html', {
-        'this_user': this_user
-    })
+    if this_user.id == request.user.id:
+        return redirect('/user/home')
+    else:
+        return render(request, 'profiles/view_profile.html', {
+            'this_user': this_user
+        })
 
 
 @login_required(login_url='/user/login')
