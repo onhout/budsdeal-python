@@ -1,8 +1,9 @@
-{% extends 'view_messages.html' %}
-{% block message_form %}
-    <h1>Send Message</h1>
+{% extends 'Nav.html' %}
+{% block title %}Send a message to {{ this_user.first_name }}{% endblock %}
+{% block content %}
+    <h1>Send Message regarding item {{ this_product }}</h1>
     <hr>
-    <form class="form" method="post" action="{% url 'send_message' this_user.profile.social_id %}">
+    <form class="form" method="post" action="{% url 'send_message' this_user.profile.social_id this_product.id%}">
         {% csrf_token %}
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">

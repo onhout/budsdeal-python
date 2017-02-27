@@ -17,9 +17,12 @@
                             <p>Type: {{ item.type }}</p>
                             <p>Brand: {{ item.brand }}</p>
                             <p>Description: {{ item.description }}</p>
-                            <p>Seller: <a
-                                    href="{% url 'view_profile' item.user.profile.social_id %}">{{ item.user.get_full_name }} </a>
+                            <p>Seller:
+                                <a href="{% url 'view_profile' item.user.profile.social_id %}">{{ item.user.get_full_name }} </a>
                             </p>
+                            {% if item.user != user %}
+                            <p><a href="{% url 'send_message' item.user.profile.social_id item.id %}">Send Message </a></p>
+                            {% endif %}
                             <p>Created: {{ item.created_at|timesince }} ago</p>
                         </div>
                     </div>
