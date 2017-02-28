@@ -5,6 +5,7 @@
     <h2>Homepage</h2>
     {% if user and not user.is_anonymous %}
         Hello, {{ user.get_full_name }}!
+        Hello, {{ user.profile.display_name }}!
         <br>
         your pic: {{ user.profile.profile_photo }}
     {% endif %}

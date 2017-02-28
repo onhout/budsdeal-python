@@ -17,6 +17,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     gender = models.CharField(max_length=20, null=True, blank=True,
                               choices=GENDERS)
+    display_name = models.CharField(max_length=20, blank=True, null=True)
     locale = models.CharField(max_length=10, blank=True, null=True)
     social_id = models.CharField(max_length=255, blank=True)
     login_type = models.CharField(max_length=10, null=True, blank=True)
@@ -34,10 +35,10 @@ class Profile(models.Model):
 
 class Company(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    name = models.CharField(max_length=50, blank=True, null=True)
-    address = models.CharField(max_length=255, blank=True, null=True)
+    name = models.CharField(max_length=50)
+    address = models.CharField(max_length=255)
     address2 = models.CharField(max_length=10, blank=True, null=True)
-    city = models.CharField(max_length=25, blank=True, null=True)
+    city = models.CharField(max_length=25)
     state = models.CharField(max_length=2)
     zip = models.CharField(max_length=10)
     phone_number = models.CharField(max_length=50)

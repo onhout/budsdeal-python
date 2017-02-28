@@ -51,3 +51,5 @@ class CompanyForm(ModelForm):
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
             self.fields[field].label = 'Company ' + self.fields[field].label
+            if self.fields[field].required:
+                self.fields[field].help_text = '*required'

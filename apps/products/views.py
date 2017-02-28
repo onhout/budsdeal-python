@@ -36,9 +36,12 @@ def add_product(request):
 @login_required
 def list_product(request):
     product_list = models.Item.objects.all().filter(user=request.user)
+    # if not request.user.company.name: #DISABLED FOR DEVELOPMENT
+    #     return redirect('user_settings') #TODO REENABLE IT WHEN EVERYTHING IS DONE
+    # else:
     return render(request, 'list_products.html', {
-        'product_list': product_list
-    })
+            'product_list': product_list
+        })
 
 
 @login_required

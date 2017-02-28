@@ -1,10 +1,12 @@
 {% extends 'Nav.html' %}
 {% block content %}
     <h1 class="text-center">Profile for {{ user.get_full_name }}</h1>
-    <form class="form" method="post" action="{% url 'save_settings' %}">
-        {% csrf_token %}
-        <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
+    <p class="text-center"> Display Name:{{ user.profile.display_name }}</p>
+    <div class="col-sm-6 col-sm-offset-3">
+        <form class="form" method="post" action="{% url 'save_settings' %}">
+            {% csrf_token %}
+            <div class="row">
+
                 {% for fields in user_form %}
                     <div class="form-group">
                         <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
@@ -18,21 +20,27 @@
                     </div>
                 {% endfor %}
             </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
+            <div class="row">
+                {% if not user.company.name and user.profile.approved_as_seller %}
+                    <h3>Your company name is not set, please set it</h3>
+                {% endif %}
                 {% if company_form %}
                     {% for fields in company_form %}
                         <div class="form-group">
                             <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
                             {{ fields }}
+                            <span class="help-block">{{ fields.help_text }}</span>
                         </div>
                     {% endfor %}
                 {% endif %}
 
             </div>
-        </div>
-        <button type="submit" class="btn btn-success">Submit</button>
-    </form>
-    <a href={% url 'user_settings_password' %}>Change password</a>
+            <div class="row">
+                <button type="submit" class="btn btn-success">Submit</button>
+                <a href="{% url 'user_settings_password' %}" class="pull-right">Change password</a>
+            </div>
+
+        </form>
+    </div>
+
 {% endblock %}
