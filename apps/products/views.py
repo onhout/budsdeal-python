@@ -84,3 +84,10 @@ def view_product(request, product_id):
     return render(request, 'view_product.html', {
         'item': item
     })
+
+
+def list_categories(request, category_slug, subcategory_slug):
+    parent_category = models.Category.objects.get(slug=category_slug)
+    item = models.Item.objects.filter(categories=subcategory_slug)
+    print(item)
+    return render(request, 'category_list.html')

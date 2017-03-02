@@ -1,4 +1,5 @@
 from django.views.generic import ListView
+from django.shortcuts import render
 
 from apps.products import models
 from apps.user_messages.models import Conversations
@@ -18,3 +19,5 @@ class Index(ListView):
     #         context = super(Index, self).get_context_data(**kwargs)
     #         context['unread_messages'] = Conversations.objects.filter(to_user_id=self.request.user, read=False)
     #         return context
+
+
