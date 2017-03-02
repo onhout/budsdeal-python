@@ -21,7 +21,8 @@ def add_product(request):
             form.user = request.user
             form.item_pic.save(slugify(uuid4().hex + '_i') + '.jpg', request.FILES['item_pic'])
             form.save()
-            # messages.success(request, _('Your profile was successfully updated!'))
+            form.save_m2m()
+            product_form.save_m2m()
             return redirect('list_product')
             # else:
             # messages.error(request, _('Please correct the error below.'))
@@ -57,7 +58,7 @@ def update_product(request, product_id):
             if request.FILES:
                 form.item_pic.save(slugify(uuid4().hex + '_i') + '.jpg', request.FILES['item_pic'])
             form.save()
-            # messages.success(request, _('Your profile was successfully updated!'))
+            product_form.save_m2m()
             return redirect('list_product')
             # else:
             # messages.error(request, _('Please correct the error below.'))
@@ -86,8 +87,18 @@ def view_product(request, product_id):
     })
 
 
-def list_categories(request, category_slug, subcategory_slug):
-    parent_category = models.Category.objects.get(slug=category_slug)
-    item = models.Item.objects.filter(categories=subcategory_slug)
-    print(item)
-    return render(request, 'category_list.html')
+def parent_categories(request, category_slug):
+    parent_category = models.Category.objects.get(slug=category_slug, parent_category__isnull=True)
+    child = models.Category.objects.filter(parent_category_id=parent_category.id)
+    items = models.Item.objects.filter(categories__id__in=child.values_list('id')).distinct()
+    return render(request, 'category_list.html', {
+        'items': items
+    })
+
+
+def child_categories(request, category_slug, subcategory_slug):
+    child_category = models.Category.objects.filter(slug=subcategory_slug, parent_category__isnull=False)
+    items = models.Item.objects.filter(categories=child_category)
+    return render(request, 'category_list.html', {
+        'items': items
+    })

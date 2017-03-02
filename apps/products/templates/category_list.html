@@ -3,4 +3,7 @@
 {% block title %}Viewing category{% endblock %}
 {% block content %}
     <h1>Category</h1>
+    {% for item in items %}
+        <h2>{{ item }}</h2>
+    {% endfor %}
 {% endblock %}
