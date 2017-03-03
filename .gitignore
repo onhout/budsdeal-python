@@ -9,6 +9,7 @@ db.sqlite3
 # Elastic Beanstalk Files
 static/*
 .elasticbeanstalk/*
+data.json
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 user_profiles_photos
