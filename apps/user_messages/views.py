@@ -1,16 +1,18 @@
-from django.shortcuts import render, redirect
-from django.core.paginator import Paginator
-from . import models, forms
-from apps.user.models import Profile
 from django.contrib.auth.admin import User
-from apps.products.models import Item
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+
+from apps.products.models import Item
+from apps.user.models import Profile
+from . import models, forms
+
+
 # Create your views here.
 
 
 @login_required
 def view_sent_messages(request):
-    messages = models.Conversations.objects.filter(from_user_id=request.user.id)
+    messages = models.Conversations.objects.filter(from_user=request.user.id)
     return render(request, 'view_messages.html', {
         'inbox_type': 'Sent',
         'user_messages': messages
@@ -19,7 +21,7 @@ def view_sent_messages(request):
 
 @login_required
 def view_inbox_messages(request):
-    messages = models.Conversations.objects.filter(to_user_id=request.user.id)
+    messages = models.Conversations.objects.filter(to_user=request.user.id)
     return render(request, 'view_messages.html', {
         'inbox_type': 'Inbox',
         'user_messages': messages
@@ -35,8 +37,8 @@ def send_message(request, social_id, item_id):
         message_form = forms.MessageForm(request.POST)
         if message_form.is_valid():
             form = message_form.save(commit=False)
-            form.from_user_id = request.user
-            form.to_user_id = this_user
+            form.from_user = request.user
+            form.to_user = this_user
             form.regard_item = regard_item
             form.save()
             return redirect('view_sent_messages')
@@ -53,8 +55,9 @@ def send_message(request, social_id, item_id):
 @login_required
 def message_details(request, message_id):
     message = models.Conversations.objects.get(id=message_id)
-    message.read = True
-    message.save()
+    if message.to_user == request.user:
+        message.read = True
+        message.save()
     return render(request, 'message_details.html', {
         'message': message
     })

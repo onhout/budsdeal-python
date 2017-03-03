@@ -7,8 +7,8 @@
     <p>Regarding: <a href="{% url 'view_product' message.regard_item_id %}">{{ message.regard_item }}</a></p>
     <p>Subject: {{ message.subject }}</p>
     <p>Content: {{ message.content }}</p>
-    {% if message.from_user_id != user %}
-        <p><a href="{% url 'send_message' message.from_user_id.profile.social_id message.regard_item.id %}">Reply</a>
+    {% if message.from_user != user %}
+        <p><a href="{% url 'send_message' message.from_user.profile.social_id message.regard_item.id %}">Reply</a>
         </p>
     {% endif %}
 {% endblock %}
