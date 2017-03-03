@@ -34,7 +34,7 @@
                         <ul class="dropdown-menu">
                             {% for child in child_category %}
                                 {% if child.parent_category.name == parent.name %}
-                                    <li><a href={% url 'view_inbox_messages' %}>{{ child.name }}</a></li>
+                                    <li><a href={% url 'view_child_categories' parent.slug child.slug %}>{{ child.name }}</a></li>
                                 {% endif %}
                             {% endfor %}
                         </ul>

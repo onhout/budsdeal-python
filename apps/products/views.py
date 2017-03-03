@@ -21,8 +21,7 @@ def add_product(request):
             form.user = request.user
             form.item_pic.save(slugify(uuid4().hex + '_i') + '.jpg', request.FILES['item_pic'])
             form.save()
-            form.save_m2m()
-            product_form.save_m2m()
+            # product_form.save_m2m()
             return redirect('list_product')
             # else:
             # messages.error(request, _('Please correct the error below.'))
@@ -58,7 +57,7 @@ def update_product(request, product_id):
             if request.FILES:
                 form.item_pic.save(slugify(uuid4().hex + '_i') + '.jpg', request.FILES['item_pic'])
             form.save()
-            product_form.save_m2m()
+            # product_form.save_m2m()
             return redirect('list_product')
             # else:
             # messages.error(request, _('Please correct the error below.'))

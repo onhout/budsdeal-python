@@ -36,7 +36,7 @@ class Item(models.Model):
     price = models.DecimalField(max_digits=9, decimal_places=2)
     count = models.DecimalField(max_digits=9, decimal_places=2)
     weight_unit = models.CharField(max_length=10, choices=WEIGHT_UNIT)
-    categories = models.ManyToManyField(Category, related_name='categories')
+    categories = models.ForeignKey(Category, related_name='categories')
     description = models.TextField(blank=True)
     item_pic = models.ImageField(upload_to='./static/media/item_pics', blank=True)
     # TODO change the upload to AMAZON AWS
