@@ -11,7 +11,14 @@
                     <div class="panel panel-default">
                         <div class="panel-heading"><h3>{{ items.name | capfirst }}</h3></div>
                         <div class="panel-body">
-                            <img src="/{{ items.item_pic }}" alt="{{ items.item_pic }}" class="img-responsive">
+                            {% for image in image_link %}
+                                {% for i in image %}
+                                    {% if i.item_id == items.id %}
+                                        <img src="/{{ i.image }}" alt="{{ i.image }}" class="img-responsive">
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+
                             <div class="caption">
                                 <p>Type: {{ items.type | capfirst }}</p>
                                 <p>Brand: {{ items.brand | capfirst }}</p>

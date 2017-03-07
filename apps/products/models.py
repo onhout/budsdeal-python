@@ -53,7 +53,7 @@ def get_file_path(instance, filename):
 
 
 class ItemImage(models.Model):
-    item = models.ForeignKey(Item, related_name='images')
+    item = models.ForeignKey(Item, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to=get_file_path)
     directory_string = './static/media/item_pics'
 

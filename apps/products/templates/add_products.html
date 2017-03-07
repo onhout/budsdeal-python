@@ -16,9 +16,20 @@
             </div>
         </div>
         {{ formset.management_form }}
-        {% for form in formset %}
-            {{ form }}
-        {% endfor %}
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+            <h4>Three images</h4>
+                {% for form in formset %}
+                    {% for fields in form %}
+                        <div class="form-group">
+                            {{ fields }}
+                            <span class="help-block">{{ fields.help_text }}</span>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
         <button type="submit" class="btn btn-success">Submit</button>
     </form>
 {% endblock %}
