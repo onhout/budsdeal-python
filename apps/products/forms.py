@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django.forms.widgets import CheckboxSelectMultiple
-from .models import Item, Category
+from .models import Item, Category, ItemImage
 
 
 class AddProductForm(ModelForm):
@@ -30,3 +30,9 @@ class EditProductForm(ModelForm):
             self.fields[field].widget.attrs['class'] = 'form-control'
             if self.fields[field].required:
                 self.fields[field].help_text = '*required'
+
+
+class ImageForm(ModelForm):
+    class Meta:
+        model = ItemImage
+        fields = ['image']

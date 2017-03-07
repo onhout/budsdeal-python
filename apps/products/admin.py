@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Item, Category
+from .models import Item, Category, ItemImage
 
 
 # Register your models here.
@@ -24,6 +24,16 @@ class CategoryAdmin(admin.ModelAdmin):
         'slug',
         'parent_category',
     ]
+
+
+class ItemImageInline(admin.TabularInline):
+    model = ItemImage
+    extra = 3
+
+
+class PropertyAdmin(admin.ModelAdmin):
+    inlines = [ItemImageInline]
+
 
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Category, CategoryAdmin)

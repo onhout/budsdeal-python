@@ -15,6 +15,10 @@
                 {% endfor %}
             </div>
         </div>
+        {{ formset.management_form }}
+        {% for form in formset %}
+            {{ form }}
+        {% endfor %}
         <button type="submit" class="btn btn-success">Submit</button>
     </form>
 {% endblock %}

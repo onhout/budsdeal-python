@@ -3,6 +3,7 @@ from uuid import uuid4
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.template.defaultfilters import slugify
+from django.forms.models import modelformset_factory
 
 from . import forms, models
 
@@ -12,24 +13,31 @@ from . import forms, models
 
 @login_required
 def add_product(request):
+    imageformset = modelformset_factory(models.ItemImage, form=forms.ImageForm, extra=3)
     if request.POST and request.user.is_authenticated:
-        product_form = forms.AddProductForm(request.POST, request.FILES)
-        if product_form.is_valid():
+        product_form = forms.AddProductForm(request.POST)
+        formset = imageformset(request.POST, request.FILES, queryset=models.ItemImage.objects.none())
+        if product_form.is_valid() and formset.is_valid():
             form = product_form.save(commit=False)
             # NOTE: VARIABLES FROM FORM, SHOULD MAKE ANOTHER VARIABLES JUST FOR THE SAVE
             # THIS IS VERY IMPORTANT!!
             form.user = request.user
-            form.item_pic.save(slugify(uuid4().hex + '_i') + '.jpg', request.FILES['item_pic'])
+            # form.item_pic.save(slugify(uuid4().hex + '_i') + '.jpg', request.FILES['item_pic'])
             form.save()
-            # product_form.save_m2m()
+            for formset in formset.cleaned_data:
+                image = formset['image']
+                photo = models.ItemImage(item=form, image=image)
+                photo.save()
+
             return redirect('list_product')
             # else:
             # messages.error(request, _('Please correct the error below.'))
     else:
         product_form = forms.AddProductForm(instance=request.user)
-
+        formset = imageformset(queryset=models.ItemImage.objects.none())
     return render(request, 'add_products.html', {
-        'add_product_form': product_form
+        'add_product_form': product_form,
+        'formset': formset
     })
 
 

@@ -1,5 +1,5 @@
 from uuid import uuid4
-
+import os
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_delete
@@ -38,13 +38,24 @@ class Item(models.Model):
     weight_unit = models.CharField(max_length=10, choices=WEIGHT_UNIT)
     categories = models.ForeignKey(Category, related_name='categories')
     description = models.TextField(blank=True)
-    item_pic = models.ImageField(upload_to='./static/media/item_pics', blank=True)
+    # item_pic = models.ImageField(upload_to='./static/media/item_pics', blank=True)
     # TODO change the upload to AMAZON AWS
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
+
+
+def get_file_path(instance, filename):
+    filename = '%s.%s' % (uuid4(), 'jpg')
+    return os.path.join(instance.directory_string, filename)
+
+
+class ItemImage(models.Model):
+    item = models.ForeignKey(Item, related_name='images')
+    image = models.ImageField(upload_to=get_file_path)
+    directory_string = './static/media/item_pics'
 
 
 @receiver(post_delete, sender=Item)
