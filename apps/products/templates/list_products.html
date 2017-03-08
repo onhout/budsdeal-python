@@ -1,6 +1,5 @@
-{% extends 'Nav.html' %}
-{% load render_bundle from webpack_loader %}
-{% block content %}
+{% extends 'products_index.html' %}
+{% block product_content %}
     <h1>List Products</h1>
     <a href="{% url 'add_product' %}" class="btn btn-success">Add Product</a>
     <hr>

@@ -1,6 +1,5 @@
-{% extends 'Nav.html' %}
-{% load render_bundle from webpack_loader %}
-{% block content %}
+{% extends 'products_index.html' %}
+{% block product_content %}
     <h1>Add Products</h1>
     <form class="form" method="post" action="{% url 'add_product' %}" enctype="multipart/form-data">
         {% csrf_token %}
@@ -29,7 +28,6 @@
                 {% endfor %}
             </div>
         </div>
-
         <button type="submit" class="btn btn-success">Submit</button>
     </form>
 {% endblock %}

@@ -9,7 +9,9 @@ module.exports = {
     entry: {
         main: 'main/js/main',
         user: 'user/js/user',
-        vendor:[
+        products: 'products/js/products',
+        user_messages: 'user_messages/js/user_messages',
+        vendor: [
             'globals/index.less',
             'jquery',
             'bootstrap'
