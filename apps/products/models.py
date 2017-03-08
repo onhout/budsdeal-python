@@ -1,9 +1,12 @@
-from uuid import uuid4
 import os
+from uuid import uuid4
+
 from django.contrib.auth.models import User
 from django.db import models
-from django.db.models.signals import post_delete
+from django.db.models.signals import post_delete, pre_save
 from django.dispatch import receiver
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 
 class Category(models.Model):
@@ -38,7 +41,6 @@ class Item(models.Model):
     weight_unit = models.CharField(max_length=10, choices=WEIGHT_UNIT)
     categories = models.ForeignKey(Category, related_name='categories')
     description = models.TextField(blank=True)
-    # item_pic = models.ImageField(upload_to='./static/media/item_pics', blank=True)
     # TODO change the upload to AMAZON AWS
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -54,12 +56,23 @@ def get_file_path(instance, filename):
 
 class ItemImage(models.Model):
     item = models.ForeignKey(Item, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to=get_file_path)
+    image = ProcessedImageField(upload_to=get_file_path,
+                                processors=[ResizeToFill(640, 480)],
+                                format='JPEG')
     directory_string = './static/media/item_pics'
 
 
-@receiver(post_delete, sender=Item)
-def item_delete(sender, instance, **kwargs):
-    # Pass false so FileField doesn't save the model.
-    if instance.item_pic:
-        instance.item_pic.delete(False)
+@receiver(post_delete, sender=ItemImage)
+def image_delete(sender, instance, **kwargs):
+    if instance.image:
+        instance.image.delete(False)
+
+
+@receiver(pre_save, sender=ItemImage)
+def image_update(sender, instance, **kwargs):
+    try:
+        old_item = ItemImage.objects.get(pk=instance.id)
+        if old_item.image:
+            old_item.image.delete(False)
+    except ItemImage.DoesNotExist:
+        pass

@@ -1,9 +1,5 @@
-from uuid import uuid4
-
 from django.contrib.auth.decorators import login_required
-from django.forms.models import modelformset_factory
 from django.shortcuts import render, redirect
-from django.template.defaultfilters import slugify
 
 from . import forms, models
 
@@ -13,28 +9,26 @@ from . import forms, models
 
 @login_required
 def add_product(request):
-    imageformset = modelformset_factory(models.ItemImage, form=forms.ImageForm, extra=3)
     if request.POST and request.user.is_authenticated:
         product_form = forms.AddProductForm(request.POST)
-        formset = imageformset(request.POST, request.FILES, queryset=models.ItemImage.objects.none())
+        formset = forms.AddImageFormSet(request.POST, request.FILES, queryset=models.ItemImage.objects.none())
         if product_form.is_valid() and formset.is_valid():
             form = product_form.save(commit=False)
             # NOTE: VARIABLES FROM FORM, SHOULD MAKE ANOTHER VARIABLES JUST FOR THE SAVE
             # THIS IS VERY IMPORTANT!!
             form.user = request.user
-            # form.item_pic.save(slugify(uuid4().hex + '_i') + '.jpg', request.FILES['item_pic'])
             form.save()
             for formset in formset.cleaned_data:
-                image = formset['image']
-                photo = models.ItemImage(item=form, image=image)
-                photo.save()
-
+                try:
+                    image = formset['image']
+                    photo = models.ItemImage(item=form, image=image)
+                    photo.save()
+                except:
+                    pass
             return redirect('list_product')
-            # else:
-            # messages.error(request, _('Please correct the error below.'))
     else:
         product_form = forms.AddProductForm(instance=request.user)
-        formset = imageformset(queryset=models.ItemImage.objects.none())
+        formset = forms.AddImageFormSet(queryset=models.ItemImage.objects.none())
     return render(request, 'add_products.html', {
         'add_product_form': product_form,
         'formset': formset
@@ -46,45 +40,36 @@ def list_product(request):
     product_list = models.Item.objects.all().filter(user=request.user)
 
     itemImage = []
-    for product in product_list:
-        itemImage.append(models.ItemImage.objects.select_related().filter(item=product))
+    for item in product_list:
+        itemImage.append(models.ItemImage.objects.select_related().filter(item=item))
 
-    image_link = itemImage
+    item_images = itemImage
     # if not request.user.company.name: #DISABLED FOR DEVELOPMENT
     #     return redirect('user_settings') #TODO REENABLE IT WHEN EVERYTHING IS DONE
     # else:
     return render(request, 'list_products.html', {
         'product_list': product_list,
-        'image_link': image_link
+        'item_images': item_images
     })
 
 
 @login_required
 def update_product(request, product_id):
     product = models.Item.objects.get(pk=product_id)
-    imageformset = modelformset_factory(models.ItemImage, form=forms.ImageForm, max_num=3)
     if request.POST and request.user.is_authenticated:
         product_form = forms.EditProductForm(request.POST, request.FILES, instance=product)
-        formset = imageformset(request.POST, request.FILES)
-        if product_form.is_valid():
+        formset = forms.UpdateImageFormSet(request.POST, request.FILES, instance=product)
+        if product_form.is_valid() and formset.is_valid():
             form = product_form.save(commit=False)
             # NOTE: VARIABLES FROM FORM, SHOULD MAKE ANOTHER VARIABLES JUST FOR THE SAVE
             # THIS IS VERY IMPORTANT!!
             form.user = request.user
             form.save()
-            # TODO figure out this, because this appends multiple lines instead of updating.
-            for formset in formset.cleaned_data:
-                image = formset['image']
-                photo = models.ItemImage(item=form, image=image)
-                photo.save()
-
-            # product_form.save_m2m()
+            formset.save()
             return redirect('list_product')
-            # else:
-            # messages.error(request, _('Please correct the error below.'))
     else:
         product_form = forms.EditProductForm(instance=product)
-        formset = imageformset(queryset=models.ItemImage.objects.filter(item_id=product_id))
+        formset = forms.UpdateImageFormSet(instance=product)
 
     return render(request, 'update_product.html', {
         'product_id': product_id,
@@ -104,8 +89,10 @@ def delete_product(request, product_id):
 
 def view_product(request, product_id):
     item = models.Item.objects.get(pk=product_id)
+    item_images = models.ItemImage.objects.select_related().filter(item=item)
     return render(request, 'view_product.html', {
-        'item': item
+        'item': item,
+        'item_images': item_images
     })
 
 

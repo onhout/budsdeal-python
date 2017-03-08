@@ -11,7 +11,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading"><h3>{{ items.name | capfirst }}</h3></div>
                         <div class="panel-body">
-                            {% for image in image_link %}
+                            {% for image in item_images %}
                                 {% for i in image %}
                                     {% if i.item_id == items.id %}
                                         <img src="/{{ i.image }}" alt="{{ i.image }}" class="img-responsive">
@@ -23,6 +23,7 @@
                                 <p>Type: {{ items.type | capfirst }}</p>
                                 <p>Brand: {{ items.brand | capfirst }}</p>
                                 <p>Price: ${{ items.price }}</p>
+                                <p>Unit: {{ items.count }} {{ items.weight_unit }}</p>
                                 <p>Description: {{ items.description }}</p>
                             </div>
                         </div>

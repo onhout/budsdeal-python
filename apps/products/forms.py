@@ -1,5 +1,6 @@
 from django.forms import ModelForm
-from django.forms.widgets import CheckboxSelectMultiple
+from django.forms.models import inlineformset_factory, modelformset_factory
+
 from .models import Item, Category, ItemImage
 
 
@@ -36,3 +37,8 @@ class ImageForm(ModelForm):
     class Meta:
         model = ItemImage
         fields = ['image']
+        exclude = ['item']
+
+
+UpdateImageFormSet = inlineformset_factory(Item, ItemImage, form=ImageForm, max_num=3)
+AddImageFormSet = modelformset_factory(ItemImage, form=ImageForm, extra=3, max_num=3)

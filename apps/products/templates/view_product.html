@@ -5,7 +5,9 @@
     <h1>{{ item.name }} - ${{ item.price }}</h1>
     <hr>
     <div class="jumbotron">
-        <img src="/{{ item.item_pic }}" alt="{{ item.item_pic }}" class="img-responsive">
+        {% for image in item_images %}
+            <img src="/{{ image.image }}" alt="{{ image.image }}" class="img-responsive">
+        {% endfor %}
         <p>Type: {{ item.type }}</p>
         <p>Brand: {{ item.brand }}</p>
         <p>Description: {{ item.description }}</p>
