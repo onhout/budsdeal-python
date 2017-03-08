@@ -58,7 +58,8 @@ class ItemImage(models.Model):
     item = models.ForeignKey(Item, related_name='images', on_delete=models.CASCADE)
     image = ProcessedImageField(upload_to=get_file_path,
                                 processors=[ResizeToFill(640, 480)],
-                                format='JPEG')
+                                format='JPEG',
+                                options={'quality': 100})
     directory_string = './static/media/item_pics'
 
 

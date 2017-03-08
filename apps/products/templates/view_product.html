@@ -1,14 +1,18 @@
 {% extends 'products_index.html' %}
 {% block title %}Viewing {{ item.name }}{% endblock %}
 {% block product_content %}
-    {#    <div class="splash-screen">#}
-    {#        <img src="/{{ item_images.0.image }}" alt="{{ item_images.0.image }}" class="img-responsive">#}
-    {#    </div>#}
-    <h1>{{ item.name }} - ${{ item.price }}</h1>
+    <div class="splash-screen">
+        <img src="/{{ item_images.0.image }}" alt="{{ item_images.0.image }}" class="img-responsive">
+    </div>
+    <div class="splash-circle center-block">
+        <img src="/{{ item_images.1.image }}" alt="{{ item_images.1.image }}">
+    </div>
+
+    <h1 class="text-center">{{ item.name }} - ${{ item.price }}</h1>
     <hr>
     <div class="jumbotron">
         {% for image in item_images %}
-            <img src="/{{ image.image }}" alt="{{ image.image }}" class="img-responsive">
+            <img src="/{{ image.image }}" alt="{{ image.image }}" class="img-responsive img-thumbnail center-block">
         {% endfor %}
         <p>Type: {{ item.type }}</p>
         <p>Brand: {{ item.brand }}</p>
