@@ -41,15 +41,15 @@ def list_product(request):
 
     itemImage = []
     for item in product_list:
-        itemImage.append(models.ItemImage.objects.select_related().filter(item=item))
+        itemImage.append(item.images.all())
 
-    item_images = itemImage
+    product_list.item_image = itemImage
     # if not request.user.company.name: #DISABLED FOR DEVELOPMENT
     #     return redirect('user_settings') #TODO REENABLE IT WHEN EVERYTHING IS DONE
     # else:
+
     return render(request, 'list_products.html', {
-        'product_list': product_list,
-        'item_images': item_images
+        'product_list': product_list
     })
 
 
@@ -89,10 +89,9 @@ def delete_product(request, product_id):
 
 def view_product(request, product_id):
     item = models.Item.objects.get(pk=product_id)
-    item_images = models.ItemImage.objects.select_related().filter(item=item)
     return render(request, 'view_product.html', {
         'item': item,
-        'item_images': item_images
+        'item_images': item.images.all()
     })
 
 

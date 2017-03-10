@@ -9,11 +9,33 @@
             {% for item in product_list %}
                 <div class="col-sm-6 col-md-4">
                     <div class="thumbnail">
-                        <a href="{% url 'view_product'  item.id %}">
-                            <img src="/{{ item.item_pic }}" alt="{{ item.item_pic }}">
-                        </a>
+                        <div id="{{ item }}-carousel" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner" role="listbox">
+                                {% for images in product_list.item_image %}
+                                    {% for image in images %}
+                                        {% if image.item_id == item.id %}
+                                            <div class="item {% if forloop.counter == 1 %}active{% endif %}">
+                                                <img src="/{{ image.image }}" alt="{{ image.image }}"
+                                                     class="img-responsive">
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                            <a class="left carousel-control" href="#{{ item }}-carousel" role="button"
+                               data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control" href="#{{ item }}-carousel" role="button"
+                               data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
                         <div class="caption">
-                            <h3>{{ item.name }} - ${{ item.price }}</h3>
+                            <h3><a href="{% url 'view_product' item.id %}">{{ item.name | capfirst }}</a> -
+                                ${{ item.price }}</h3>
                             <p>Type: {{ item.type }}</p>
                             <p>Brand: {{ item.brand }}</p>
                             <p>Description: {{ item.description }}</p>

@@ -5,31 +5,31 @@
     <hr>
     <div class="row">
         {% if product_list %}
-            {% for items in product_list %}
+            {% for item in product_list %}
                 <div class="col-sm-6 col-md-4">
                     <div class="panel panel-default">
-                        <div class="panel-heading"><h3>{{ items.name | capfirst }}</h3></div>
+                        <div class="panel-heading"><h3>{{ item.name | capfirst }}</h3></div>
                         <div class="panel-body">
-                            {% for image in item_images %}
-                                {% for i in image %}
-                                    {% if i.item_id == items.id %}
-                                        <img src="/{{ i.image }}" alt="{{ i.image }}" class="img-responsive">
+                            {% for images in product_list.item_image %}
+                                {% for image in images %}
+                                    {% if image.item_id == item.id %}
+                                        <img src="/{{ image.image }}" alt="{{ image.image }}" class="img-responsive">
                                     {% endif %}
                                 {% endfor %}
                             {% endfor %}
 
                             <div class="caption">
-                                <p>Type: {{ items.type | capfirst }}</p>
-                                <p>Brand: {{ items.brand | capfirst }}</p>
-                                <p>Price: ${{ items.price }}</p>
-                                <p>Unit: {{ items.count }} {{ items.weight_unit }}</p>
-                                <p>Description: {{ items.description }}</p>
+                                <p>Type: {{ item.type | capfirst }}</p>
+                                <p>Brand: {{ item.brand | capfirst }}</p>
+                                <p>Price: ${{ item.price }}</p>
+                                <p>Unit: {{ item.count }} {{ item.weight_unit }}</p>
+                                <p>Description: {{ item.description }}</p>
                             </div>
                         </div>
                         <div class="panel-footer">
-                            <a href="{% url 'update_product' items.id %}" class="btn btn-primary">Update
+                            <a href="{% url 'update_product' item.id %}" class="btn btn-primary">Update
                                 Product</a>
-                            <a href="{% url 'delete_product' items.id %}" class="btn btn-danger">Delete</a>
+                            <a href="{% url 'delete_product' item.id %}" class="btn btn-danger">Delete</a>
                         </div>
                     </div>
                 </div>
