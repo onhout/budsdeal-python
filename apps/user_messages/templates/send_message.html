@@ -1,7 +1,7 @@
 {% extends 'Nav.html' %}
 {% block title %}Send a message to {{ this_user.first_name }}{% endblock %}
 {% block content %}
-    <h1>Send Message regarding item {{ this_product }}</h1>
+    <h1>Request for quote about <a href="{% url 'view_product' this_product.id %}">{{ this_product }}</a></h1>
     <hr>
     <form class="form" method="post" action="{% url 'send_message' this_user.profile.social_id this_product.id%}">
         {% csrf_token %}

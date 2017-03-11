@@ -43,7 +43,7 @@ def send_message(request, social_id, item_id):
             form.save()
             return redirect('view_sent_messages')
     else:
-        message_form = forms.MessageForm()
+        message_form = forms.MessageForm(initial={'subject': 'Quote regarding: ' + regard_item.name})
 
     return render(request, 'send_message.html', {
         'this_product': regard_item,

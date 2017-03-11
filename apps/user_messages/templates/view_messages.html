@@ -14,6 +14,7 @@
                 <th>Regarding</th>
                 <th>Subject</th>
                 <th>Content</th>
+                <th>Amount</th>
                 <th>Timestamp</th>
                 <th>Actions</th>
             </tr>
@@ -23,7 +24,8 @@
                     <td>{{ message.to_user.profile.display_name }}</td>
                     <td><a href="{% url 'view_product' message.regard_item.id %}">{{ message.regard_item }}</a></td>
                     <td><a href="{% url 'message_details' message.id %}">{{ message.subject }}</a></td>
-                    <td>{{ message.content }}</td>
+                    <td>{{ message.content|truncatechars:50 }}</td>
+                    <td>{{ message.regard_item_amount }}</td>
                     <td>{{ message.timestamp }}</td>
                     <td><a href="{% url 'delete_message' message.id %}" class="btn btn-danger">Delete</a></td>
                 </tr>
@@ -35,6 +37,7 @@
                 <th>Regarding</th>
                 <th>Subject</th>
                 <th>Content</th>
+                <th>Amount</th>
                 <th>Read</th>
                 <th>Timestamp</th>
                 <th>Actions</th>
@@ -45,7 +48,8 @@
                     <td>{{ message.from_user.profile.display_name }}</td>
                     <td><a href="{% url 'view_product' message.regard_item.id %}">{{ message.regard_item }}</a></td>
                     <td><a href="{% url 'message_details' message.id %}">{{ message.subject }}</a></td>
-                    <td>{{ message.content }}</td>
+                    <td>{{ message.content|truncatechars:50 }}</td>
+                    <td>{{ message.regard_item_amount }}</td>
                     <td>{{ message.read }}</td>
                     <td>{{ message.timestamp }}</td>
                     <td><a href="{% url 'delete_message' message.id %}" class="btn btn-danger">Delete</a></td>
