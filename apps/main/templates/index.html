@@ -11,16 +11,25 @@
                     <div class="thumbnail">
                         <div id="{{ item.id }}-carousel" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner" role="listbox">
-                                {% for images in product_list.item_image %}
-                                    {% for image in images %}
-                                        {% if image.item_id == item.id %}
-                                            <div class="item {% if forloop.counter == 1 %}active{% endif %}">
-                                                <img src="/{{ image.image }}" alt="{{ image.image }}"
-                                                     class="img-responsive">
-                                            </div>
-                                        {% endif %}
+                                {% if product_list.item_image.count > 1 %}
+                                    {% for images in product_list.item_image %}
+                                        {% for image in images %}
+                                            {% if image.item_id == item.id %}
+                                                <div class="item {% if forloop.counter == 1 %}active{% endif %}">
+                                                    <img src="/{{ image.image }}" alt="{{ image.image }}"
+                                                         class="img-responsive">
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
                                     {% endfor %}
-                                {% endfor %}
+                                {% else %}
+                                    {% for num in 'xxx' %}
+                                        <div class="item {% if forloop.counter == 1 %}active{% endif %}">
+                                            <img src="https://unsplash.it/640/480/?random" alt="Test"
+                                                 class="img-responsive">
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
                             <a class="left carousel-control" href="#{{ item.id }}-carousel" role="button"
                                data-slide="prev">

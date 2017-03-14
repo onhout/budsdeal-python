@@ -14,16 +14,24 @@ class Command(BaseCommand):
     help = "My shiny new management command."
 
     def handle(self, *args, **options):
+        print('Clearing data...')
         self.clear()
+        print('making categories...')
         self.make_category()
+        print('making subcategories...')
         self.make_subcategory()
+        print('making users...')
         self.make_users()
+        print('making products...')
         self.make_products()
+        print('DONE!')
 
     def clear(self):
         models.Category.objects.all().delete()
         User.objects.all().delete()
         Profile.objects.all().delete()
+        models.Item.objects.all().delete()
+
 
     def make_category(self):
         categories = (
@@ -56,6 +64,13 @@ class Command(BaseCommand):
                 email=email,
                 username=username
             )
+            profile = Profile.objects.get(user=User.objects.get(username=username).id)
+            profile.social_id = random.randint(1000000, 10000000)
+            profile.display_name = first_name.lower() + str(random.randint(100000, 1000000))
+            profile.gender = random.choice(['Male', 'Female'])
+            profile.approved_as_seller = random.choice([True, False])
+            profile.save()
+
 
     def make_products(self):
         fake = Faker()
@@ -66,6 +81,7 @@ class Command(BaseCommand):
                 models.Item,
                 name=name,
                 user=User.objects.get(username='username' + str(random.randint(1, 99))),
+                brand=fake.company(),
                 type=random.choice(['Indica', 'Sativa', 'Hybrid']),
                 price=random.randint(100, 1000),
                 count=random.randint(1, 500),

@@ -12,7 +12,7 @@ def get_profile_data(backend, details, response, uid, user, *args, **kwargs):
         if not profile.login_type:
             profile.login_type = 'Facebook'
         # if not profile.display_name:
-        #     profile.display_name = user.first_name.lower() + response.get('id')[:5]
+            profile.display_name = user.first_name.lower() + response.get('id')[:5]
         if not profile.gender and response.get('gender'):
             profile.gender = response.get('gender')
         if not profile.locale and response.get('locale'):
@@ -24,7 +24,7 @@ def get_profile_data(backend, details, response, uid, user, *args, **kwargs):
         if not profile.login_type:
             profile.login_type = 'Google'
         # if not profile.display_name:
-        #     profile.display_name = user.first_name.lower() + response.get('id')[:5]
+            profile.display_name = user.first_name.lower() + response.get('id')[:5]
         if not profile.gender and response.get('gender'):
             profile.gender = response.get('gender')
         if not profile.locale and response.get('locale'):
