@@ -3,7 +3,7 @@
 {% block content %}
     <h1>Request for quote about <a href="{% url 'view_product' this_product.id %}">{{ this_product }}</a></h1>
     <hr>
-    <form class="form" method="post" action="{% url 'send_message' this_user.profile.social_id this_product.id%}">
+    <form class="form" method="post" action="{% url 'send_message' this_user.profile.social_id this_product.id %}">
         {% csrf_token %}
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">

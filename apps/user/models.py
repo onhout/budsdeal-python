@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+import random
 
 #
 #
@@ -52,7 +52,8 @@ class Company(models.Model):
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(user=instance)
+        display_name = instance.first_name.lower() + str(random.randint(1, 10000))
+        Profile.objects.create(user=instance, display_name=display_name)
         Company.objects.create(user=instance)
 
 

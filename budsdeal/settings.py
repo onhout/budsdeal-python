@@ -50,6 +50,9 @@ INSTALLED_APPS = [
     'social.apps.django_app.default',
     'social_django',
     'imagekit',
+    'django_extensions',
+    'names',
+    'faker',
 ]
 
 MIDDLEWARE_CLASSES = [
