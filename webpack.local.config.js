@@ -13,8 +13,12 @@ module.exports = {
         user_messages: 'user_messages/js/user_messages',
         vendor:[
             'globals/index.less',
+            'globals/index.js',
             'jquery',
-            'bootstrap'
+            'bootstrap',
+            'bootstrap-material-design',
+            'slick-carousel',
+            'lodash'
         ]
     }, // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
 
@@ -43,7 +47,7 @@ module.exports = {
         loaders: [
             {test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel-loader'}, // to transform JSX into JS
             {test: /\.less$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")}, //to transform less into CSS
-            {test: /\.(jpe|jpg|png|woff|woff2|eot|ttf|svg)(\?.*$|$)/, loader: 'url-loader?limit=100000'},//changed the regex because of an issue of loading less-loader for font-awesome.
+            {test: /\.(jpe|jpg|png|woff|woff2|eot|ttf|gif|svg)(\?.*$|$)/, loader: 'url-loader?limit=100000'},//changed the regex because of an issue of loading less-loader for font-awesome.
             {test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader")},
         ],
     },

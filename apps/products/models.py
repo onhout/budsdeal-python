@@ -41,7 +41,7 @@ class Item(models.Model):
     weight_unit = models.CharField(max_length=10, choices=WEIGHT_UNIT)
     categories = models.ForeignKey(Category, related_name='categories')
     description = models.TextField(blank=True)
-    # TODO change the upload to AMAZON AWS
+    view_count = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

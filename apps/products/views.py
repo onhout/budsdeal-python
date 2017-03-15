@@ -89,6 +89,9 @@ def delete_product(request, product_id):
 
 def view_product(request, product_id):
     item = models.Item.objects.get(pk=product_id)
+    if item.user != request.user:
+        item.view_count += 1
+        item.save()
     return render(request, 'view_product.html', {
         'item': item,
         'item_images': item.images.all()

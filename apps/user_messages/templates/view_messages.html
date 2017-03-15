@@ -3,8 +3,8 @@
 {% block title %}Messages{% endblock %}
 {% block content %}
     <h1>{{ inbox_type }} Messages</h1>
-    <a href="{% url 'view_inbox_messages' %}" class="btn btn-default">Inbox</a>
-    <a href="{% url 'view_sent_messages' %}" class="btn btn-default">Sent</a>
+    <a href="{% url 'view_inbox_messages' %}" class="btn btn-raised btn-default">Inbox</a>
+    <a href="{% url 'view_sent_messages' %}" class="btn btn-raised btn-default">Sent</a>
     <hr>
     <table class="table table-striped table-hover">
         {% if inbox_type  == 'Sent' %}
@@ -27,7 +27,8 @@
                     <td>{{ message.content|truncatechars:50 }}</td>
                     <td>{{ message.regard_item_amount }}</td>
                     <td>{{ message.timestamp }}</td>
-                    <td><a href="{% url 'delete_message' message.id %}" class="btn btn-danger">Delete</a></td>
+                    <td><a href="{% url 'delete_message' message.id %}" class="btn btn-raised btn-danger">Delete</a>
+                    </td>
                 </tr>
             {% endfor %}
         {% elif inbox_type == 'Inbox' %}
@@ -52,7 +53,8 @@
                     <td>{{ message.regard_item_amount }}</td>
                     <td>{{ message.read }}</td>
                     <td>{{ message.timestamp }}</td>
-                    <td><a href="{% url 'delete_message' message.id %}" class="btn btn-danger">Delete</a></td>
+                    <td><a href="{% url 'delete_message' message.id %}" class="btn btn-raised btn-danger">Delete</a>
+                    </td>
                 </tr>
             {% endfor %}
         {% endif %}

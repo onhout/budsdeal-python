@@ -1,0 +1,57 @@
+<div class="col-md-10 col-sm-10 col-md-offset-1 col-sm-offset-1">
+    <div id="featured-carousel">
+        {% for images_set in featured_list.item_image %}
+            <div>
+                <img src="/{{ images_set.0.image }}" alt="{{ images_set.0.image }}"
+                     class="img-responsive">
+                <h4 class="text-center"><a
+                        href="{% url 'view_product' images_set.0.item.id %}">{{ images_set.0.item.name }}</a></h4>
+                <div class="text-center">
+                    <p class="text-danger">${{ images_set.0.item.price }} / {{ images_set.0.item.weight_unit }}</p>
+                    <a class="btn btn-raised btn-primary"
+                       href="{% url 'send_message' images_set.0.item.user.profile.social_id images_set.0.item.id %}">Quote</a>
+                </div>
+
+            </div>
+        {% endfor %}
+        {#        <div><h3>1</h3></div>#}
+        {#        <div><h3>2</h3></div>#}
+        {#        <div><h3>3</h3></div>#}
+        {#        <div><h3>4</h3></div>#}
+        {#        <div><h3>5</h3></div>#}
+        {#        <div><h3>6</h3></div>#}
+        {#        <div class="carousel-inner" role="listbox">#}
+        {#            {% for images_set in featured_list.item_image %}#}
+        {#                <div class="item {% if forloop.counter == 1 %}active{% endif %}">#}
+        {#                    <img src="/{{ images_set.0.image }}" alt="{{ images_set.0.image }}"#}
+        {#                         class="img-responsive">#}
+        {#                    <div class="carousel-caption">#}
+        {#                        <h3><a href="{% url 'view_product' images_set.0.item.id %}">{{ images_set.0.item.name }}</a></h3>#}
+        {#                        <p>by</p>#}
+        {#                        <p>{{ images_set.0.item.brand }}</p>#}
+        {##}
+        {#                    </div>#}
+        {#                <h3 class="text-success">${{ images_set.0.item.price }} / {{ images_set.0.item.weight_unit }}</h3>#}
+        {#                </div>#}
+        {#            {% endfor %}#}
+        {#        {% if featured_list.item_image.count > 1 %}#}
+        {#            {% for images in product_list.item_image %}#}
+        {#                {% for image in images %}#}
+        {#                    {% if image.item_id == item.id %}#}
+        {#                        <div class="item {% if forloop.counter == 1 %}active{% endif %}">#}
+        {#                            <img src="/{{ image.image }}" alt="{{ image.image }}"#}
+        {#                                 class="img-responsive">#}
+        {#                        </div>#}
+        {#                    {% endif %}#}
+        {#                {% endfor %}#}
+        {#            {% endfor %}#}
+        {#        {% else %}#}
+        {#            {% for num in 'xxxxx' %}#}
+        {#                <div class="item {% if forloop.counter == 1 %}active{% endif %}">#}
+        {#                    <img src="http://lorempixel.com/640/480" alt="Test"#}
+        {#                         class="img-responsive">#}
+        {#                </div>#}
+        {#            {% endfor %}#}
+        {#        {% endif %}#}
+    </div>
+</div>

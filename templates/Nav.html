@@ -6,6 +6,9 @@
     {% render_bundle 'vendor' %}
     <title>{% block title %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Load fonts here -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -34,7 +37,9 @@
                         <ul class="dropdown-menu">
                             {% for child in child_category %}
                                 {% if child.parent_category.name == parent.name %}
-                                    <li><a href={% url 'view_child_categories' parent.slug child.slug %}>{{ child.name }}</a></li>
+                                    <li>
+                                        <a href={% url 'view_child_categories' parent.slug child.slug %}>{{ child.name }}</a>
+                                    </li>
                                 {% endif %}
                             {% endfor %}
                         </ul>

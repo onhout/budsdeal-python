@@ -4,8 +4,9 @@ import names
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
-from model_mommy import mommy
 from faker import Faker
+from model_mommy import mommy
+
 from apps.products import models
 from apps.user.models import Profile
 
@@ -71,7 +72,6 @@ class Command(BaseCommand):
             profile.approved_as_seller = random.choice([True, False])
             profile.save()
 
-
     def make_products(self):
         fake = Faker()
         category_model = models.Category.objects.filter(parent_category__isnull=False)
@@ -83,8 +83,9 @@ class Command(BaseCommand):
                 user=User.objects.get(username='username' + str(random.randint(1, 99))),
                 brand=fake.company(),
                 type=random.choice(['Indica', 'Sativa', 'Hybrid']),
-                price=random.randint(100, 1000),
+                price=random.randint(10, 10000),
                 count=random.randint(1, 500),
+                view_count=fake.random_number(4),
                 description=fake.text(),
                 categories=category_model[random.randint(0, category_model.count()-1)]
             )
