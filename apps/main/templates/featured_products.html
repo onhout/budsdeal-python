@@ -4,14 +4,10 @@
             <div>
                 <img src="/{{ images_set.0.image }}" alt="{{ images_set.0.image }}"
                      class="img-responsive">
-                <h4 class="text-center"><a
-                        href="{% url 'view_product' images_set.0.item.id %}">{{ images_set.0.item.name }}</a></h4>
-                <div class="text-center">
-                    <p class="text-danger">${{ images_set.0.item.price }} / {{ images_set.0.item.weight_unit }}</p>
-                    <a class="btn btn-raised btn-primary"
-                       href="{% url 'send_message' images_set.0.item.user.profile.social_id images_set.0.item.id %}">Quote</a>
-                </div>
-
+                <h4><a href="{% url 'view_product' images_set.0.item.id %}">{{ images_set.0.item.name }}</a></h4>
+                <p class="text-danger">${{ images_set.0.item.price }} / {{ images_set.0.item.weight_unit }}</p>
+                <a class="btn btn-raised btn-primary"
+                   href="{% url 'send_message' images_set.0.item.user.profile.social_id images_set.0.item.id %}">Quote</a>
             </div>
         {% endfor %}
         {#        <div><h3>1</h3></div>#}

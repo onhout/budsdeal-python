@@ -1,0 +1,10 @@
+{% for parents in parent_category %}
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            <a href="{% url 'view_parent_categories' parents.slug %}">{{ parents }}</a>
+        </div>
+        <div class="panel-body">
+            lala
+        </div>
+    </div>
+{% endfor %}
