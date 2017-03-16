@@ -14,13 +14,6 @@ def main_index(request):
 
     featured_list.item_image = featured_image
 
-    product_list = models.Item.objects.all()
-    itemImage = []
-    for item in product_list:
-        itemImage.append(item.images.all())
-
-    product_list.item_image = itemImage
     return render(request, 'index.html', {
-        'product_list': product_list,
         'featured_list': featured_list
     })

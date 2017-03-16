@@ -1,12 +1,17 @@
 import os
 from uuid import uuid4
 
+import django.db.models.options as options
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_delete, pre_save
 from django.dispatch import receiver
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
+
+options.DEFAULT_NAMES = options.DEFAULT_NAMES + (
+    'es_index_name', 'es_type_name', 'es_mapping'
+)
 
 
 class Category(models.Model):
@@ -47,6 +52,53 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        es_index_name = 'django'
+        es_type_name = 'item'
+        es_mapping = {
+            'properties': {
+                'name': {'type': 'string', 'index': 'not_analyzed'},
+                'brand': {'type': 'string', 'index': 'not_analyzed'},
+                'type': {'type': 'string', 'index': 'not_analyzed'},
+                'description': {'type': 'string', 'index': 'not_analyzed'},
+            }
+        }
+
+    def es_repr(self):
+        data = {}
+        mapping = self._meta.es_mapping
+        data['_id'] = self.pk
+        for field_name in mapping['properties'].keys():
+            data[field_name] = self.field_es_repr(field_name)
+        return data
+
+    def field_es_repr(self, field_name):
+        config = self._meta.es_mapping['properties'][field_name]
+        if hasattr(self, 'get_es_%s' % field_name):
+            field_es_value = getattr(self, 'get_es_%s' % field_name)()
+        else:
+            if config['type'] == 'object':
+                related_object = getattr(self, field_name)
+                field_es_value = {}
+                field_es_value['_id'] = related_object.pk
+                for prop in config['properties'].keys():
+                    field_es_value[prop] = getattr(related_object, prop)
+            else:
+                field_es_value = getattr(self, field_name)
+        return field_es_value
+
+    def get_es_name_complete(self):
+        return {
+            "input": [self.name],
+            "output": "%s %s" % (self.name),
+            "payload": {"pk": self.pk},
+        }
+
+    def get_es_item_names(self):
+        if not self.item.exists():
+            return []
+        return [c.name for c in self.item.all()]
 
 
 def get_file_path(instance, filename):

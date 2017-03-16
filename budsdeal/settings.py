@@ -14,6 +14,7 @@ import sys
 
 import dj_database_url
 from decouple import config
+from elasticsearch import Elasticsearch, RequestsHttpConnection
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -225,3 +226,8 @@ else:
     SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET')  # App Secret
     SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
     SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+
+ES_CLIENT = Elasticsearch(
+    ['http://127.0.0.1:9200/'],
+    connection_class=RequestsHttpConnection
+)
