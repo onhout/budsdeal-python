@@ -16,11 +16,14 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+from apps.main import views
+
 urlpatterns = [
     url(r'^', include('apps.main.urls')),
     url(r'^user/', include('apps.user.urls')),
     url(r'^products/', include('apps.products.urls')),
     url(r'^messages/', include('apps.user_messages.urls')),
+    url(r'^autocomplete/', views.search_product, name='search_product'),
     url(r'^admin/', admin.site.urls),
     url('', include('social.apps.django_app.urls', namespace='social')),
     url('', include('django.contrib.auth.urls', namespace='auth')),

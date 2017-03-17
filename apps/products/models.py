@@ -2,12 +2,15 @@ import os
 from uuid import uuid4
 
 import django.db.models.options as options
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_delete, pre_save
 from django.dispatch import receiver
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
+
+es_client = settings.ES_CLIENT
 
 options.DEFAULT_NAMES = options.DEFAULT_NAMES + (
     'es_index_name', 'es_type_name', 'es_mapping'
@@ -58,10 +61,10 @@ class Item(models.Model):
         es_type_name = 'item'
         es_mapping = {
             'properties': {
-                'name': {'type': 'string', 'index': 'not_analyzed'},
-                'brand': {'type': 'string', 'index': 'not_analyzed'},
+                'name': {'type': 'string'},
+                'brand': {'type': 'string'},
                 'type': {'type': 'string', 'index': 'not_analyzed'},
-                'description': {'type': 'string', 'index': 'not_analyzed'},
+                'description': {'type': 'string'},
             }
         }
 
@@ -91,7 +94,7 @@ class Item(models.Model):
     def get_es_name_complete(self):
         return {
             "input": [self.name],
-            "output": "%s %s" % (self.name),
+            "output": "%s %s" % self.name,
             "payload": {"pk": self.pk},
         }
 
@@ -99,6 +102,42 @@ class Item(models.Model):
         if not self.item.exists():
             return []
         return [c.name for c in self.item.all()]
+
+    def save(self, *args, **kwargs):
+        is_new = self._state.adding
+        super(Item, self).save(*args, **kwargs)
+        payload = self.es_repr()
+        if is_new:
+            es_client.create(
+                index=self._meta.es_index_name,
+                doc_type=self._meta.es_type_name,
+                id=self.pk,
+                refresh=True,
+                body={
+                    'doc': payload
+                }
+            )
+        else:
+            del payload['_id']
+            es_client.update(
+                index=self._meta.es_index_name,
+                doc_type=self._meta.es_type_name,
+                id=self.pk,
+                refresh=True,
+                body={
+                    'doc': payload
+                }
+            )
+
+    def delete(self, *args, **kwargs):
+        prev_pk = self.pk
+        super(Item, self).delete(*args, **kwargs)
+        es_client.delete(
+            index=self._meta.es_index_name,
+            doc_type=self._meta.es_type_name,
+            id=prev_pk,
+            refresh=True,
+        )
 
 
 def get_file_path(instance, filename):
