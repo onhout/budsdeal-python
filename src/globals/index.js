@@ -1,3 +1,4 @@
 $(function () {
-    $.material.init()
+    $.material.init();
+    console.log(Bloodhound);
 });

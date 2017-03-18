@@ -12,6 +12,7 @@ django-material==0.12.3
 django-require==1.0.11
 django-webpack-loader==0.4.1
 djangorestframework==3.5.3
+elasticsearch==5.2.0
 env-tools==2.0.0
 Faker==0.7.10
 future==0.16.0
@@ -40,4 +41,5 @@ six==1.10.0
 social-auth-app-django==1.0.1
 social-auth-core==1.1.0
 tini==3.0.1
+urllib3==1.20
 whitenoise==3.2.3

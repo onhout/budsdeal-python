@@ -19,7 +19,7 @@ module.exports = {
             'bootstrap-material-design',
             'slick-carousel',
             'lodash',
-            'typeahead.js'
+            'typeahead.js/dist/typeahead.jquery'
         ]
     }, // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
 
@@ -36,6 +36,7 @@ module.exports = {
         new webpack.ProvidePlugin({
             $: 'jquery',             // bootstrap 3.x requires
             jQuery: 'jquery',        // bootstrap 3.x requires
+            Bloodhound: 'typeahead.js/dist/bloodhound'
         }),
         new ExtractTextPlugin('[name]-[hash].css'),
         new webpack.DefinePlugin({
