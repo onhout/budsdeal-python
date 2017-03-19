@@ -1,5 +1,6 @@
 {% extends 'Nav.html' %}
 {% block title %}Viewing {{ this_user.get_full_name }}{% endblock %}
 {% block content %}
-    {{ this_user }}
+    <h1>{{ this_user.get_full_name }}</h1>
+    <h3>{{ this_user.company.name }}</h3>
 {% endblock %}

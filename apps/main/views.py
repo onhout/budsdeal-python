@@ -17,11 +17,20 @@ def main_index(request):
     featured_image = []
     for item in featured_list:
         featured_image.append(item.images.all())
-
     featured_list.item_image = featured_image
 
+    categorized_product = []
+    categories = models.Category.objects.filter(parent_category__isnull=True)
+    for category in categories:
+        child = models.Category.objects.filter(parent_category_id=category.id)
+        items = models.Item.objects.filter(categories__id__in=child.values_list('id')).distinct().order_by(
+            'view_count')[:5]
+        items.parent_category = category
+        categorized_product.append(items)
+
     return render(request, 'index.html', {
-        'featured_list': featured_list
+        'featured_list': featured_list,
+        'categorized_list': categorized_product
     })
 
 

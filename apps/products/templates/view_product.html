@@ -23,7 +23,10 @@
         {% endif %}
         <p>Type: {{ item.type }}</p>
         <p>Brand: {{ item.brand }}</p>
+        <p>Category: {{ item.categories }}</p>
         <p>Description: {{ item.description }}</p>
-        <p>Seller: {{ item.user.profile.display_name }}</p>
+        <p>Seller: <a
+                href="{% url 'view_profile' item.user.profile.display_name %}">{{ item.user.profile.display_name }}</a>
+        </p>
     </div>
 {% endblock %}

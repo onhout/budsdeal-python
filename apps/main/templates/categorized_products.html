@@ -1,10 +1,12 @@
-{% for parents in parent_category %}
+{% for products in categorized_list %}
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <a href="{% url 'view_parent_categories' parents.slug %}">{{ parents }}</a>
+            <a href="{% url 'view_parent_categories' products.parent_category.slug %}">Newest {{ products.parent_category }}</a>
         </div>
         <div class="panel-body">
-            lala
+            {% for product in products %}
+                <p><a href="{% url 'view_product' product.id %}">{{ product }}</a></p>
+            {% endfor %}
         </div>
     </div>
 {% endfor %}

@@ -28,8 +28,8 @@ def logout(request):
     return redirect('/user/login')
 
 
-def view_profile(request, social_id):
-    user_profile = Profile.objects.get(social_id=social_id)
+def view_profile(request, display_name):
+    user_profile = Profile.objects.get(display_name=display_name)
     this_user = User.objects.get(id=user_profile.user_id)
     if this_user.id == request.user.id:
         return redirect('/user/home')

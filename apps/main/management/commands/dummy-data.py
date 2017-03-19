@@ -37,7 +37,7 @@ class Command(BaseCommand):
 
     def make_category(self):
         categories = (
-            'Flowers', 'Extracts', 'Edible', 'Product'
+            'Flowers', 'Extracts', 'Edibles', 'Products'
         )
         for category in categories:
             mommy.make(models.Category, name=category, slug=category.lower())
