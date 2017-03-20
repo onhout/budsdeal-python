@@ -107,3 +107,12 @@ def save_company_info(request):
         company_form = user_forms.CompanyForm(request.POST, instance=request.user.company)
         company_form.save()
         return redirect('user_home')
+
+
+@login_required
+def register_as_seller(request):
+    profile = request.user.profile
+    if request.user.is_authenticated and not profile.approved_as_seller:
+        return render(request, 'profiles/register_as_seller.html')
+    else:
+        return redirect('user_home')

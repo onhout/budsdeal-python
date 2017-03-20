@@ -21,7 +21,9 @@
         </form>
         <div class="row">
             <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2">
-                <a class="btn btn-social btn-facebook btn-block" href="{% url 'social:begin' 'facebook' %}">
+                <a class="btn btn-social btn-facebook btn-block" href="
+
+                        {% url 'social:begin' 'facebook' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
                     <i class="fa fa-facebook"></i>
                     Login with Facebook
                 </a>
@@ -30,7 +32,9 @@
 
         <div class="row">
             <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2">
-                <a class="btn btn-social btn-google btn-block" href="{% url 'social:begin' 'google-oauth2' %}">
+                <a class="btn btn-social btn-google btn-block" href="
+
+                        {% url 'social:begin' 'google-oauth2' %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}">
                     <i class="fa fa-google"></i>
                     Login with Google
                 </a>

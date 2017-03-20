@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^settings/company/save/$', views.save_company_info, name='save_company_info'),
     url(r'^settings/edit_password/$', views.account_settings_password, name='user_settings_password'),
     url(r'^view/(?P<display_name>[\w-]+)', views.view_profile, name='view_profile'),
+    url(r'^seller/register', views.register_as_seller, name='register_as_seller'),
 ]

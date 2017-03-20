@@ -6,7 +6,7 @@
             <a href="{% url 'add_product' %}" class="btn btn-raised btn-success">Add Product</a>
             <span class="pull-right">{{ product_list.start_index }} to {{ product_list.end_index }}
                 of {{ product_list.paginator.count }}</span>
-            <table class="table" id="item_list">
+            <table class="table table-bordered table-striped" id="item_list">
                 <tr>
                     <th>Pic</th>
                     <th>Name</th>

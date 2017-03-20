@@ -57,9 +57,11 @@ def add_product(request):
                 except:
                     pass
             return redirect('list_product')
-    else:
+    elif request.user.profile.approved_as_seller:
         product_form = product_forms.AddProductForm(instance=request.user)
         formset = product_forms.AddImageFormSet(queryset=product_models.ItemImage.objects.none())
+    else:
+        return redirect('register_as_seller')
     return render(request, 'user/add_products.html', {
         'add_product_form': product_form,
         'formset': formset
@@ -84,8 +86,10 @@ def list_product(request):
         itemImage.append(item.images.all())
 
     products.item_image = itemImage
-    if not request.user.company.name:  # DISABLED FOR DEVELOPMENT
+    if not request.user.company.name and request.user.profile.approved_as_seller:  # DISABLED FOR DEVELOPMENT
         return redirect('user_company')  # TODO REENABLE IT WHEN EVERYTHING IS DONE
+    elif not request.user.profile.approved_as_seller:
+        return redirect('register_as_seller')
     else:
         return render(request, 'user/list_products.html', {
             'product_list': products
@@ -106,9 +110,11 @@ def update_product(request, product_id):
             form.save()
             formset.save()
             return redirect('list_product')
-    else:
+    elif request.user.profile.approved_as_seller:
         product_form = product_forms.EditProductForm(instance=product)
         formset = product_forms.UpdateImageFormSet(instance=product)
+    else:
+        return redirect('register_as_seller')
 
     return render(request, 'user/update_product.html', {
         'product_id': product_id,
@@ -120,7 +126,7 @@ def update_product(request, product_id):
 @login_required
 def delete_product(request, product_id):
     product = product_models.Item.objects.get(pk=product_id).delete()
-    if request.POST and request.user.is_authenticated:
+    if request.POST and request.user.is_authenticated and request.user.profile.approved_as_seller:
         product.save()
 
     return redirect('list_product')
