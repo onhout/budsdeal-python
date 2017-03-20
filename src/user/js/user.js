@@ -7,5 +7,9 @@ import "../less/user.less";
 // googButton.append(GOOGLE.register(googButton.data('method')));
 
 $(function () {
-    console.log('users loaded!')
+    $('#toggle-sidebar').click(function () {
+        $('#cross').toggle();
+        $('#bars').toggle();
+        $('#wrapper').toggleClass('toggled');
+    })
 });
