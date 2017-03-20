@@ -1,21 +1,29 @@
 <!-- Sidebar -->
+{% url 'user_home'  as user_home %}
+{% url 'view_inbox_messages'  as view_inbox_messages %}
+{% url 'user_profile'  as user_profile %}
+{% url 'user_company'  as user_company %}
+
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
         <li>
-            <a href="{% url 'user_home' %}">Dashboard</a>
+            <a class="{% ifequal request.path user_home %}active{% endifequal %}" href="{{ user_home }}">Dashboard</a>
         </li>
         <li>
-            <a href="{% url 'view_inbox_messages' %}">Messages
+            <a class="{% ifequal request.path view_inbox_messages %}active{% endifequal %}"
+               href="{{ view_inbox_messages }}">Messages
                 {% if unread_message_count %}
                     <span class="badge"> {{ unread_message_count }}</span>
                 {% endif %}
             </a>
         </li>
         <li>
-            <a href="{% url 'user_profile' %}">Profile</a>
+            <a class="{% ifequal request.path user_profile %}active{% endifequal %}"
+               href="{{ user_profile }}">Profile</a>
         </li>
         <li>
-            <a href="{% url 'user_company' %}">Company</a>
+            <a class="{% ifequal request.path user_company %}active{% endifequal %}"
+               href="{{ user_company }}">Company</a>
         </li>
     </ul>
 </div>
