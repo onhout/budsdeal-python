@@ -1,0 +1,7 @@
+{% extends 'Nav.html' %}
+{% load render_bundle from webpack_loader %}
+{% block content %}
+    {% block message_content %}
+    {% endblock %}
+    {% render_bundle 'user_message' %}
+{% endblock %}

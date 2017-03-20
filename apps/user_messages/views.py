@@ -13,7 +13,7 @@ from . import models, forms
 @login_required
 def view_sent_messages(request):
     messages = models.Conversations.objects.filter(from_user=request.user.id)
-    return render(request, 'view_messages.html', {
+    return render(request, 'user/view_messages.html', {
         'inbox_type': 'Sent',
         'user_messages': messages
     })
@@ -22,7 +22,7 @@ def view_sent_messages(request):
 @login_required
 def view_inbox_messages(request):
     messages = models.Conversations.objects.filter(to_user=request.user.id)
-    return render(request, 'view_messages.html', {
+    return render(request, 'user/view_messages.html', {
         'inbox_type': 'Inbox',
         'user_messages': messages
     })
@@ -45,7 +45,7 @@ def send_message(request, social_id, item_id):
     else:
         message_form = forms.MessageForm(initial={'subject': 'Quote regarding: ' + regard_item.name})
 
-    return render(request, 'send_message.html', {
+    return render(request, 'user/send_message.html', {
         'this_product': regard_item,
         'this_user': this_user,
         'message_form': message_form
@@ -58,7 +58,7 @@ def message_details(request, message_id):
     if message.to_user == request.user:
         message.read = True
         message.save()
-    return render(request, 'message_details.html', {
+    return render(request, 'user/message_details.html', {
         'message': message
     })
 

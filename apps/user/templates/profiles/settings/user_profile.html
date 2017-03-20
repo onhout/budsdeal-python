@@ -1,36 +1,30 @@
-{% extends 'profiles/user_index.html' %}
+{% extends 'user_index.html' %}
 {% block user_content %}
-    <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <h1 class="text-center">Profile for {{ user.get_full_name }}</h1>
-            <p class="text-center"> Display Name:{{ user.profile.display_name }}</p>
-            <div class="col-sm-6 col-sm-offset-3">
-                <form class="form" method="post" action="{% url 'save_settings' %}">
-                    {% csrf_token %}
-                    <div class="row">
+    <h1 class="text-center">Profile for {{ user.get_full_name }}</h1>
+    <p class="text-center"> Display Name:{{ user.profile.display_name }}</p>
+    <div class="col-sm-6 col-sm-offset-3">
+        <form class="form" method="post" action="{% url 'save_settings' %}">
+            {% csrf_token %}
+            <div class="row">
 
-                        {% for fields in user_form %}
-                            <div class="form-group">
-                                <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
-                                {{ fields }}
-                            </div>
-                        {% endfor %}
-                        {% for fields in profile_form %}
-                            <div class="form-group">
-                                <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
-                                {{ fields }}
-                            </div>
-                        {% endfor %}
+                {% for fields in user_form %}
+                    <div class="form-group">
+                        <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
+                        {{ fields }}
                     </div>
-
-                    <div class="row">
-                        <button type="submit" class="btn btn-raised btn-success">Submit</button>
-                        <a href="{% url 'user_settings_password' %}" class="pull-right">Change password</a>
+                {% endfor %}
+                {% for fields in profile_form %}
+                    <div class="form-group">
+                        <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
+                        {{ fields }}
                     </div>
-                </form>
+                {% endfor %}
             </div>
-        </div>
+
+            <div class="row">
+                <button type="submit" class="btn btn-raised btn-success">Submit</button>
+                <a href="{% url 'user_settings_password' %}" class="pull-right">Change password</a>
+            </div>
+        </form>
     </div>
-
-
 {% endblock %}

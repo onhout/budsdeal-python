@@ -1,0 +1,14 @@
+{% extends 'Nav.html' %}
+{% load render_bundle from webpack_loader %}
+{% block content %}
+    <div id="wrapper">
+        {% include 'user_sidebar.html' %}
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                {% block user_content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    {% render_bundle 'user' %}
+{% endblock %}

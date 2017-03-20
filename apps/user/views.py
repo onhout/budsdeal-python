@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
-from . import forms
+from . import forms as user_forms
 from .models import Profile
 
 
@@ -47,9 +47,9 @@ def home(request):
 @login_required
 def account_settings_password(request):
     if request.user.has_usable_password():
-        password_form = forms.PasswordChangeCustomForm
+        password_form = user_forms.PasswordChangeCustomForm
     else:
-        password_form = forms.AdminPasswordChangeCustomForm
+        password_form = user_forms.AdminPasswordChangeCustomForm
 
     if request.POST:
         form = password_form(request.user, request.POST)
@@ -67,8 +67,8 @@ def account_settings_password(request):
 
 @login_required
 def user_profile(request):
-    user_form = forms.UserForm(instance=request.user)
-    profile_form = forms.ProfileForm(instance=request.user.profile)
+    user_form = user_forms.UserForm(instance=request.user)
+    profile_form = user_forms.ProfileForm(instance=request.user.profile)
 
     return render(request, 'profiles/settings/user_profile.html', {
         'user_form': user_form,
@@ -80,7 +80,7 @@ def user_profile(request):
 def user_company(request):
     profile = request.user.profile
     if profile.approved_as_seller:
-        company_form = forms.CompanyForm(instance=request.user.company)
+        company_form = user_forms.CompanyForm(instance=request.user.company)
         return render(request, 'profiles/settings/user_company.html', {
             'company_form': company_form
         })
@@ -92,8 +92,8 @@ def user_company(request):
 @login_required
 def save_account_settings(request):
     if request.POST:
-        user_form = forms.UserForm(request.POST, instance=request.user)
-        profile_form = forms.ProfileForm(request.POST, instance=request.user.profile)
+        user_form = user_forms.UserForm(request.POST, instance=request.user)
+        profile_form = user_forms.ProfileForm(request.POST, instance=request.user.profile)
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
@@ -104,6 +104,6 @@ def save_account_settings(request):
 def save_company_info(request):
     profile = request.user.profile
     if request.POST and profile.approved_as_seller:
-        company_form = forms.CompanyForm(request.POST, instance=request.user.company)
+        company_form = user_forms.CompanyForm(request.POST, instance=request.user.company)
         company_form.save()
         return redirect('user_home')

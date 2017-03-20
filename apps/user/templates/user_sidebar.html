@@ -3,6 +3,9 @@
 {% url 'view_inbox_messages'  as view_inbox_messages %}
 {% url 'user_profile'  as user_profile %}
 {% url 'user_company'  as user_company %}
+{% url 'user_company'  as user_company %}
+{% url 'list_product' as user_products %}
+{% url 'register_as_seller' as register_as_seller %}
 
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
@@ -21,10 +24,21 @@
             <a class="{% ifequal request.path user_profile %}active{% endifequal %}"
                href="{{ user_profile }}">Profile</a>
         </li>
-        <li>
-            <a class="{% ifequal request.path user_company %}active{% endifequal %}"
-               href="{{ user_company }}">Company</a>
-        </li>
+        {% if user.profile.approved_as_seller %}
+            <li>
+                <a class="{% ifequal request.path user_company %}active{% endifequal %}"
+                   href="{{ user_company }}">Company</a>
+            </li>
+            <li>
+                <a class="{% ifequal request.path user_products %}active{% endifequal %}"
+                   href="{{ user_products }}">List Products</a>
+            </li>
+        {% else %}
+            <li>
+                <a class="{% ifequal request.path register_as_seller %}active{% endifequal %}"
+                   href="{{ register_as_seller }}">Wholesaler</a>
+            </li>
+        {% endif %}
     </ul>
 </div>
 <!-- /#sidebar-wrapper -->

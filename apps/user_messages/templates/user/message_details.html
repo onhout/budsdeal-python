@@ -1,7 +1,6 @@
-{% extends 'Nav.html' %}
-{% load render_bundle from webpack_loader %}
+{% extends 'user_index.html' %}
 {% block title %}Message Details{% endblock %}
-{% block content %}
+{% block user_content %}
     <h1>Messages Details</h1>
     <hr>
     <p>Regarding: <a href="{% url 'view_product' message.regard_item_id %}">{{ message.regard_item }}</a></p>

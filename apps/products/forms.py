@@ -7,7 +7,7 @@ from .models import Item, Category, ItemImage
 class AddProductForm(ModelForm):
     class Meta:
         model = Item
-        exclude = 'id', 'user'
+        exclude = 'id', 'user', 'view_count'
 
     def __init__(self, *args, **kwargs):
         super(AddProductForm, self).__init__(*args, **kwargs)
@@ -22,7 +22,7 @@ class AddProductForm(ModelForm):
 class EditProductForm(ModelForm):
     class Meta:
         model = Item
-        exclude = 'id', 'user'
+        exclude = 'id', 'user', 'view_count'
 
     def __init__(self, *args, **kwargs):
         super(EditProductForm, self).__init__(*args, **kwargs)

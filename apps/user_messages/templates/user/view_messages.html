@@ -1,7 +1,7 @@
-{% extends 'Nav.html' %}
+{% extends 'user_index.html' %}
 {% load render_bundle from webpack_loader %}
 {% block title %}Messages{% endblock %}
-{% block content %}
+{% block user_content %}
     <h1>{{ inbox_type }} Messages</h1>
     <a href="{% url 'view_inbox_messages' %}" class="btn btn-raised btn-default">Inbox</a>
     <a href="{% url 'view_sent_messages' %}" class="btn btn-raised btn-default">Sent</a>

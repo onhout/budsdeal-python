@@ -1,25 +1,19 @@
-{% extends 'profiles/user_index.html' %}
+{% extends 'user_index.html' %}
 {% load render_bundle from webpack_loader %}
 {% block title %}Welcome!{% endblock %}
 {% block user_content %}
-    <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <h1>Welcome {{ user.get_full_name }}</h1>
-            {% if user and not user.is_anonymous %}
-                Hello, {{ user.get_full_name }}!
-                Hello, {{ user.profile.display_name }}!
-                <br>
-                {#                            your pic: {{ user.profile.profile_photo }}#}
-            {% endif %}
-            <a href="{% url 'user_profile' %}">Change user profiles</a>
-            <a href={% url 'user_logout' %}>Logout</a>
-            <p>This template has a responsive menu toggling system. The menu will appear collapsed on
-                smaller screens, and will appear non-collapsed on larger screens. When toggled using the
-                button below, the menu will appear/disappear. On small screens, the page content will be
-                pushed off canvas.</p>
-            <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
-            <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
-
-        </div>
-    </div>
+    <h1>Welcome {{ user.get_full_name }}</h1>
+    {% if user and not user.is_anonymous %}
+        Hello, {{ user.get_full_name }}!
+        Hello, {{ user.profile.display_name }}!
+        <br>
+        {#                            your pic: {{ user.profile.profile_photo }}#}
+    {% endif %}
+    <a href="{% url 'user_profile' %}">Change user profiles</a>
+    <a href={% url 'user_logout' %}>Logout</a>
+    <p>This template has a responsive menu toggling system. The menu will appear collapsed on
+        smaller screens, and will appear non-collapsed on larger screens. When toggled using the
+        button below, the menu will appear/disappear. On small screens, the page content will be
+        pushed off canvas.</p>
+    <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
 {% endblock %}
