@@ -7,8 +7,10 @@ urlpatterns = [
     url(r'^login', views.login, name='user_login'),
     url(r'^logout', views.logout, name='user_logout'),
     url(r'^home', views.home, name='user_home'),
-    url(r'^settings/$', views.account_settings, name='user_settings'),
+    url(r'^settings/$', views.user_profile, name='user_profile'),
+    url(r'^settings/company/$', views.user_company, name='user_company'),
     url(r'^settings/save/$', views.save_account_settings, name='save_settings'),
+    url(r'^settings/company/save/$', views.save_company_info, name='save_company_info'),
     url(r'^settings/edit_password/$', views.account_settings_password, name='user_settings_password'),
     url(r'^view/(?P<display_name>[\w-]+)', views.view_profile, name='view_profile'),
 ]

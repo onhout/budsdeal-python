@@ -13,7 +13,7 @@ from .models import Profile
 
 
 def signup(request):
-    return render(request, 'signup.html')
+    return render(request, 'registration/signup.html')
 
 
 def login(request):
@@ -41,7 +41,7 @@ def view_profile(request, display_name):
 
 @login_required(login_url='/user/login')
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'profiles/user_home.html')
 
 
 @login_required
@@ -62,46 +62,48 @@ def account_settings_password(request):
             messages.error(request, 'Please correct the error below.')
     else:
         form = password_form(request.user)
-    return render(request, 'profiles/password.html', {'form': form})
+    return render(request, 'profiles/settings/password.html', {'form': form})
 
 
 @login_required
-def account_settings(request):
-    profile = request.user.profile
+def user_profile(request):
     user_form = forms.UserForm(instance=request.user)
     profile_form = forms.ProfileForm(instance=request.user.profile)
 
+    return render(request, 'profiles/settings/user_profile.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
+
+
+@login_required
+def user_company(request):
+    profile = request.user.profile
     if profile.approved_as_seller:
         company_form = forms.CompanyForm(instance=request.user.company)
-        return render(request, 'profiles/settings.html', {
-            'user_form': user_form,
-            'profile_form': profile_form,
+        return render(request, 'profiles/settings/user_company.html', {
             'company_form': company_form
         })
     else:
-        return render(request, 'profiles/settings.html', {
-            'user_form': user_form,
-            'profile_form': profile_form
+        return render(request, 'profiles/user_home.html', {
         })
 
 
 @login_required
 def save_account_settings(request):
-    profile = request.user.profile
     if request.POST:
-        if profile.approved_as_seller:
-            user_form = forms.UserForm(request.POST, instance=request.user)
-            profile_form = forms.ProfileForm(request.POST, instance=request.user.profile)
-            company_form = forms.CompanyForm(request.POST, instance=request.user.company)
-            if user_form.is_valid() and profile_form.is_valid():
-                user_form.save()
-                profile_form.save()
-                company_form.save()
-                return redirect('user_settings')
-        else:
-            user_form = forms.UserForm(request.POST, instance=request.user)
-            profile_form = forms.ProfileForm(request.POST, instance=request.user.profile)
-            if user_form.is_valid() and profile_form.is_valid():
-                user_form.save()
-                profile_form.save()
-                return redirect('user_settings')
+        user_form = forms.UserForm(request.POST, instance=request.user)
+        profile_form = forms.ProfileForm(request.POST, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('user_home')
+
+
+@login_required
+def save_company_info(request):
+    profile = request.user.profile
+    if request.POST and profile.approved_as_seller:
+        company_form = forms.CompanyForm(request.POST, instance=request.user.company)
+        company_form.save()
+        return redirect('user_home')

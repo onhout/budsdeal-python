@@ -1,0 +1,33 @@
+{% extends 'profiles/user_index.html' %}
+{% load render_bundle from webpack_loader %}
+{% block title %}Welcome!{% endblock %}
+{% block user_content %}
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="col-sm-6 col-sm-offset-3">
+                <form class="form" method="post" action="{% url 'save_company_info' %}">
+                    {% csrf_token %}
+                    <div class="row">
+                        {% if not user.company.name and user.profile.approved_as_seller %}
+                            <h3>Your company name is not set, please set it</h3>
+                        {% endif %}
+                        {% if company_form %}
+                            {% for fields in company_form %}
+                                <div class="form-group">
+                                    <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
+                                    {{ fields }}
+                                    <span class="help-block">{{ fields.help_text }}</span>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                    </div>
+                    <div class="row">
+                        <button type="submit" class="btn btn-raised btn-success">Submit</button>
+                        <a href="{% url 'user_settings_password' %}" class="pull-right">Change password</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

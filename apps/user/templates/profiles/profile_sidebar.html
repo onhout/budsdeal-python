@@ -1,0 +1,22 @@
+<!-- Sidebar -->
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <li>
+            <a href="{% url 'user_home' %}">Dashboard</a>
+        </li>
+        <li>
+            <a href="{% url 'view_inbox_messages' %}">Messages
+                {% if unread_message_count %}
+                    <span class="badge"> {{ unread_message_count }}</span>
+                {% endif %}
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'user_profile' %}">Profile</a>
+        </li>
+        <li>
+            <a href="{% url 'user_company' %}">Company</a>
+        </li>
+    </ul>
+</div>
+<!-- /#sidebar-wrapper -->

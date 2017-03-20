@@ -9,6 +9,9 @@
 footer {
   background-color: whitesmoke;
   padding: 15px;
+  z-index: 1001;
+  position: absolute;
+  width: 100%;
 }
 
 //https://github.com/twitter/typeahead.js/issues/378#issuecomment-22007353
@@ -22,8 +25,8 @@ footer {
   color: black;
 }
 
-//#Main_Search {
-//  input{
-//    width: 400px;
-//  }
-//}
+#Main_Search {
+  .tt-hint {
+    background: none !important;
+  }
+}
