@@ -4,116 +4,116 @@
   "chunks": {
     "main": [
       {
-        "name": "main-2a1b63b0f790290c0c9c.js",
-        "publicPath": "/static/dist/main-2a1b63b0f790290c0c9c.js",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/main-2a1b63b0f790290c0c9c.js"
+        "name": "main-2f88cf635e211d15ea9f.js",
+        "publicPath": "/static/dist/main-2f88cf635e211d15ea9f.js",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/main-2f88cf635e211d15ea9f.js"
       },
       {
-        "name": "main-2a1b63b0f790290c0c9c.css",
-        "publicPath": "/static/dist/main-2a1b63b0f790290c0c9c.css",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/main-2a1b63b0f790290c0c9c.css"
+        "name": "main-2f88cf635e211d15ea9f.css",
+        "publicPath": "/static/dist/main-2f88cf635e211d15ea9f.css",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/main-2f88cf635e211d15ea9f.css"
       },
       {
-        "name": "main-2a1b63b0f790290c0c9c.js.map",
-        "publicPath": "/static/dist/main-2a1b63b0f790290c0c9c.js.map",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/main-2a1b63b0f790290c0c9c.js.map"
+        "name": "main-2f88cf635e211d15ea9f.js.map",
+        "publicPath": "/static/dist/main-2f88cf635e211d15ea9f.js.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/main-2f88cf635e211d15ea9f.js.map"
       },
       {
-        "name": "main-2a1b63b0f790290c0c9c.css.map",
-        "publicPath": "/static/dist/main-2a1b63b0f790290c0c9c.css.map",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/main-2a1b63b0f790290c0c9c.css.map"
+        "name": "main-2f88cf635e211d15ea9f.css.map",
+        "publicPath": "/static/dist/main-2f88cf635e211d15ea9f.css.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/main-2f88cf635e211d15ea9f.css.map"
       }
     ],
     "products": [
       {
-        "name": "products-2a1b63b0f790290c0c9c.js",
-        "publicPath": "/static/dist/products-2a1b63b0f790290c0c9c.js",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/products-2a1b63b0f790290c0c9c.js"
+        "name": "products-2f88cf635e211d15ea9f.js",
+        "publicPath": "/static/dist/products-2f88cf635e211d15ea9f.js",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/products-2f88cf635e211d15ea9f.js"
       },
       {
-        "name": "products-2a1b63b0f790290c0c9c.css",
-        "publicPath": "/static/dist/products-2a1b63b0f790290c0c9c.css",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/products-2a1b63b0f790290c0c9c.css"
+        "name": "products-2f88cf635e211d15ea9f.css",
+        "publicPath": "/static/dist/products-2f88cf635e211d15ea9f.css",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/products-2f88cf635e211d15ea9f.css"
       },
       {
-        "name": "products-2a1b63b0f790290c0c9c.js.map",
-        "publicPath": "/static/dist/products-2a1b63b0f790290c0c9c.js.map",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/products-2a1b63b0f790290c0c9c.js.map"
+        "name": "products-2f88cf635e211d15ea9f.js.map",
+        "publicPath": "/static/dist/products-2f88cf635e211d15ea9f.js.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/products-2f88cf635e211d15ea9f.js.map"
       },
       {
-        "name": "products-2a1b63b0f790290c0c9c.css.map",
-        "publicPath": "/static/dist/products-2a1b63b0f790290c0c9c.css.map",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/products-2a1b63b0f790290c0c9c.css.map"
+        "name": "products-2f88cf635e211d15ea9f.css.map",
+        "publicPath": "/static/dist/products-2f88cf635e211d15ea9f.css.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/products-2f88cf635e211d15ea9f.css.map"
       }
     ],
     "user": [
       {
-        "name": "user-2a1b63b0f790290c0c9c.js",
-        "publicPath": "/static/dist/user-2a1b63b0f790290c0c9c.js",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/user-2a1b63b0f790290c0c9c.js"
+        "name": "user-2f88cf635e211d15ea9f.js",
+        "publicPath": "/static/dist/user-2f88cf635e211d15ea9f.js",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user-2f88cf635e211d15ea9f.js"
       },
       {
-        "name": "user-2a1b63b0f790290c0c9c.css",
-        "publicPath": "/static/dist/user-2a1b63b0f790290c0c9c.css",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/user-2a1b63b0f790290c0c9c.css"
+        "name": "user-2f88cf635e211d15ea9f.css",
+        "publicPath": "/static/dist/user-2f88cf635e211d15ea9f.css",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user-2f88cf635e211d15ea9f.css"
       },
       {
-        "name": "user-2a1b63b0f790290c0c9c.js.map",
-        "publicPath": "/static/dist/user-2a1b63b0f790290c0c9c.js.map",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/user-2a1b63b0f790290c0c9c.js.map"
+        "name": "user-2f88cf635e211d15ea9f.js.map",
+        "publicPath": "/static/dist/user-2f88cf635e211d15ea9f.js.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user-2f88cf635e211d15ea9f.js.map"
       },
       {
-        "name": "user-2a1b63b0f790290c0c9c.css.map",
-        "publicPath": "/static/dist/user-2a1b63b0f790290c0c9c.css.map",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/user-2a1b63b0f790290c0c9c.css.map"
+        "name": "user-2f88cf635e211d15ea9f.css.map",
+        "publicPath": "/static/dist/user-2f88cf635e211d15ea9f.css.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user-2f88cf635e211d15ea9f.css.map"
       }
     ],
     "user_messages": [
       {
-        "name": "user_messages-2a1b63b0f790290c0c9c.js",
-        "publicPath": "/static/dist/user_messages-2a1b63b0f790290c0c9c.js",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/user_messages-2a1b63b0f790290c0c9c.js"
+        "name": "user_messages-2f88cf635e211d15ea9f.js",
+        "publicPath": "/static/dist/user_messages-2f88cf635e211d15ea9f.js",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user_messages-2f88cf635e211d15ea9f.js"
       },
       {
-        "name": "user_messages-2a1b63b0f790290c0c9c.css",
-        "publicPath": "/static/dist/user_messages-2a1b63b0f790290c0c9c.css",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/user_messages-2a1b63b0f790290c0c9c.css"
+        "name": "user_messages-2f88cf635e211d15ea9f.css",
+        "publicPath": "/static/dist/user_messages-2f88cf635e211d15ea9f.css",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user_messages-2f88cf635e211d15ea9f.css"
       },
       {
-        "name": "user_messages-2a1b63b0f790290c0c9c.js.map",
-        "publicPath": "/static/dist/user_messages-2a1b63b0f790290c0c9c.js.map",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/user_messages-2a1b63b0f790290c0c9c.js.map"
+        "name": "user_messages-2f88cf635e211d15ea9f.js.map",
+        "publicPath": "/static/dist/user_messages-2f88cf635e211d15ea9f.js.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user_messages-2f88cf635e211d15ea9f.js.map"
       },
       {
-        "name": "user_messages-2a1b63b0f790290c0c9c.css.map",
-        "publicPath": "/static/dist/user_messages-2a1b63b0f790290c0c9c.css.map",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/user_messages-2a1b63b0f790290c0c9c.css.map"
+        "name": "user_messages-2f88cf635e211d15ea9f.css.map",
+        "publicPath": "/static/dist/user_messages-2f88cf635e211d15ea9f.css.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user_messages-2f88cf635e211d15ea9f.css.map"
       }
     ],
     "vendor": [
       {
-        "name": "vendor-2a1b63b0f790290c0c9c.js",
-        "publicPath": "/static/dist/vendor-2a1b63b0f790290c0c9c.js",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/vendor-2a1b63b0f790290c0c9c.js"
+        "name": "vendor-2f88cf635e211d15ea9f.js",
+        "publicPath": "/static/dist/vendor-2f88cf635e211d15ea9f.js",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/vendor-2f88cf635e211d15ea9f.js"
       },
       {
-        "name": "vendor-2a1b63b0f790290c0c9c.css",
-        "publicPath": "/static/dist/vendor-2a1b63b0f790290c0c9c.css",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/vendor-2a1b63b0f790290c0c9c.css"
+        "name": "vendor-2f88cf635e211d15ea9f.css",
+        "publicPath": "/static/dist/vendor-2f88cf635e211d15ea9f.css",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/vendor-2f88cf635e211d15ea9f.css"
       },
       {
-        "name": "vendor-2a1b63b0f790290c0c9c.js.map",
-        "publicPath": "/static/dist/vendor-2a1b63b0f790290c0c9c.js.map",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/vendor-2a1b63b0f790290c0c9c.js.map"
+        "name": "vendor-2f88cf635e211d15ea9f.js.map",
+        "publicPath": "/static/dist/vendor-2f88cf635e211d15ea9f.js.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/vendor-2f88cf635e211d15ea9f.js.map"
       },
       {
-        "name": "vendor-2a1b63b0f790290c0c9c.css.map",
-        "publicPath": "/static/dist/vendor-2a1b63b0f790290c0c9c.css.map",
-        "path": "/home/onhout/Documents/budsdeal-python/static/dist/vendor-2a1b63b0f790290c0c9c.css.map"
+        "name": "vendor-2f88cf635e211d15ea9f.css.map",
+        "publicPath": "/static/dist/vendor-2f88cf635e211d15ea9f.css.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/vendor-2f88cf635e211d15ea9f.css.map"
       }
     ]
   },
-  "error": "ModuleBuildError",
-  "file": "/home/onhout/Documents/budsdeal-python/src/user/less/user.less",
-  "message": "Module build failed: Unrecognised input. Possibly missing opening '{'\n @ /home/onhout/Documents/budsdeal-python/src/user/less/user.less (line 94, column 0)\n near lines:\n     }\n   }\n   "
+  "error": "ModuleNotFoundError",
+  "file": "/Users/pl/Documents/pythonstuff/budsdeal/src/user/js/user.js",
+  "message": "Module not found: Error: Cannot resolve module '.carousel' in /Users/pl/Documents/pythonstuff/budsdeal/src/main/js"
 }
