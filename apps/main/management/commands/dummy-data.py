@@ -89,7 +89,7 @@ class Command(BaseCommand):
                 name=fake.bs().title(),
                 user=User.objects.get(username='username' + str(random.randint(1, 99))),
                 brand=fake.company(),
-                type=random.choice(['Indica', 'Sativa', 'Hybrid']),
+                type=random.choice(['indica', 'sativa', 'hybrid']),
                 price=fake.random_int(10, 10000),
                 count=fake.random_int(1, 500),
                 view_count=fake.random_number(4),

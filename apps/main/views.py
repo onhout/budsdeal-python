@@ -35,11 +35,12 @@ def main_index(request):
 
 
 def search_product(request):
-    if int(request.GET.get('page')) > 0:
-        from_num = (int(request.GET.get('page', '0')) - 1) * int(request.GET.get('count'))
-    else:
-        from_num = 0
-
+    from_num = (int(request.GET.get('page', '0')) - 1) * int(request.GET.get('count')) \
+        if int(request.GET.get('page')) > 0 else 0
+    type_query = ' AND (type:' + request.GET.get('type') + ')' if request.GET.get('type') else ''
+    category_query = ' AND(categories.slug:' + request.GET.get('category') + ')' if request.GET.get('category') else ''
+    search_query = request.GET.get('search') + "*" if request.GET.get('search') else ''
+    _query = search_query + type_query + category_query
     resp = client.msearch(
         index='django',
         body=[
@@ -47,7 +48,7 @@ def search_product(request):
             {"query": {
                 "query_string": {
                     'fields': ['name^3', 'description', 'brand'],
-                    'query': request.GET.get('search') + "*"
+                    'query': _query
                 }
             },
                 'size': request.GET.get('count'),
@@ -62,6 +63,7 @@ def search_product(request):
              'description': i['_source']['description'],
              'brand': i['_source']['brand'],
              'type': i['_source']['type'],
+             'category': i['_source']['categories']['name']
          } for i in resp['responses'][0]['hits']['hits']]
     )
 

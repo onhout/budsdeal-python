@@ -65,6 +65,13 @@ class Item(models.Model):
                 'brand': {'type': 'string'},
                 'type': {'type': 'string', 'index': 'not_analyzed'},
                 'description': {'type': 'string'},
+                'categories': {
+                    'type': 'object',
+                    'properties': {
+                        "name": {'type': 'string'},
+                        "slug": {'type': 'string'}
+                    }
+                }
             }
         }
 
