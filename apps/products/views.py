@@ -74,12 +74,11 @@ def image_upload(request, product_id):
     item = product_models.Item.objects.get(id=product_id)
     if request.POST and request.user.is_authenticated and request.user.profile.approved_as_seller:
         image_form = product_forms.ImageForm(request.POST, request.FILES)
-        print(image_form)
         if image_form.is_valid() and request.user == item.user:
             form = image_form.save(commit=False)
             form.item = item
             form.save()
-            data = {'is_valid': True, 'name': form.item.name, 'url': form.file.url}
+            data = {'is_valid': True, 'name': form.item.name, 'url': '/' + form.image.url}
         else:
             data = {'is_valid': False}
         return JsonResponse(data)

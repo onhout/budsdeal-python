@@ -66,6 +66,5 @@ def search_product(request):
              'category': i['_source']['categories']['name']
          } for i in resp['responses'][0]['hits']['hits']]
     )
-
     mimetype = 'application/json'
     return HttpResponse(options, mimetype)

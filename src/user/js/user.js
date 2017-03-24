@@ -15,11 +15,11 @@ $(function () {
     });
     //file upload
     $(".js-upload-photos").click(function () {
-        $("#fileupload").click();
+        $("#id_image").click();
     });
 
     /* 2. INITIALIZE THE FILE UPLOAD COMPONENT */
-    $("#fileupload").fileupload({
+    $("#id_image").fileupload({
         dataType: 'json',
         done: function (e, data) {  /* 3. PROCESS THE RESPONSE FROM THE SERVER */
             if (data.result.is_valid) {

@@ -37,6 +37,7 @@ class ImageForm(ModelForm):
     class Meta:
         model = ItemImage
         fields = ['image']
+        exclude = ['item']
 
 
 UpdateImageFormSet = inlineformset_factory(Item, ItemImage, form=ImageForm, max_num=3)

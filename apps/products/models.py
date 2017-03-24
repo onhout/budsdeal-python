@@ -115,14 +115,13 @@ class Item(models.Model):
         super(Item, self).save(*args, **kwargs)
         payload = self.es_repr()
         if is_new:
+            del payload['_id']  # ITS ONLY CUZ OF THIS! CAUSING THE DOC ADDED!
             es_client.create(
                 index=self._meta.es_index_name,
                 doc_type=self._meta.es_type_name,
                 id=self.pk,
                 refresh=True,
-                body={
-                    'doc': payload
-                }
+                body=payload  # CHANGED HOW THE PAYLOAD IS LOADED!!!
             )
         else:
             del payload['_id']
