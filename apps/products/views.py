@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 from . import forms as product_forms, models as product_models
@@ -41,30 +42,49 @@ def child_categories(request, category_slug, subcategory_slug):
 def add_product(request):
     if request.POST and request.user.is_authenticated:
         product_form = product_forms.AddProductForm(request.POST)
-        formset = product_forms.AddImageFormSet(request.POST, request.FILES,
-                                                queryset=product_models.ItemImage.objects.none())
-        if product_form.is_valid() and formset.is_valid():
+        # formset = product_forms.AddImageFormSet(request.POST, request.FILES,
+        #                                         queryset=product_models.ItemImage.objects.none())
+        if product_form.is_valid():  # and formset.is_valid()
             form = product_form.save(commit=False)
             # NOTE: VARIABLES FROM FORM, SHOULD MAKE ANOTHER VARIABLES JUST FOR THE SAVE
             # THIS IS VERY IMPORTANT!!
             form.user = request.user
             form.save()
-            for formset in formset.cleaned_data:
-                try:
-                    image = formset['image']
-                    photo = product_models.ItemImage(item=form, image=image)
-                    photo.save()
-                except:
-                    pass
-            return redirect('list_product')
+            # for formset in formset.cleaned_data:
+            #     try:
+            #         image = formset['image']
+            #         photo = product_models.ItemImage(item=form, image=image)
+            #         photo.save()
+            #     except:
+            #         pass
+            return redirect('image_upload', product_id=form.id)
     elif request.user.profile.approved_as_seller:
         product_form = product_forms.AddProductForm(instance=request.user)
-        formset = product_forms.AddImageFormSet(queryset=product_models.ItemImage.objects.none())
+        # formset = product_forms.AddImageFormSet(queryset=product_models.ItemImage.objects.none())
     else:
         return redirect('register_as_seller')
     return render(request, 'user/add_products.html', {
         'add_product_form': product_form,
-        'formset': formset
+        # 'formset': formset
+    })
+
+
+@login_required
+def image_upload(request, product_id):
+    item = product_models.Item.objects.get(id=product_id)
+    if request.POST and request.user.is_authenticated and request.user.profile.approved_as_seller:
+        image_form = product_forms.ImageForm(request.POST, request.FILES)
+        print(image_form)
+        if image_form.is_valid() and request.user == item.user:
+            form = image_form.save(commit=False)
+            form.item = item
+            form.save()
+            data = {'is_valid': True, 'name': form.item.name, 'url': form.file.url}
+        else:
+            data = {'is_valid': False}
+        return JsonResponse(data)
+    return render(request, 'user/image_upload.html', {
+        'item': item
     })
 
 

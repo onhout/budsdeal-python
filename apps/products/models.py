@@ -49,7 +49,7 @@ class Item(models.Model):
     weight_unit = models.CharField(max_length=10, choices=WEIGHT_UNIT)
     categories = models.ForeignKey(Category, related_name='categories')
     description = models.TextField(blank=True)
-    view_count = models.IntegerField()
+    view_count = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

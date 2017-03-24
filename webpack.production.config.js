@@ -18,6 +18,7 @@ module.exports = {
             'bootstrap',
             'bootstrap-material-design',
             'slick-carousel',
+            'blueimp-file-upload',
             'lodash',
             'typeahead.js/dist/typeahead.jquery'
         ]
