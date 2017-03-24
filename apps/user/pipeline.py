@@ -6,7 +6,6 @@ from django.template.defaultfilters import slugify
 
 
 def get_profile_data(backend, details, response, uid, user, *args, **kwargs):
-    print(response)
     profile = user.profile
     if backend.__class__.__name__ == 'FacebookOAuth2':
         if not profile.login_type:

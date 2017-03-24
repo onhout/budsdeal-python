@@ -157,6 +157,8 @@ class ItemImage(models.Model):
                                 processors=[ResizeToFill(640, 480)],
                                 format='JPEG',
                                 options={'quality': 100})
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     directory_string = './static/media/item_pics'
 
 

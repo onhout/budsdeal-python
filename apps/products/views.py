@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
@@ -72,19 +74,37 @@ def add_product(request):
 @login_required
 def image_upload(request, product_id):
     item = product_models.Item.objects.get(id=product_id)
+    try:
+        item_image = product_models.ItemImage.objects.filter(item=item)
+    except:
+        pass
     if request.POST and request.user.is_authenticated and request.user.profile.approved_as_seller:
         image_form = product_forms.ImageForm(request.POST, request.FILES)
         if image_form.is_valid() and request.user == item.user:
             form = image_form.save(commit=False)
             form.item = item
             form.save()
-            data = {'is_valid': True, 'name': form.item.name, 'url': '/' + form.image.url}
+            data = {
+                'is_valid': True,
+                'updated_at': datetime.datetime.now().strftime('%B %d, %Y, %I:%M:%S %p'),
+                'url': '/' + form.image.url,
+                'image_id': form.id
+            }
         else:
             data = {'is_valid': False}
         return JsonResponse(data)
     return render(request, 'user/image_upload.html', {
-        'item': item
+        'item': item,
+        'item_image': item_image
     })
+
+
+@login_required
+def image_delete(request, image_id):
+    if request.POST and request.user.is_authenticated and request.user.profile.approved_as_seller:
+        product_models.ItemImage.objects.get(pk=image_id).delete()
+        data = {'success': True}
+        return JsonResponse(data)
 
 
 @login_required
@@ -120,25 +140,25 @@ def update_product(request, product_id):
     product = product_models.Item.objects.get(pk=product_id)
     if request.POST and request.user.is_authenticated:
         product_form = product_forms.EditProductForm(request.POST, request.FILES, instance=product)
-        formset = product_forms.UpdateImageFormSet(request.POST, request.FILES, instance=product)
-        if product_form.is_valid() and formset.is_valid():
+        # formset = product_forms.UpdateImageFormSet(request.POST, request.FILES, instance=product)
+        if product_form.is_valid():
             form = product_form.save(commit=False)
             # NOTE: VARIABLES FROM FORM, SHOULD MAKE ANOTHER VARIABLES JUST FOR THE SAVE
             # THIS IS VERY IMPORTANT!!
             form.user = request.user
             form.save()
-            formset.save()
-            return redirect('list_product')
+            # formset.save()
+            return redirect('image_upload', product_id=form.id)
     elif request.user.profile.approved_as_seller:
         product_form = product_forms.EditProductForm(instance=product)
-        formset = product_forms.UpdateImageFormSet(instance=product)
+        # formset = product_forms.UpdateImageFormSet(instance=product)
     else:
         return redirect('register_as_seller')
 
     return render(request, 'user/update_product.html', {
         'product_id': product_id,
         'edit_product_form': product_form,
-        'formset': formset
+        # 'formset': formset
     })
 
 
