@@ -7,6 +7,19 @@ class ImageUpload {
 
         id_image.fileupload({
             dataType: 'json',
+            sequentialUploads: true,
+            start: function (e) {  /* 2. WHEN THE UPLOADING PROCESS STARTS, SHOW THE MODAL */
+                $('.progress').show();
+            },
+            stop: function (e) {  /* 3. WHEN THE UPLOADING PROCESS FINALIZE, HIDE THE MODAL */
+                $('.progress').hide();
+            },
+            progressall: function (e, data) {  /* 4. UPDATE THE PROGRESS BAR */
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                var strProgress = progress + "%";
+                $(".progress-bar").css({"width": strProgress});
+                // $(".progress-percentage").text(strProgress);
+            },
             done: function (e, data) {  /* 3. PROCESS THE RESPONSE FROM THE SERVER */
                 if (data.result.is_valid) {
                     var imageTableRow = new ImageTableRow(data, csrf_token);

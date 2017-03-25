@@ -1,15 +1,18 @@
 {% extends 'user_index.html' %}
 {% block user_content %}
     {# 1. BUTTON TO TRIGGER THE ACTION #}
-    <button type="button" class="btn btn-primary js-upload-photos">
-        <span class="glyphicon glyphicon-cloud-upload"></span> Upload photos
-    </button>
-
-    <div class="well text-muted text-center" style="padding-top: 4rem; padding-bottom: 4rem;">
+    <div class="well text-muted text-center" style="padding: 4rem 0; margin-top: 10px;">
         <span class="glyphicon glyphicon-arrow-down" style="font-size: 4rem;"></span>
         <h3>Drop Photos Here to Upload</h3>
     </div>
 
+    <button type="button" class="btn btn-primary js-upload-photos">
+        <span class="glyphicon glyphicon-cloud-upload"></span> Upload photos
+    </button>
+
+    <div class="progress" hidden>
+        <div class="progress-bar" role="progressbar" style="width: 0;"></div>
+    </div>
     {# 2. FILE INPUT TO BE USED BY THE PLUG-IN #}
     <input id="id_image" type="file" name="image" multiple
            style="display: none;"
@@ -50,4 +53,5 @@
         {% endfor %}
         </tbody>
     </table>
+    <a href="{% url 'list_product' %}" class="btn btn-primary btn-raised">Done</a>
 {% endblock %}

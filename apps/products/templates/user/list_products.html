@@ -8,19 +8,19 @@
                 of {{ product_list.paginator.count }}</span>
             <table class="table table-bordered table-striped" id="item_list">
                 <tr>
-                    <th>Pic</th>
+                    <th class="hidden-xs">Pic</th>
                     <th>Name</th>
-                    <th>Type</th>
-                    <th>Brand</th>
-                    <th>Price</th>
-                    <th>Unit</th>
-                    <th>Description</th>
+                    <th class="hidden-xs hidden-sm">Type</th>
+                    <th class="hidden-xs hidden-sm">Brand</th>
+                    <th class="hidden-xs">Price</th>
+                    <th class="hidden-xs hidden-sm">Unit</th>
+                    <th class="hidden-xs hidden-sm">Description</th>
                     <th>Actions</th>
                 </tr>
                 {% if product_list %}
                     {% for item in product_list %}
                         <tr>
-                            <td>
+                            <td class="hidden-xs">
                                 {% for images in product_list.item_image %}
                                     {% if images.0.item_id == item.id %}
                                         <img src="/{{ images.0.image }}" alt="{{ images.0.image }}"
@@ -28,11 +28,11 @@
                                     {% endif %}
                                 {% endfor %}</td>
                             <td>{{ item.name | capfirst }}</td>
-                            <td>{{ item.type | capfirst }}</td>
-                            <td>{{ item.brand | capfirst }}</td>
-                            <td>${{ item.price }}</td>
-                            <td>{{ item.count }} {{ item.weight_unit }}</td>
-                            <td>{{ item.description|truncatechars:20 }}</td>
+                            <td class="hidden-xs hidden-sm">{{ item.type | capfirst }}</td>
+                            <td class="hidden-xs hidden-sm">{{ item.brand | capfirst }}</td>
+                            <td class="hidden-xs">${{ item.price }}</td>
+                            <td class="hidden-xs hidden-sm">{{ item.count }} {{ item.weight_unit }}</td>
+                            <td class="hidden-xs hidden-sm">{{ item.description|truncatechars:20 }}</td>
                             <td>
                                 <a href="{% url 'update_product' item.id %}" class="btn btn-raised btn-primary">Update
                                     Product</a>
