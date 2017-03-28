@@ -3,8 +3,10 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db.models import Sum, F
 from django.shortcuts import render, redirect
 
+from apps.products.models import Item
 from . import forms as user_forms
 from .models import Profile
 
@@ -41,7 +43,13 @@ def view_profile(request, display_name):
 
 @login_required(login_url='/user/login')
 def home(request):
-    return render(request, 'profiles/user_home.html')
+    user_products = Item.objects.filter(user=request.user)
+    products_count = user_products.count()
+    products_extra_info = user_products.aggregate(Sum('view_count'), total=Sum(F('price') * F('count')))
+    return render(request, 'profiles/user_home.html', {
+        'products_count': products_count,
+        'products_extra_info': products_extra_info
+    })
 
 
 @login_required

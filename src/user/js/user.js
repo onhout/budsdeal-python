@@ -19,8 +19,6 @@ $(function () {
         new Image_Upload('#id_image');
     });
 
-    new Image_Upload('#id_image');
-
 
     $('.delete_photo').click(function (e) {
         e.preventDefault();
