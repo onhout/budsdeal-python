@@ -1,9 +1,9 @@
 from django.contrib import messages
-from django.contrib.auth import logout as auth_logout
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import logout as auth_logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.db.models import Sum, F
+from django.db.models import Sum, F, Avg, Count
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 from apps.products.models import Item
@@ -124,3 +124,41 @@ def register_as_seller(request):
         return render(request, 'profiles/register_as_seller.html')
     else:
         return redirect('user_home')
+
+
+@login_required
+def user_feedback(request, display_name):
+    userProfile = Profile.objects.get(display_name=display_name)
+    user = User.objects.get(id=userProfile.user_id)
+    if request.POST and request.user.is_authenticated:
+        feedbackForm = user_forms.FeedBackForm(request.POST)
+        feedbackForm.save(commit=False)
+        feedbackForm.from_user = request.user
+        feedbackForm.to_user = user
+        feedbackForm.save()
+        data = {
+            'rating': user.feedback_to_user.aggregate(avg=Avg('user_rating'), count=Count('user_rating'))
+        }
+    else:
+        data = {
+            'rating': user.feedback_to_user.aggregate(avg=Avg('user_rating'), count=Count('user_rating'))
+        }
+    return JsonResponse(data)
+
+
+def product_feedback(request, product_id):
+    product = Item.objects.get(id=product_id)
+    if request.POST and request.user.is_authenticated:
+        feedbackForm = user_forms.ProductFeedBackForm(request.POST)
+        feedbackForm.save(commit=False)
+        feedbackForm.from_user = request.user
+        feedbackForm.to_item = product
+        feedbackForm.save()
+        data = {
+            'rating': product.product_feedback_to_product.aggregate(avg=Avg('item_rating'), count=Count('item_rating'))
+        }
+    else:
+        data = {
+            'rating': product.product_feedback_to_product.aggregate(avg=Avg('item_rating'), count=Count('item_rating'))
+        }
+    return JsonResponse(data)

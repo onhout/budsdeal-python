@@ -7,7 +7,7 @@ from faker import Faker
 from model_mommy import mommy
 
 from apps.products import models
-from apps.user.models import Profile, Company
+from apps.user.models import Profile, Company, Feedback, ProductFeedback
 
 fake = Faker()
 
@@ -24,8 +24,12 @@ class Command(BaseCommand):
         self.make_subcategory()
         print('making users...')
         self.make_users()
+        print('making bs feedbacks...')
+        self.make_user_feedback()
         print('making products...')
         self.make_products()
+        print('making SLOW ASS product feedbacks...')
+        self.make_product_feedback()
         print('DONE!')
 
     def clear(self):
@@ -81,6 +85,16 @@ class Command(BaseCommand):
             profile.save()
             company.save()
 
+    def make_user_feedback(self):
+        for num in range(1, fake.random_int(1, 1000)):
+            mommy.make(
+                Feedback,
+                from_user=User.objects.get(username='username' + str(fake.random_int(1, 99))),
+                to_user=User.objects.get(username='username' + str(fake.random_int(1, 99))),
+                user_rating=fake.random_int(1, 5),
+                content=fake.text()
+            )
+
     def make_products(self):
         category_model = models.Category.objects.filter(parent_category__isnull=False)
         for num1 in range(1, 1000):
@@ -95,4 +109,14 @@ class Command(BaseCommand):
                 view_count=fake.random_number(4),
                 description=fake.text(),
                 categories=category_model[random.randint(0, category_model.count() - 1)]
+            )
+
+    def make_product_feedback(self):
+        for num in range(1, fake.random_int(1, 10000)):
+            mommy.make(
+                ProductFeedback,
+                from_user=User.objects.get(username='username' + str(fake.random_int(1, 99))),
+                to_item=models.Item.objects.order_by('?').first(),  # THIS IS GONNA BE SLOW
+                item_rating=fake.random_int(1, 5),
+                content=fake.text()
             )

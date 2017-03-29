@@ -2,13 +2,17 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-import random
+
+from apps.products.models import Item
+
 
 #
 #
 # # Create your models here.
 #
 #
+
+
 class Profile(models.Model):
     GENDERS = (
         ('male', 'Male'),
@@ -47,6 +51,24 @@ class Company(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Feedback(models.Model):
+    STARS_CHOICES = zip(range(1, 5), range(1, 5))
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='feedback_from_user')
+    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='feedback_to_user')
+    user_rating = models.IntegerField(choices=STARS_CHOICES)
+    content = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now=True)
+
+
+class ProductFeedback(models.Model):
+    STARS_CHOICES = zip(range(1, 5), range(1, 5))
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='product_feedback_from_user')
+    to_item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='product_feedback_to_product')
+    item_rating = models.IntegerField(choices=STARS_CHOICES)
+    content = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now=True)
 
 
 @receiver(post_save, sender=User)
