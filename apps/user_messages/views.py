@@ -12,7 +12,7 @@ from . import models, forms
 
 @login_required
 def view_sent_messages(request):
-    messages = models.Conversations.objects.filter(from_user=request.user.id)
+    messages = request.user.message_from_user.all()
     return render(request, 'user/view_messages.html', {
         'inbox_type': 'Sent',
         'user_messages': messages
@@ -21,7 +21,7 @@ def view_sent_messages(request):
 
 @login_required
 def view_inbox_messages(request):
-    messages = models.Conversations.objects.filter(to_user=request.user.id)
+    messages = request.user.message_to_user.all()
     return render(request, 'user/view_messages.html', {
         'inbox_type': 'Inbox',
         'user_messages': messages

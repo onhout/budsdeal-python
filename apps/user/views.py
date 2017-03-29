@@ -6,7 +6,6 @@ from django.db.models import Sum, F, Avg, Count
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
-from apps.products.models import Item
 from . import forms as user_forms
 from .models import Profile
 
@@ -43,7 +42,7 @@ def view_profile(request, display_name):
 
 @login_required(login_url='/user/login')
 def home(request):
-    user_products = Item.objects.filter(user=request.user)
+    user_products = request.user.product
     products_count = user_products.count()
     products_extra_info = user_products.aggregate(Sum('view_count'), total=Sum(F('price') * F('count')))
     return render(request, 'profiles/user_home.html', {
@@ -126,11 +125,20 @@ def register_as_seller(request):
         return redirect('user_home')
 
 
-@login_required
-def user_feedback(request, display_name):
+def get_user_feedback(request, display_name):
     userProfile = Profile.objects.get(display_name=display_name)
     user = User.objects.get(id=userProfile.user_id)
-    if request.POST and request.user.is_authenticated:
+    data = {
+        'rating': user.feedback_to_user.aggregate(avg=Avg('user_rating'), count=Count('user_rating'))
+    }
+    return JsonResponse(data)
+
+
+@login_required
+def post_user_feedback(request, display_name):
+    user = User.objects.get(id=Profile.objects.get(display_name=display_name))
+    feedback = request.user.feedback_from_user.filter(to_user=user)
+    if request.POST and request.user.is_authenticated and request.user is not user and not feedback:
         feedbackForm = user_forms.FeedBackForm(request.POST)
         feedbackForm.save(commit=False)
         feedbackForm.from_user = request.user
@@ -140,7 +148,5 @@ def user_feedback(request, display_name):
             'rating': user.feedback_to_user.aggregate(avg=Avg('user_rating'), count=Count('user_rating'))
         }
     else:
-        data = {
-            'rating': user.feedback_to_user.aggregate(avg=Avg('user_rating'), count=Count('user_rating'))
-        }
+        data = 'Not Authorized'
     return JsonResponse(data)

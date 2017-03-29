@@ -18,7 +18,7 @@ class Profile(models.Model):
         ('male', 'Male'),
         ('female', 'Female')
     )
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     gender = models.CharField(max_length=20, null=True, blank=True,
                               choices=GENDERS)
     display_name = models.CharField(max_length=20, blank=True, null=True)
@@ -38,7 +38,7 @@ class Profile(models.Model):
 
 
 class Company(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='company')
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=255)
     address2 = models.CharField(max_length=10, blank=True, null=True)

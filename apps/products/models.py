@@ -40,7 +40,7 @@ class Item(models.Model):
         ('unit', 'unit'),
     ]
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='product')
     name = models.CharField(max_length=150)
     type = models.CharField(max_length=10, choices=TYPE)
     brand = models.CharField(max_length=150, blank=True, null=True)

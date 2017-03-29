@@ -110,7 +110,7 @@ def image_delete(request, image_id):
 
 @login_required
 def list_product(request):
-    product_list = product_models.Item.objects.all().filter(user=request.user)
+    product_list = request.user.product.all()
     paginator = Paginator(product_list, 5)
     page = request.GET.get('page')
 
@@ -172,7 +172,16 @@ def delete_product(request, product_id):
     return redirect('list_product')
 
 
-def product_feedback(request, product_id):
+def get_product_feedback(request, product_id):
+    product = product_models.Item.objects.get(id=product_id)
+    data = {
+        'rating': product.product_feedback_to_product.aggregate(avg=Avg('item_rating'), count=Count('item_rating'))
+    }
+    return JsonResponse(data)
+
+
+@login_required
+def post_product_feedback(request, product_id):
     product = product_models.Item.objects.get(id=product_id)
     if request.POST and request.user.is_authenticated:
         feedbackForm = product_forms.FeedBackForm(request.POST)
@@ -184,7 +193,5 @@ def product_feedback(request, product_id):
             'rating': product.product_feedback_to_product.aggregate(avg=Avg('item_rating'), count=Count('item_rating'))
         }
     else:
-        data = {
-            'rating': product.product_feedback_to_product.aggregate(avg=Avg('item_rating'), count=Count('item_rating'))
-        }
+        data = 'Not Authorized'
     return JsonResponse(data)
