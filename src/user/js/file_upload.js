@@ -29,15 +29,15 @@ class ImageUpload {
         })
     }
 
-    static deleteFN() {
+    static deleteFN(image_id) {
         return function (e) {
             e.preventDefault();
-            var self = $(this);
-            var href = self.attr('href');
-            var csrfToken = self.data('csrftoken');
+            var self = this;
+            var href = '/products/image/delete/' + image_id + '/';
+            var csrfToken = $(self).data('csrftoken');
             $.post(href, csrfToken, function (data) {
                 if (data.success) {
-                    self.closest('tr').remove();
+                    $(self).closest('tr').remove();
                 }
             })
         }
@@ -64,7 +64,7 @@ class ImageTableRow {
                 'class': 'btn btn-danger btn-raised delete_photo',
                 'data-csrftoken': '{"csrfmiddlewaretoken": "' + csrfToken.getCookie('csrftoken') + '"}',
                 'text': 'Delete'
-            }).click(ImageUpload.deleteFN());  //TODO fix this
+            }).click(ImageUpload.deleteFN(data.result.image_id));
 
         this._row = this.row
             .append($('<td>').append(this.imgLink.append(this.img)))
