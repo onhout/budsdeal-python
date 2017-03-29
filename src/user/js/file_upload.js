@@ -8,6 +8,7 @@ class ImageUpload {
         id_image.fileupload({
             dataType: 'json',
             sequentialUploads: true,
+            acceptFileTypes: /(\.|\/)(jpe?g|png)$/i,
             start: function (e) {  /* 2. WHEN THE UPLOADING PROCESS STARTS, SHOW THE MODAL */
                 $('.progress').show();
             },
@@ -29,13 +30,12 @@ class ImageUpload {
         })
     }
 
-    static deleteFN(image_id) {
+    static deleteFN(image_id, csrftoken, SELF) {
         return function (e) {
             e.preventDefault();
-            var self = this;
+            var self = this || SELF;
             var href = '/products/image/delete/' + image_id + '/';
-            var csrfToken = $(self).data('csrftoken');
-            $.post(href, csrfToken, function (data) {
+            $.post(href, csrftoken, function (data) {
                 if (data.success) {
                     $(self).closest('tr').remove();
                 }
@@ -62,9 +62,9 @@ class ImageTableRow {
         this.deleteBtn = $('<a/>',
             {
                 'class': 'btn btn-danger btn-raised delete_photo',
-                'data-csrftoken': '{"csrfmiddlewaretoken": "' + csrfToken.getCookie('csrftoken') + '"}',
                 'text': 'Delete'
-            }).click(ImageUpload.deleteFN(data.result.image_id));
+            }).click(ImageUpload.deleteFN(data.result.image_id,
+            {csrfmiddlewaretoken: '' + csrfToken.getCookie('csrftoken')}));
 
         this._row = this.row
             .append($('<td>').append(this.imgLink.append(this.img)))

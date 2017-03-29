@@ -2,6 +2,7 @@ import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Avg, Count
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
@@ -169,3 +170,21 @@ def delete_product(request, product_id):
         product.save()
 
     return redirect('list_product')
+
+
+def product_feedback(request, product_id):
+    product = product_models.Item.objects.get(id=product_id)
+    if request.POST and request.user.is_authenticated:
+        feedbackForm = product_forms.FeedBackForm(request.POST)
+        feedbackForm.save(commit=False)
+        feedbackForm.from_user = request.user
+        feedbackForm.to_item = product
+        feedbackForm.save()
+        data = {
+            'rating': product.product_feedback_to_product.aggregate(avg=Avg('item_rating'), count=Count('item_rating'))
+        }
+    else:
+        data = {
+            'rating': product.product_feedback_to_product.aggregate(avg=Avg('item_rating'), count=Count('item_rating'))
+        }
+    return JsonResponse(data)

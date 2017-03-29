@@ -144,21 +144,3 @@ def user_feedback(request, display_name):
             'rating': user.feedback_to_user.aggregate(avg=Avg('user_rating'), count=Count('user_rating'))
         }
     return JsonResponse(data)
-
-
-def product_feedback(request, product_id):
-    product = Item.objects.get(id=product_id)
-    if request.POST and request.user.is_authenticated:
-        feedbackForm = user_forms.ProductFeedBackForm(request.POST)
-        feedbackForm.save(commit=False)
-        feedbackForm.from_user = request.user
-        feedbackForm.to_item = product
-        feedbackForm.save()
-        data = {
-            'rating': product.product_feedback_to_product.aggregate(avg=Avg('item_rating'), count=Count('item_rating'))
-        }
-    else:
-        data = {
-            'rating': product.product_feedback_to_product.aggregate(avg=Avg('item_rating'), count=Count('item_rating'))
-        }
-    return JsonResponse(data)

@@ -2,7 +2,7 @@ from django.contrib.auth.admin import User
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 from django.forms import ModelForm
 
-from .models import Profile, Company, Feedback, ProductFeedback
+from .models import Profile, Company, Feedback
 
 
 class PasswordChangeCustomForm(PasswordChangeForm):
@@ -58,10 +58,4 @@ class CompanyForm(ModelForm):
 class FeedBackForm(ModelForm):
     class Meta:
         model = Feedback
-        exclude = ['to_user', 'from_user']
-
-
-class ProductFeedBackForm(ModelForm):
-    class Meta:
-        model = ProductFeedback
         exclude = ['to_user', 'from_user']

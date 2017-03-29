@@ -162,6 +162,15 @@ class ItemImage(models.Model):
     directory_string = './static/media/item_pics'
 
 
+class Feedback(models.Model):
+    STARS_CHOICES = zip(range(1, 5), range(1, 5))
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='product_feedback_from_user')
+    to_item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='product_feedback_to_product')
+    item_rating = models.IntegerField(choices=STARS_CHOICES)
+    content = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now=True)
+
+
 @receiver(post_delete, sender=ItemImage)
 def image_delete(sender, instance, **kwargs):
     if instance.image:

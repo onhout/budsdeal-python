@@ -7,7 +7,7 @@ from faker import Faker
 from model_mommy import mommy
 
 from apps.products import models
-from apps.user.models import Profile, Company, Feedback, ProductFeedback
+from apps.user.models import Profile, Company, Feedback
 
 fake = Faker()
 
@@ -114,7 +114,7 @@ class Command(BaseCommand):
     def make_product_feedback(self):
         for num in range(1, fake.random_int(1, 10000)):
             mommy.make(
-                ProductFeedback,
+                models.Feedback,
                 from_user=User.objects.get(username='username' + str(fake.random_int(1, 99))),
                 to_item=models.Item.objects.order_by('?').first(),  # THIS IS GONNA BE SLOW
                 item_rating=fake.random_int(1, 5),

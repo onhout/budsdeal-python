@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django.forms.models import inlineformset_factory, modelformset_factory
 
-from .models import Item, Category, ItemImage
+from .models import Item, Category, ItemImage, Feedback
 
 
 class AddProductForm(ModelForm):
@@ -38,6 +38,12 @@ class ImageForm(ModelForm):
         model = ItemImage
         fields = ['image']
         exclude = ['item']
+
+
+class FeedBackForm(ModelForm):
+    class Meta:
+        model = Feedback
+        exclude = ['to_user', 'from_user']
 
 
 UpdateImageFormSet = inlineformset_factory(Item, ItemImage, form=ImageForm, max_num=3)

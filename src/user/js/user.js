@@ -21,14 +21,7 @@ $(function () {
 
 
     $('.delete_photo').click(function (e) {
-        e.preventDefault();
-        var self = $(this);
-        var href = self.attr('href');
-        var csrfToken = self.data('csrftoken');
-        $.post(href, csrfToken, function (data) {
-            if (data.success) {
-                self.closest('tr').remove();
-            }
-        })
+        var ID = $(this).data('image_id');
+        return Image_Upload.deleteFN(ID, $(this).data('csrftoken'), $(this))(e)
     })
 });

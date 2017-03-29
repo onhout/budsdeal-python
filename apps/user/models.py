@@ -62,15 +62,6 @@ class Feedback(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
 
-class ProductFeedback(models.Model):
-    STARS_CHOICES = zip(range(1, 5), range(1, 5))
-    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='product_feedback_from_user')
-    to_item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='product_feedback_to_product')
-    item_rating = models.IntegerField(choices=STARS_CHOICES)
-    content = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now=True)
-
-
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
