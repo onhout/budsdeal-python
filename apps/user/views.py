@@ -45,9 +45,11 @@ def home(request):
     user_products = request.user.product
     products_count = user_products.count()
     products_extra_info = user_products.aggregate(Sum('view_count'), total=Sum(F('price') * F('count')))
+    user_rating = request.user.feedback_to_user.aggregate(avg=Avg('user_rating'), count=Count('user_rating'))
+    request.user.rating = user_rating
     return render(request, 'profiles/user_home.html', {
         'products_count': products_count,
-        'products_extra_info': products_extra_info
+        'products_extra_info': products_extra_info,
     })
 
 
@@ -123,15 +125,6 @@ def register_as_seller(request):
         return render(request, 'profiles/register_as_seller.html')
     else:
         return redirect('user_home')
-
-
-def get_user_feedback(request, display_name):
-    userProfile = Profile.objects.get(display_name=display_name)
-    user = User.objects.get(id=userProfile.user_id)
-    data = {
-        'rating': user.feedback_to_user.aggregate(avg=Avg('user_rating'), count=Count('user_rating'))
-    }
-    return JsonResponse(data)
 
 
 @login_required

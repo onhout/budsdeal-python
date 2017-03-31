@@ -6,6 +6,7 @@ import "../less/user.less";
 // fbButton.append(FB.register(fbButton.data('method')));
 // googButton.append(GOOGLE.register(googButton.data('method')));
 var Image_Upload = require('./file_upload').default;
+var Feedback = require('../../globals/Feedback/Feedback.js').default;
 
 
 $(function () {
@@ -23,5 +24,8 @@ $(function () {
     $('.delete_photo').click(function (e) {
         var ID = $(this).data('image_id');
         return Image_Upload.deleteFN(ID, $(this).data('csrftoken'), $(this))(e)
-    })
+    });
+
+
+    var feedback = new Feedback();
 });

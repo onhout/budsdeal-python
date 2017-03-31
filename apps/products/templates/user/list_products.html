@@ -27,7 +27,7 @@
                                              class="img-responsive img-rounded">
                                     {% endif %}
                                 {% endfor %}</td>
-                            <td>{{ item.name | capfirst }}</td>
+                            <td><a href="{% url 'view_product' item.id %}">{{ item.name | capfirst }}</a></td>
                             <td class="hidden-xs hidden-sm">{{ item.type | capfirst }}</td>
                             <td class="hidden-xs hidden-sm">{{ item.brand | capfirst }}</td>
                             <td class="hidden-xs">${{ item.price }}</td>

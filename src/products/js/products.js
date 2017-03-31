@@ -1,2 +1,6 @@
 import "../less/products.less";
-console.log('products index loaded every time!');
+var Feedback = require('../../globals/Feedback/Feedback.js').default;
+
+$(function () {
+    var feedback = new Feedback();
+});

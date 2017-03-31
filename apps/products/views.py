@@ -14,6 +14,7 @@ from . import forms as product_forms, models as product_models
 
 def view_product(request, product_id):
     item = product_models.Item.objects.get(pk=product_id)
+    item.rating = item.product_feedback_to_product.aggregate(avg=Avg('item_rating'), count=Count('item_rating'))
     if item.user != request.user:
         item.view_count += 1
         item.save()
@@ -170,14 +171,6 @@ def delete_product(request, product_id):
         product.save()
 
     return redirect('list_product')
-
-
-def get_product_feedback(request, product_id):
-    product = product_models.Item.objects.get(id=product_id)
-    data = {
-        'rating': product.product_feedback_to_product.aggregate(avg=Avg('item_rating'), count=Count('item_rating'))
-    }
-    return JsonResponse(data)
 
 
 @login_required

@@ -7,8 +7,12 @@
     <div class="splash-circle center-block">
         <img src="/{{ item_images.1.image }}" alt="{{ item_images.1.image }}">
     </div>
-
+    <div class="buds_star"
+         data-feedback_products="{{ item.id }}"
+         data-feedback_rating_count="{{ item.rating.count }}"
+         data-feedback_rating={{ item.rating.avg }}></div>
     <h1 class="text-center">{{ item.name }} - ${{ item.price }}</h1>
+
     <hr>
     <div class="jumbotron">
         {% for image in item_images %}
