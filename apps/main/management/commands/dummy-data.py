@@ -48,7 +48,9 @@ class Command(BaseCommand):
         parent_models = models.Category.objects.filter(parent_category__isnull=True)
         for num in range(1, 30):
             name = fake.catch_phrase().title()
-            mommy.make(models.Category, name=name, slug=slugify(name),
+            mommy.make(models.Category,
+                       name=name,
+                       slug=slugify(name),
                        parent_category=models.Category.objects.get(name=parent_models[random.randint(0, 3)]))
 
     def make_users(self):

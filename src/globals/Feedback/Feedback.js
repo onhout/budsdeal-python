@@ -68,9 +68,6 @@ class Feedback {
         }
     }
 
-    _post() {
-
-    }
 }
 
 export default Feedback

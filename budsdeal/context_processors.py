@@ -1,5 +1,5 @@
-from apps.user_messages.models import Conversations
 from apps.products.models import Category
+from apps.user_messages.models import Conversations
 
 
 def unread_message_count(request):
@@ -12,9 +12,16 @@ def unread_message_count(request):
 
 
 def category_list(request):
-    parent_category = Category.objects.exclude(parent_category__isnull=False)
-    child_category = Category.objects.exclude(parent_category__isnull=True)
+    categories = Category.objects.exclude(parent_category__isnull=False)
+    # child_category = Category.objects.exclude(parent_category__isnull=True)
+    # print(Category.objects.filter(parent_category__in=parent_category))
+    for parent in categories:
+        parent.menu_bar_all = []
+        parent.menu_bar = []
+        parent.menu_bar_all.append(Category.objects.filter(parent_category=parent)[4:])
+        parent.menu_bar.append(Category.objects.filter(parent_category=parent)[:4])
     return {
-        'parent_category': parent_category,
-        'child_category': child_category,
+        'categories': categories,
+        # 'child_category': child_category,
+        # 'child_category_menu': child_category[:5]
     }
