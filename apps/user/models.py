@@ -53,15 +53,6 @@ class Company(models.Model):
         return self.name
 
 
-class Feedback(models.Model):
-    STARS_CHOICES = zip(range(1, 5), range(1, 5))
-    from_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='feedback_from_user')
-    to_user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='feedback_to_user')
-    user_rating = models.IntegerField(choices=STARS_CHOICES)
-    content = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now=True)
-
-
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

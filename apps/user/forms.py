@@ -2,7 +2,7 @@ from django.contrib.auth.admin import User
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 from django.forms import ModelForm
 
-from .models import Profile, Company, Feedback
+from .models import Profile, Company
 
 
 class PasswordChangeCustomForm(PasswordChangeForm):
@@ -53,9 +53,3 @@ class CompanyForm(ModelForm):
             self.fields[field].label = 'Company ' + self.fields[field].label
             if self.fields[field].required:
                 self.fields[field].help_text = '*required'
-
-
-class FeedBackForm(ModelForm):
-    class Meta:
-        model = Feedback
-        exclude = ['to_user', 'from_user']

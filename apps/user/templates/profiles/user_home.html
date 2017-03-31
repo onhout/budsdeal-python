@@ -8,8 +8,8 @@
             <img src="/{{ user.profile.profile_photo }}" class="img-thumbnail"/>
             <div class="buds_star"
                  data-feedback_user="{{ user.profile.display_name }}"
-                 data-feedback_rating="{{ user.rating.avg }}"
-                 data-feedback_rating_count="{{ user.rating.count }}"></div>
+                 data-feedback_rating="{{ user.item_rating.avg }}"
+                 data-feedback_rating_count="{{ user.item_rating.count }}"></div>
             <div class="buds_feedback" data-feedback_user="{{ user.profile.display_name }}"
                  data-feedback_submit_rating="true"></div>
         </div>
@@ -41,8 +41,8 @@
                         <h2>{{ products_extra_info.view_count__sum }}</h2>
                     </div>
                     <div class="profile_info col-md-4">
-                        <h4>Total Revenue</h4>
-                        <h2 class="no-wrap">${{ products_extra_info.total|intword }}</h2>
+                        <h4>Last Login</h4>
+                        <h2 class="no-wrap">{{ user.last_login }}</h2>
                     </div>
                 </div>
             </div>

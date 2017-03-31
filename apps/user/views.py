@@ -3,9 +3,9 @@ from django.contrib.auth import logout as auth_logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Sum, F, Avg, Count
-from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
+from apps.products.models import Feedback
 from . import forms as user_forms
 from .models import Profile
 
@@ -45,8 +45,9 @@ def home(request):
     user_products = request.user.product
     products_count = user_products.count()
     products_extra_info = user_products.aggregate(Sum('view_count'), total=Sum(F('price') * F('count')))
-    user_rating = request.user.feedback_to_user.aggregate(avg=Avg('user_rating'), count=Count('user_rating'))
-    request.user.rating = user_rating
+    item_rating = Feedback.objects.filter(to_item__in=request.user.product.all()).aggregate(avg=Avg('item_rating'),
+                                                                                            count=Count('item_rating'))
+    request.user.item_rating = item_rating
     return render(request, 'profiles/user_home.html', {
         'products_count': products_count,
         'products_extra_info': products_extra_info,
@@ -125,21 +126,3 @@ def register_as_seller(request):
         return render(request, 'profiles/register_as_seller.html')
     else:
         return redirect('user_home')
-
-
-@login_required
-def post_user_feedback(request, display_name):
-    user = User.objects.get(id=Profile.objects.get(display_name=display_name))
-    feedback = request.user.feedback_from_user.filter(to_user=user)
-    if request.POST and request.user.is_authenticated and request.user is not user and not feedback:
-        feedbackForm = user_forms.FeedBackForm(request.POST)
-        feedbackForm.save(commit=False)
-        feedbackForm.from_user = request.user
-        feedbackForm.to_user = user
-        feedbackForm.save()
-        data = {
-            'rating': user.feedback_to_user.aggregate(avg=Avg('user_rating'), count=Count('user_rating'))
-        }
-    else:
-        data = 'Not Authorized'
-    return JsonResponse(data)

@@ -14,5 +14,4 @@ urlpatterns = [
     url(r'^settings/edit_password/$', views.account_settings_password, name='user_settings_password'),
     url(r'^view/(?P<display_name>[\w-]+)', views.view_profile, name='view_profile'),
     url(r'^seller/register', views.register_as_seller, name='register_as_seller'),
-    url(r'^feedback/post/(?P<display_name>[\w-]+)', views.post_user_feedback, name='user_feedback'),
 ]

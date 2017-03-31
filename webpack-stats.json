@@ -112,8 +112,5 @@
         "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/vendor-541eddfeca33c597a6ad.css.map"
       }
     ]
-  },
-  "error": "ModuleBuildError",
-  "file": "/Users/pl/Documents/pythonstuff/budsdeal/src/globals/Feedback/Feedback.js",
-  "message": "Module build failed: SyntaxError: Unexpected token (26:12)\n\n  24 |             this.star.on('mouseenter.buds_star', function(e){\n  25 |                 e.target.\n> 26 |             })\n     |             ^\n  27 |         }\n  28 | \n  29 |     }\n"
+  }
 }
