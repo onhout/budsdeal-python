@@ -1,1 +1,119 @@
-{"status":"compiling","publicPath":"/static/dist/","chunks":{"main":[{"name":"main-541eddfeca33c597a6ad.js","publicPath":"/static/dist/main-541eddfeca33c597a6ad.js","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/main-541eddfeca33c597a6ad.js"},{"name":"main-541eddfeca33c597a6ad.css","publicPath":"/static/dist/main-541eddfeca33c597a6ad.css","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/main-541eddfeca33c597a6ad.css"},{"name":"main-541eddfeca33c597a6ad.js.map","publicPath":"/static/dist/main-541eddfeca33c597a6ad.js.map","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/main-541eddfeca33c597a6ad.js.map"},{"name":"main-541eddfeca33c597a6ad.css.map","publicPath":"/static/dist/main-541eddfeca33c597a6ad.css.map","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/main-541eddfeca33c597a6ad.css.map"}],"products":[{"name":"products-541eddfeca33c597a6ad.js","publicPath":"/static/dist/products-541eddfeca33c597a6ad.js","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/products-541eddfeca33c597a6ad.js"},{"name":"products-541eddfeca33c597a6ad.css","publicPath":"/static/dist/products-541eddfeca33c597a6ad.css","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/products-541eddfeca33c597a6ad.css"},{"name":"products-541eddfeca33c597a6ad.js.map","publicPath":"/static/dist/products-541eddfeca33c597a6ad.js.map","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/products-541eddfeca33c597a6ad.js.map"},{"name":"products-541eddfeca33c597a6ad.css.map","publicPath":"/static/dist/products-541eddfeca33c597a6ad.css.map","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/products-541eddfeca33c597a6ad.css.map"}],"user":[{"name":"user-541eddfeca33c597a6ad.js","publicPath":"/static/dist/user-541eddfeca33c597a6ad.js","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user-541eddfeca33c597a6ad.js"},{"name":"user-541eddfeca33c597a6ad.css","publicPath":"/static/dist/user-541eddfeca33c597a6ad.css","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user-541eddfeca33c597a6ad.css"},{"name":"user-541eddfeca33c597a6ad.js.map","publicPath":"/static/dist/user-541eddfeca33c597a6ad.js.map","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user-541eddfeca33c597a6ad.js.map"},{"name":"user-541eddfeca33c597a6ad.css.map","publicPath":"/static/dist/user-541eddfeca33c597a6ad.css.map","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user-541eddfeca33c597a6ad.css.map"}],"user_messages":[{"name":"user_messages-541eddfeca33c597a6ad.js","publicPath":"/static/dist/user_messages-541eddfeca33c597a6ad.js","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user_messages-541eddfeca33c597a6ad.js"},{"name":"user_messages-541eddfeca33c597a6ad.css","publicPath":"/static/dist/user_messages-541eddfeca33c597a6ad.css","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user_messages-541eddfeca33c597a6ad.css"},{"name":"user_messages-541eddfeca33c597a6ad.js.map","publicPath":"/static/dist/user_messages-541eddfeca33c597a6ad.js.map","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user_messages-541eddfeca33c597a6ad.js.map"},{"name":"user_messages-541eddfeca33c597a6ad.css.map","publicPath":"/static/dist/user_messages-541eddfeca33c597a6ad.css.map","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user_messages-541eddfeca33c597a6ad.css.map"}],"vendor":[{"name":"vendor-541eddfeca33c597a6ad.js","publicPath":"/static/dist/vendor-541eddfeca33c597a6ad.js","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/vendor-541eddfeca33c597a6ad.js"},{"name":"vendor-541eddfeca33c597a6ad.css","publicPath":"/static/dist/vendor-541eddfeca33c597a6ad.css","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/vendor-541eddfeca33c597a6ad.css"},{"name":"vendor-541eddfeca33c597a6ad.js.map","publicPath":"/static/dist/vendor-541eddfeca33c597a6ad.js.map","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/vendor-541eddfeca33c597a6ad.js.map"},{"name":"vendor-541eddfeca33c597a6ad.css.map","publicPath":"/static/dist/vendor-541eddfeca33c597a6ad.css.map","path":"/Users/pl/Documents/pythonstuff/budsdeal/static/dist/vendor-541eddfeca33c597a6ad.css.map"}]},"error":"ModuleBuildError","file":"/Users/pl/Documents/pythonstuff/budsdeal/src/globals/Feedback/Feedback.js","message":"Module build failed: SyntaxError: Unexpected token (26:12)\n\n  24 |             this.star.on('mouseenter.buds_star', function(e){\n  25 |                 e.target.\n> 26 |             })\n     |             ^\n  27 |         }\n  28 | \n  29 |     }\n"}
+{
+  "status": "done",
+  "publicPath": "/static/dist/",
+  "chunks": {
+    "main": [
+      {
+        "name": "main-541eddfeca33c597a6ad.js",
+        "publicPath": "/static/dist/main-541eddfeca33c597a6ad.js",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/main-541eddfeca33c597a6ad.js"
+      },
+      {
+        "name": "main-541eddfeca33c597a6ad.css",
+        "publicPath": "/static/dist/main-541eddfeca33c597a6ad.css",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/main-541eddfeca33c597a6ad.css"
+      },
+      {
+        "name": "main-541eddfeca33c597a6ad.js.map",
+        "publicPath": "/static/dist/main-541eddfeca33c597a6ad.js.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/main-541eddfeca33c597a6ad.js.map"
+      },
+      {
+        "name": "main-541eddfeca33c597a6ad.css.map",
+        "publicPath": "/static/dist/main-541eddfeca33c597a6ad.css.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/main-541eddfeca33c597a6ad.css.map"
+      }
+    ],
+    "products": [
+      {
+        "name": "products-541eddfeca33c597a6ad.js",
+        "publicPath": "/static/dist/products-541eddfeca33c597a6ad.js",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/products-541eddfeca33c597a6ad.js"
+      },
+      {
+        "name": "products-541eddfeca33c597a6ad.css",
+        "publicPath": "/static/dist/products-541eddfeca33c597a6ad.css",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/products-541eddfeca33c597a6ad.css"
+      },
+      {
+        "name": "products-541eddfeca33c597a6ad.js.map",
+        "publicPath": "/static/dist/products-541eddfeca33c597a6ad.js.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/products-541eddfeca33c597a6ad.js.map"
+      },
+      {
+        "name": "products-541eddfeca33c597a6ad.css.map",
+        "publicPath": "/static/dist/products-541eddfeca33c597a6ad.css.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/products-541eddfeca33c597a6ad.css.map"
+      }
+    ],
+    "user": [
+      {
+        "name": "user-541eddfeca33c597a6ad.js",
+        "publicPath": "/static/dist/user-541eddfeca33c597a6ad.js",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user-541eddfeca33c597a6ad.js"
+      },
+      {
+        "name": "user-541eddfeca33c597a6ad.css",
+        "publicPath": "/static/dist/user-541eddfeca33c597a6ad.css",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user-541eddfeca33c597a6ad.css"
+      },
+      {
+        "name": "user-541eddfeca33c597a6ad.js.map",
+        "publicPath": "/static/dist/user-541eddfeca33c597a6ad.js.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user-541eddfeca33c597a6ad.js.map"
+      },
+      {
+        "name": "user-541eddfeca33c597a6ad.css.map",
+        "publicPath": "/static/dist/user-541eddfeca33c597a6ad.css.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user-541eddfeca33c597a6ad.css.map"
+      }
+    ],
+    "user_messages": [
+      {
+        "name": "user_messages-541eddfeca33c597a6ad.js",
+        "publicPath": "/static/dist/user_messages-541eddfeca33c597a6ad.js",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user_messages-541eddfeca33c597a6ad.js"
+      },
+      {
+        "name": "user_messages-541eddfeca33c597a6ad.css",
+        "publicPath": "/static/dist/user_messages-541eddfeca33c597a6ad.css",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user_messages-541eddfeca33c597a6ad.css"
+      },
+      {
+        "name": "user_messages-541eddfeca33c597a6ad.js.map",
+        "publicPath": "/static/dist/user_messages-541eddfeca33c597a6ad.js.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user_messages-541eddfeca33c597a6ad.js.map"
+      },
+      {
+        "name": "user_messages-541eddfeca33c597a6ad.css.map",
+        "publicPath": "/static/dist/user_messages-541eddfeca33c597a6ad.css.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/user_messages-541eddfeca33c597a6ad.css.map"
+      }
+    ],
+    "vendor": [
+      {
+        "name": "vendor-541eddfeca33c597a6ad.js",
+        "publicPath": "/static/dist/vendor-541eddfeca33c597a6ad.js",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/vendor-541eddfeca33c597a6ad.js"
+      },
+      {
+        "name": "vendor-541eddfeca33c597a6ad.css",
+        "publicPath": "/static/dist/vendor-541eddfeca33c597a6ad.css",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/vendor-541eddfeca33c597a6ad.css"
+      },
+      {
+        "name": "vendor-541eddfeca33c597a6ad.js.map",
+        "publicPath": "/static/dist/vendor-541eddfeca33c597a6ad.js.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/vendor-541eddfeca33c597a6ad.js.map"
+      },
+      {
+        "name": "vendor-541eddfeca33c597a6ad.css.map",
+        "publicPath": "/static/dist/vendor-541eddfeca33c597a6ad.css.map",
+        "path": "/Users/pl/Documents/pythonstuff/budsdeal/static/dist/vendor-541eddfeca33c597a6ad.css.map"
+      }
+    ]
+  },
+  "error": "ModuleBuildError",
+  "file": "/Users/pl/Documents/pythonstuff/budsdeal/src/globals/Feedback/Feedback.js",
+  "message": "Module build failed: SyntaxError: Unexpected token (26:12)\n\n  24 |             this.star.on('mouseenter.buds_star', function(e){\n  25 |                 e.target.\n> 26 |             })\n     |             ^\n  27 |         }\n  28 | \n  29 |     }\n"
+}

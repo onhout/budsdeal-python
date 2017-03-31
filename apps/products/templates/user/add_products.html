@@ -1,11 +1,12 @@
 {% extends 'user_index.html' %}
 {% block user_content %}
-    <h1>Add Products</h1>
-    <form class="form" method="post" action="{% url 'add_product' %}" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="row">
-            <div class="col-sm-6 col-sm-offset-3">
-                {% for fields in add_product_form %}
+    <div class="col-sm-6 col-sm-offset-3">
+        <h1 class="text-center">Add Product</h1>
+        <hr>
+        <form class="form" method="post" action="{% url 'add_product' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                {% for fields in product_form %}
                     <div class="form-group">
                         <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
                         {{ fields }}
@@ -13,21 +14,7 @@
                     </div>
                 {% endfor %}
             </div>
-        </div>
-        {#        {{ formset.management_form }}#}
-        {#        <div class="row">#}
-        {#            <div class="col-sm-6 col-sm-offset-3">#}
-        {#                <h4>Three images</h4>#}
-        {#                {% for form in formset %}#}
-        {#                    {% for fields in form %}#}
-        {#                        <div class="form-group">#}
-        {#                            {{ fields }}#}
-        {#                            <span class="help-block">{{ fields.help_text }}</span>#}
-        {#                        </div>#}
-        {#                    {% endfor %}#}
-        {#                {% endfor %}#}
-        {#            </div>#}
-        {#        </div>#}
-        <button type="submit" class="btn btn-raised btn-success">Submit</button>
-    </form>
+            <button type="submit" class="btn btn-raised btn-success">Save</button>
+        </form>
+    </div>
 {% endblock %}

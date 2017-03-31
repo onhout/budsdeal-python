@@ -46,30 +46,19 @@ def child_categories(request, category_slug, subcategory_slug):
 def add_product(request):
     if request.POST and request.user.is_authenticated:
         product_form = product_forms.AddProductForm(request.POST)
-        # formset = product_forms.AddImageFormSet(request.POST, request.FILES,
-        #                                         queryset=product_models.ItemImage.objects.none())
-        if product_form.is_valid():  # and formset.is_valid()
+        if product_form.is_valid():
             form = product_form.save(commit=False)
             # NOTE: VARIABLES FROM FORM, SHOULD MAKE ANOTHER VARIABLES JUST FOR THE SAVE
             # THIS IS VERY IMPORTANT!!
             form.user = request.user
             form.save()
-            # for formset in formset.cleaned_data:
-            #     try:
-            #         image = formset['image']
-            #         photo = product_models.ItemImage(item=form, image=image)
-            #         photo.save()
-            #     except:
-            #         pass
             return redirect('image_upload', product_id=form.id)
     elif request.user.profile.approved_as_seller:
         product_form = product_forms.AddProductForm(instance=request.user)
-        # formset = product_forms.AddImageFormSet(queryset=product_models.ItemImage.objects.none())
     else:
         return redirect('register_as_seller')
     return render(request, 'user/add_products.html', {
-        'add_product_form': product_form,
-        # 'formset': formset
+        'product_form': product_form
     })
 
 
@@ -141,26 +130,22 @@ def list_product(request):
 def update_product(request, product_id):
     product = product_models.Item.objects.get(pk=product_id)
     if request.POST and request.user.is_authenticated:
-        product_form = product_forms.EditProductForm(request.POST, request.FILES, instance=product)
-        # formset = product_forms.UpdateImageFormSet(request.POST, request.FILES, instance=product)
+        product_form = product_forms.EditProductForm(request.POST, instance=product)
         if product_form.is_valid():
             form = product_form.save(commit=False)
             # NOTE: VARIABLES FROM FORM, SHOULD MAKE ANOTHER VARIABLES JUST FOR THE SAVE
             # THIS IS VERY IMPORTANT!!
             form.user = request.user
             form.save()
-            # formset.save()
             return redirect('image_upload', product_id=form.id)
     elif request.user.profile.approved_as_seller:
         product_form = product_forms.EditProductForm(instance=product)
-        # formset = product_forms.UpdateImageFormSet(instance=product)
     else:
         return redirect('register_as_seller')
 
     return render(request, 'user/update_product.html', {
         'product_id': product_id,
-        'edit_product_form': product_form,
-        # 'formset': formset
+        'product_form': product_form,
     })
 
 
