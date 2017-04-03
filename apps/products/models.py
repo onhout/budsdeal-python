@@ -152,7 +152,8 @@ def get_file_path(instance, filename):
 
 
 class ItemImage(models.Model):
-    item = models.ForeignKey(Item, related_name='images', on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, related_name='image_item', on_delete=models.CASCADE)
+    primary = models.BooleanField(blank=True, default=False)
     image = ProcessedImageField(upload_to=get_file_path,
                                 processors=[ResizeToFill(640, 480)],
                                 format='JPEG',

@@ -11,7 +11,6 @@ class AddProductForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AddProductForm, self).__init__(*args, **kwargs)
-        # self.fields['categories'].widget = CheckboxSelectMultiple()
         self.fields['categories'].queryset = Category.objects.filter(parent_category__isnull=False)
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'

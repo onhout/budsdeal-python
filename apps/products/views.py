@@ -63,6 +63,29 @@ def add_product(request):
 
 
 @login_required
+def update_product(request, product_id):
+    product = product_models.Item.objects.get(pk=product_id)
+    if request.POST and request.user == product.user:
+        product_form = product_forms.EditProductForm(request.POST, instance=product)
+        if product_form.is_valid():
+            form = product_form.save(commit=False)
+            # NOTE: VARIABLES FROM FORM, SHOULD MAKE ANOTHER VARIABLES JUST FOR THE SAVE
+            # THIS IS VERY IMPORTANT!!
+            form.user = request.user
+            form.save()
+            return redirect('image_upload', product_id=form.id)
+    elif request.user == product.user:
+        product_form = product_forms.EditProductForm(instance=product)
+    else:
+        return redirect('register_as_seller')
+
+    return render(request, 'user/update_product.html', {
+        'product_id': product_id,
+        'product_form': product_form,
+    })
+
+
+@login_required
 def image_upload(request, product_id):
     item = product_models.Item.objects.get(id=product_id)
     try:
@@ -99,6 +122,20 @@ def image_delete(request, image_id):
 
 
 @login_required
+def image_set_primary(request, image_id):
+    if request.POST and request.user.is_authenticated and request.user.profile.approved_as_seller:
+        this_image = product_models.ItemImage.objects.get(pk=image_id)
+        # other_images = product_models.ItemImage.objects.exclude(pk=image_id, item=this_image.item)
+        # print(other_images)
+        # this_image.primary = True
+        # this_image.save()
+        #
+        data = {'success': True}
+        # TODO make this work.
+        return JsonResponse(data)
+
+
+@login_required
 def list_product(request):
     product_list = request.user.product.all()
     paginator = Paginator(product_list, 5)
@@ -124,29 +161,6 @@ def list_product(request):
         return render(request, 'user/list_products.html', {
             'product_list': products
         })
-
-
-@login_required
-def update_product(request, product_id):
-    product = product_models.Item.objects.get(pk=product_id)
-    if request.POST and request.user.is_authenticated:
-        product_form = product_forms.EditProductForm(request.POST, instance=product)
-        if product_form.is_valid():
-            form = product_form.save(commit=False)
-            # NOTE: VARIABLES FROM FORM, SHOULD MAKE ANOTHER VARIABLES JUST FOR THE SAVE
-            # THIS IS VERY IMPORTANT!!
-            form.user = request.user
-            form.save()
-            return redirect('image_upload', product_id=form.id)
-    elif request.user.profile.approved_as_seller:
-        product_form = product_forms.EditProductForm(instance=product)
-    else:
-        return redirect('register_as_seller')
-
-    return render(request, 'user/update_product.html', {
-        'product_id': product_id,
-        'product_form': product_form,
-    })
 
 
 @login_required

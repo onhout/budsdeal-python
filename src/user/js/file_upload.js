@@ -42,6 +42,14 @@ class ImageUpload {
             })
         }
     }
+
+    static makePrimaryPhoto(image_id, csrftoken, SELF) {
+        return function (e) {
+            e.preventDefault();
+            var self = this || SELF;
+            var href = '/'
+        }
+    }
 }
 
 class ImageTableRow {
@@ -65,11 +73,14 @@ class ImageTableRow {
                 'text': 'Delete'
             }).click(ImageUpload.deleteFN(data.result.image_id,
             {csrfmiddlewaretoken: '' + csrfToken.getCookie('csrftoken')}));
-
+        this.makePrimaryBtn = $('<a/>', {
+            'class': 'btn btn-primary btn-raised make_primary_btn',
+            'text': 'Make Primary'
+        }).click();
         this._row = this.row
             .append($('<td>').append(this.imgLink.append(this.img)))
             .append(this.updated)
-            .append($('<td>').append(this.deleteBtn));
+            .append($('<td>').append(this.deleteBtn).append());
 
         return this._row;
     }
