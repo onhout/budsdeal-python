@@ -18,9 +18,14 @@ def view_product(request, product_id):
     if item.user != request.user:
         item.view_count += 1
         item.save()
+    try:
+        primary_image = item.image_item.get(primary=True)
+    except:
+        primary_image = item.image_item.first()
     return render(request, 'view_product.html', {
         'item': item,
-        'item_images': item.image_item.all()
+        'item_images': item.image_item.all(),
+        'primary_image': primary_image
     })
 
 

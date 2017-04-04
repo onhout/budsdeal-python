@@ -1,36 +1,40 @@
 {% extends 'products_index.html' %}
 {% block title %}Viewing {{ item.name }}{% endblock %}
 {% block product_content %}
-    <div class="splash-screen">
-        <img src="/{{ item_images.0.image }}" alt="{{ item_images.0.image }}" class="img-responsive">
-    </div>
-    <div class="splash-circle center-block">
-        <img src="/{{ item_images.1.image }}" alt="{{ item_images.1.image }}">
-    </div>
-    <div class="buds_star"
-         data-feedback_products="{{ item.id }}"
-         data-feedback_rating_count="{{ item.rating.count }}"
-         data-feedback_rating={{ item.rating.avg }}></div>
-    <h1 class="text-center">{{ item.name }} - ${{ item.price }}</h1>
+    <div class="{{ item.type }}-page">
+        <div class="splash-screen">
+            <img src="/{{ item_images.0.image }}" alt="{{ item_images.0.image }}" class="img-responsive">
+        </div>
+        <div class="splash-circle center-block">
+            <img src="/{% if primary_image %}{{ primary_image.image }}{% else %}{{ item_images.1.image }}{% endif %}"
+                 alt="Default">
+        </div>
+        <div class="buds_star"
+             data-feedback_products="{{ item.id }}"
+             data-feedback_rating_count="{{ item.rating.count }}"
+             data-feedback_rating={{ item.rating.avg }}></div>
+        <h1 class="text-center">{{ item.name }} - ${{ item.price }}</h1>
 
-    <hr>
-    <div class="jumbotron">
-        {% for image in item_images %}
-            <div class="col-md-4 col-lg-4">
-                <img src="/{{ image.image }}" alt="{{ image.image }}" class="img-responsive img-thumbnail">
-            </div>
-        {% endfor %}
-        {% if item.user != user %}
-            <p class="text-center"><a href="{% url 'send_message' item.user.profile.social_id item.id %}"
-                                      class="btn btn-raised btn-primary"> REQUEST
-                FOR QUOTE</a></p>
-        {% endif %}
-        <p>Type: {{ item.type }}</p>
-        <p>Brand: {{ item.brand }}</p>
-        <p>Category: {{ item.categories }}</p>
-        <p>Description: {{ item.description }}</p>
-        <p>Seller: <a
-                href="{% url 'view_profile' item.user.profile.display_name %}">{{ item.user.profile.display_name }}</a>
-        </p>
+        <hr>
+        <div class="jumbotron">
+            {% for image in item_images %}
+                <div class="col-md-4 col-lg-4">
+                    <img src="/{{ image.image }}" alt="{{ image.image }}" class="img-responsive img-thumbnail">
+                </div>
+            {% endfor %}
+            {% if item.user != user %}
+                <p class="text-center"><a href="{% url 'send_message' item.user.profile.social_id item.id %}"
+                                          class="btn btn-raised btn-primary"> REQUEST
+                    FOR QUOTE</a></p>
+            {% endif %}
+            <p>Type: {{ item.type }}</p>
+            <p>Brand: {{ item.brand }}</p>
+            <p>Category: {{ item.categories }}</p>
+            <p>Description: {{ item.description }}</p>
+            <p>Seller: <a
+                    href="{% url 'view_profile' item.user.profile.display_name %}">{{ item.user.profile.display_name }}</a>
+            </p>
+        </div>
     </div>
+
 {% endblock %}
