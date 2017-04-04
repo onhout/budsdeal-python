@@ -20,7 +20,7 @@ def view_product(request, product_id):
         item.save()
     return render(request, 'view_product.html', {
         'item': item,
-        'item_images': item.images.all()
+        'item_images': item.image_item.all()
     })
 
 
@@ -90,9 +90,10 @@ def image_upload(request, product_id):
     item = product_models.Item.objects.get(id=product_id)
     try:
         item_image = product_models.ItemImage.objects.filter(item=item)
+        item_image_len = item_image.count()
     except:
         pass
-    if request.POST and request.user.is_authenticated and request.user.profile.approved_as_seller:
+    if request.POST and request.user.is_authenticated and request.user.profile.approved_as_seller and item_image_len < 8:
         image_form = product_forms.ImageForm(request.POST, request.FILES)
         if image_form.is_valid() and request.user == item.user:
             form = image_form.save(commit=False)
@@ -102,11 +103,14 @@ def image_upload(request, product_id):
                 'is_valid': True,
                 'updated_at': datetime.datetime.now().strftime('%B %d, %Y, %I:%M:%S %p'),
                 'url': '/' + form.image.url,
-                'image_id': form.id
+                'image_id': form.id,
+                'total_image_num': item_image_len
             }
         else:
             data = {'is_valid': False}
         return JsonResponse(data)
+    elif request.POST and request.user.is_authenticated and request.user.profile.approved_as_seller and item_image_len >= 8:
+        return JsonResponse({'is_valid': False, 'total_image_num': item_image_len})
     return render(request, 'user/image_upload.html', {
         'item': item,
         'item_image': item_image
@@ -125,13 +129,13 @@ def image_delete(request, image_id):
 def image_set_primary(request, image_id):
     if request.POST and request.user.is_authenticated and request.user.profile.approved_as_seller:
         this_image = product_models.ItemImage.objects.get(pk=image_id)
-        # other_images = product_models.ItemImage.objects.exclude(pk=image_id, item=this_image.item)
-        # print(other_images)
-        # this_image.primary = True
-        # this_image.save()
-        #
+        other_images = product_models.ItemImage.objects.filter(item=this_image.item).exclude(pk=image_id)
+        for image in other_images:
+            image.primary = False
+            image.save(update_fields=['primary'])
+        this_image.primary = True
+        this_image.save(update_fields=['primary'])
         data = {'success': True}
-        # TODO make this work.
         return JsonResponse(data)
 
 
@@ -150,11 +154,15 @@ def list_product(request):
 
     itemImage = []
     for item in products:
-        itemImage.append(item.images.all())
+        primary_photo = item.image_item.filter(primary=True)
+        if primary_photo:
+            itemImage.append(primary_photo)
+        else:
+            itemImage.append(item.image_item.all())
 
     products.item_image = itemImage
     if not request.user.company.name and request.user.profile.approved_as_seller:  # DISABLED FOR DEVELOPMENT
-        return redirect('user_company')  # TODO REENABLE IT WHEN EVERYTHING IS DONE
+        return redirect('user_company')
     elif not request.user.profile.approved_as_seller:
         return redirect('register_as_seller')
     else:

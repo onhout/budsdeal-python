@@ -1,7 +1,7 @@
 {% extends 'user_index.html' %}
 {% block user_content %}
 
-    <button type="button" class="btn btn-primary js-upload-photos">
+    <button type="button" class="btn btn-primary js-upload-photos {% if item_image.count >= 8 %}disabled{% endif %}">
         <span class="glyphicon glyphicon-cloud-upload"></span> Upload photos
     </button>
 
@@ -35,7 +35,9 @@
                            class="btn btn-danger btn-raised delete_photo">Delete</a>
                         <a data-csrftoken='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'
                            data-image_id="{{ image.id }}"
-                           class="btn btn-info btn-raised">Make Primary</a>
+                           class="btn btn-info btn-raised make_primary_photo"
+                           {% if image.primary == True %}style="display:none"{% endif %}>
+                            Make Primary</a>
                     </td>
                 </tr>
             {% endfor %}

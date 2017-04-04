@@ -17,13 +17,20 @@ $(function () {
     });
 
     $('.js-upload-photos').click(function () {
-        new Image_Upload('#id_image');
+        if (!$(this).hasClass('disabled')) {
+            new Image_Upload('#id_image');
+        }
     });
 
 
     $('.delete_photo').click(function (e) {
         var ID = $(this).data('image_id');
         return Image_Upload.deleteFN(ID, $(this).data('csrftoken'), $(this))(e)
+    });
+
+    $('.make_primary_photo').click(function (e) {
+        var ID = $(this).data('image_id');
+        return Image_Upload.makePrimaryPhoto(ID, $(this).data('csrftoken'), $(this))(e)
     });
 
 

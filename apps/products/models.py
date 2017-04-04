@@ -179,10 +179,11 @@ def image_delete(sender, instance, **kwargs):
 
 
 @receiver(pre_save, sender=ItemImage)
-def image_update(sender, instance, **kwargs):
-    try:
-        old_item = ItemImage.objects.get(pk=instance.id)
-        if old_item.image:
-            old_item.image.delete(False)
-    except ItemImage.DoesNotExist:
-        pass
+def image_update(sender, instance, update_fields, **kwargs):
+    if update_fields and 'primary' not in update_fields:
+        try:
+            old_image = ItemImage.objects.get(pk=instance.id)
+            if old_image.image:
+                old_image.image.delete(False)
+        except ItemImage.DoesNotExist:
+            pass
