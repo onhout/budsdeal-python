@@ -9,18 +9,24 @@
             <img src="/{% if primary_image %}{{ primary_image.image }}{% else %}{{ item_images.1.image }}{% endif %}"
                  alt="Default">
         </div>
-        <div class="buds_star"
+        <h1 class="text-center">{{ item.name }} - ${{ item.price }}</h1>
+        <div class="buds_star text-center"
              data-feedback_products="{{ item.id }}"
              data-feedback_rating_count="{{ item.rating.count }}"
              data-feedback_rating={{ item.rating.avg }}></div>
-        <h1 class="text-center">{{ item.name }} - ${{ item.price }}</h1>
 
         <hr>
         <div class="jumbotron">
             {% for image in item_images %}
-                <div class="col-md-4 col-lg-4">
-                    <img src="/{{ image.image }}" alt="{{ image.image }}" class="img-responsive img-thumbnail">
-                </div>
+                {% if forloop.first %}
+                    <div class="row">{% endif %}
+            <div class="col-md-4 col-lg-4">
+                <img src="/{{ image.image }}" alt="{{ image.image }}" class="img-responsive img-thumbnail">
+            </div>
+            {% if forloop.counter|divisibleby:3 %}</div>
+                <div class="row">{% endif %}
+            {% if forloop.last %}</div>{% endif %}
+
             {% endfor %}
             {% if item.user != user %}
                 <p class="text-center"><a href="{% url 'send_message' item.user.profile.social_id item.id %}"
