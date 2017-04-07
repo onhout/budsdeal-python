@@ -89,7 +89,7 @@
             </ul>
             <ul class="nav navbar-nav">
                 <li class="dropdown mega-dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu
                         <span class="caret"></span></a>
 
                     <ul class="dropdown-menu mega-dropdown-menu row">
@@ -208,51 +208,43 @@
                                 {% endfor %}
                             </ul>
                         </li>
-                        {#                        <li class="col-sm-3">#}
-                        {#                            <ul>#}
-                        {#                                <li class="dropdown-header">Dresses</li>#}
-                        {#                                <li><a href="#">Unique Features</a></li>#}
-                        {#                                <li><a href="#">Image Responsive</a></li>#}
-                        {#                                <li><a href="#">Auto Carousel</a></li>#}
-                        {#                                <li><a href="#">Newsletter Form</a></li>#}
-                        {#                                <li><a href="#">Four columns</a></li>#}
-                        {#                                <li class="divider"></li>#}
-                        {#                                <li class="dropdown-header">Tops</li>#}
-                        {#                                <li><a href="#">Good Typography</a></li>#}
-                        {#                                <li><a href="#">Good Typography</a></li>#}
-                        {#                                <li><a href="#">Good Typography</a></li>#}
-                        {#                                <li><a href="#">Good Typography</a></li>#}
-                        {#                                <li><a href="#">Good Typography</a></li>#}
-                        {#                            </ul>#}
-                        {#                        </li>#}
-                        {#                        <li class="col-sm-3">#}
-                        {#                            <ul>#}
-                        {#                                <li class="dropdown-header">Jackets</li>#}
-                        {#                                <li><a href="#">Easy to customize</a></li>#}
-                        {#                                <li><a href="#">Glyphicons</a></li>#}
-                        {#                                <li><a href="#">Pull Right Elements</a></li>#}
-                        {#                                <li class="divider"></li>#}
-                        {#                                <li class="dropdown-header">Pants</li>#}
-                        {#                                <li><a href="#">Coloured Headers</a></li>#}
-                        {#                                <li><a href="#">Primary Buttons & Default</a></li>#}
-                        {#                                <li><a href="#">Calls to action</a></li>#}
-                        {#                            </ul>#}
-                        {#                        </li>#}
                         <li class="col-sm-3">
                             <ul>
-                                <li class="dropdown-header">Accessories</li>
-                                <li><a href="#">Default Navbar</a></li>
-                                <li><a href="#">Lovely Fonts</a></li>
-                                <li><a href="#">Responsive Dropdown </a></li>
+
+                                {% if user and not user.is_anonymous %}
+                                    <li class="dropdown-header">{{ user.get_full_name }}</li>
+                                    {% if user.profile.approved_as_seller %}
+                                        <li><a href={% url 'list_product' %}>List Product</a></li>
+                                    {% endif %}
+                                    <li><a href={% url 'user_home' %}>Account Profile</a></li>
+                                    <li><a href={% url 'user_logout' %}>Logout</a></li>
+                                {% else %}
+                                    <li class="dropdown-header">Login</li>
+                                    <a class="btn btn-social btn-facebook btn-block"
+                                       href="{% url 'social:begin' 'facebook' %}{% if request.GET.next %}
+                                   ?next={{ request.GET.next }}{% endif %}">
+                                        <i class="fa fa-facebook"></i>
+                                        Login / Signup with Facebook
+                                    </a>
+
+                                    <a class="btn btn-social btn-google btn-block"
+                                       href="{% url 'social:begin' 'google-oauth2' %}{% if request.GET.next %}
+                                   ?next={{ request.GET.next }}{% endif %}">
+                                        <i class="fa fa-google"></i>
+                                        Login with Google
+                                    </a>
+                                {% endif %}
+                                <li class="divider"></li>
+                                <li class="dropdown-header">About us</li>
+                                <li><a href="#">Who we are</a></li>
+                                <li><a href="#">Legal</a></li>
+                                <li><a href="#">Services</a></li>
+                                <li><a href="#">Wholesalers</a></li>
+                                <li><a href="#">Retailers</a></li>
                                 <li class="divider"></li>
                                 <li class="dropdown-header">Newsletter</li>
-                                <form class="form" role="form">
-                                    <div class="form-group">
-                                        <label class="sr-only" for="email">Email address</label>
-                                        <input type="email" class="form-control" id="email" placeholder="Enter email">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary btn-block btn-raised">Sign in</button>
-                                </form>
+                                <li class="divider"></li>
+
                             </ul>
                         </li>
                     </ul>
