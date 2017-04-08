@@ -1,13 +1,9 @@
 <div class="col-md-10 col-sm-10 col-md-offset-1 col-sm-offset-1">
     <div id="featured-carousel">
-        {% for images_set in featured_list.item_image %}
+        {% for img in 'xxxxxx' %}
             <div>
-                <img src="/{{ images_set.0.image }}" alt="{{ images_set.0.image }}"
+                <img src="https://placeimg.com/1024/400/any" alt="placeholder"
                      class="img-responsive">
-                <h4><a href="{% url 'view_product' images_set.0.item.id %}">{{ images_set.0.item.name }}</a></h4>
-                <p class="text-danger">${{ images_set.0.item.price }} / {{ images_set.0.item.weight_unit }}</p>
-                <a class="btn btn-raised btn-primary"
-                   href="{% url 'send_message' images_set.0.item.user.profile.social_id images_set.0.item.id %}">Quote</a>
             </div>
         {% endfor %}
     </div>

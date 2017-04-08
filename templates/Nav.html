@@ -95,55 +95,33 @@
                     <ul class="dropdown-menu mega-dropdown-menu row">
                         <li class="col-sm-3">
                             <ul>
-                                <li class="dropdown-header">New in Stores</li>
-                                <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                                    <div class="carousel-inner">
-                                        <div class="item active">
-                                            <a href="#"><img
-                                                    src="http://placehold.it/254x150/3498db/f5f5f5/&text=New+Collection"
-                                                    class="img-responsive" alt="product 1"></a>
-                                            <h4>
-                                                <small>Summer dress floral prints</small>
-                                            </h4>
-                                            <button class="btn btn-primary" type="button">49,99 €</button>
-                                            <button href="#" class="btn btn-default" type="button"><span
-                                                    class="glyphicon glyphicon-heart"></span> Add to Wishlist
-                                            </button>
-                                        </div>
-                                        <!-- End Item -->
-                                        <div class="item">
-                                            <a href="#"><img
-                                                    src="http://placehold.it/254x150/ef5e55/f5f5f5/&text=New+Collection"
-                                                    class="img-responsive" alt="product 2"></a>
-                                            <h4>
-                                                <small>Gold sandals with shiny touch</small>
-                                            </h4>
-                                            <button class="btn btn-primary" type="button">9,99 €</button>
-                                            <button href="#" class="btn btn-default" type="button"><span
-                                                    class="glyphicon glyphicon-heart"></span> Add to Wishlist
-                                            </button>
-                                        </div>
-                                        <!-- End Item -->
-                                        <div class="item">
-                                            <a href="#"><img
-                                                    src="http://placehold.it/254x150/2ecc71/f5f5f5/&text=New+Collection"
-                                                    class="img-responsive" alt="product 3"></a>
-                                            <h4>
-                                                <small>Denin jacket stamped</small>
-                                            </h4>
-                                            <button class="btn btn-primary" type="button">49,99 €</button>
-                                            <button href="#" class="btn btn-default" type="button"><span
-                                                    class="glyphicon glyphicon-heart"></span> Add to Wishlist
-                                            </button>
-                                        </div>
+                                <li class="dropdown-header">Featured Items</li>
+                                <div id="menu-carousel" class="carousel slide" data-ride="carousel">
+                                    <div class="carousel-inner text-center">
+                                        {% for images_set in featured_list.item_image %}
+                                            <div class="item {% if forloop.counter == 1 %} active{% endif %}">
+                                                <img src="/{{ images_set.0.image }}" alt="{{ images_set.0.image }}"
+                                                     class="img-responsive">
+                                                <p>
+                                                    <a href="{% url 'view_product' images_set.0.item.id %}">{{ images_set.0.item.name }}</a>
+                                                </p>
+                                                <p class="text-danger">${{ images_set.0.item.price }}
+                                                    / {{ images_set.0.item.weight_unit }}
+                                                </p>
+                                                <a class="btn btn-raised btn-primary"
+                                                   href="{% url 'send_message' images_set.0.item.user.profile.social_id images_set.0.item.id %}">
+                                                    Quote
+                                                </a>
+
+                                            </div>
+                                        {% endfor %}
                                         <!-- End Item -->
                                     </div>
                                     <!-- End Carousel Inner -->
                                 </div>
                                 <!-- /.carousel -->
                                 <li class="divider"></li>
-                                <li><a href="#">View all Collection <span
-                                        class="glyphicon glyphicon-chevron-right pull-right"></span></a></li>
+                                <li><a href="#">View all products</a></li>
                             </ul>
                         </li>
                         <li class="col-sm-3">
@@ -161,8 +139,8 @@
                                     {% if parent.menu_bar_all.0 %}
                                         <li>
                                             <a data-toggle="collapse"
-                                               data-target="#list-{{ parent.slug }}">View all... <i
-                                                    class="fa fa-chevron-right pull-right"></i></a>
+                                               data-target="#list-{{ parent.slug }}">More...<i
+                                                    class="fa fa-chevron-down pull-right"></i></a>
                                         </li>
 
                                         <ul class="list-group collapse" id="list-{{ parent.slug }}">
@@ -192,8 +170,8 @@
                                     {% if parent.menu_bar_all.0 %}
                                         <li>
                                             <a data-toggle="collapse"
-                                               data-target="#list-{{ parent.slug }}">View all... <i
-                                                    class="fa fa-chevron-right pull-right"></i></a>
+                                               data-target="#list-{{ parent.slug }}">More...<i
+                                                    class="fa fa-chevron-down pull-right"></i></a>
                                         </li>
 
                                         <ul class="list-group collapse" id="list-{{ parent.slug }}">
@@ -241,9 +219,6 @@
                                 <li><a href="#">Services</a></li>
                                 <li><a href="#">Wholesalers</a></li>
                                 <li><a href="#">Retailers</a></li>
-                                <li class="divider"></li>
-                                <li class="dropdown-header">Newsletter</li>
-                                <li class="divider"></li>
 
                             </ul>
                         </li>

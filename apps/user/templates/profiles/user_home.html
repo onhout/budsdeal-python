@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="text-center">
                     <div class="profile_info col-md-4">
-                        <h4>Total items</h4>
+                        <h4>Items for sale</h4>
                         <h2>{{ products_count }}</h2>
                     </div>
                     <div class="profile_info col-md-4">
@@ -42,24 +42,36 @@
                 </div>
             </div>
         </div>
-
-
     </div>
-
 
     <h1>Welcome {{ user.get_full_name }}</h1>
 
-    {% if user and not user.is_anonymous %}
-        Hello, {{ user.get_full_name }}!
-        Hello, {{ user.profile.display_name }}!
-        <br>
-        {#                            your pic: {{ user.profile.profile_photo }}#}
-    {% endif %}
-    <a href="{% url 'user_profile' %}">Change user profiles</a>
-    <a href={% url 'user_logout' %}>Logout</a>
-    <p>This template has a responsive menu toggling system. The menu will appear collapsed on
-        smaller screens, and will appear non-collapsed on larger screens. When toggled using the
-        button below, the menu will appear/disappear. On small screens, the page content will be
-        pushed off canvas.</p>
-    <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">UNREAD MESSAGES</div>
+                <div class="panel-body">
+                    NOTHING YET!
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">PENDING ORDERS</div>
+                <div class="panel-body">
+                    NOTHING YET!
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-info">
+                <div class="panel-heading">PENDING REQUESTS</div>
+                <div class="panel-body">
+                    NOTHING YET!
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock %}

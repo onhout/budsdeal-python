@@ -13,12 +13,6 @@ client = settings.ES_CLIENT
 
 
 def main_index(request):
-    featured_list = models.Item.objects.all().order_by('-view_count')[:5]
-    featured_image = []
-    for item in featured_list:
-        featured_image.append(item.image_item.filter(primary=True))
-    featured_list.item_image = featured_image
-
     categorized_product = []
     categories = models.Category.objects.filter(parent_category__isnull=True)
     for category in categories:
@@ -29,7 +23,6 @@ def main_index(request):
         categorized_product.append(items)
 
     return render(request, 'index.html', {
-        'featured_list': featured_list,
         'categorized_list': categorized_product
     })
 
