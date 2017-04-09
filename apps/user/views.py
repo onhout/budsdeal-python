@@ -35,7 +35,7 @@ def view_profile(request, display_name):
     if this_user.id == request.user.id:
         return redirect('/user/home')
     else:
-        return render(request, 'profiles/view_profile.html', {
+        return render(request, 'view_profile.html', {
             'this_user': this_user
         })
 
