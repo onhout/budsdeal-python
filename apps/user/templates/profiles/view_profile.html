@@ -1,6 +1,8 @@
-{% extends 'user_index.html' %}
+{% extends 'User_Sidebar.html' %}
 {% block title %}Viewing {{ this_user.get_full_name }}{% endblock %}
-{% block user_content %}
+{% block child_content %}
     <h1>{{ this_user.get_full_name }}</h1>
     <h3>{{ this_user.company.name }}</h3>
+    {% load render_bundle from webpack_loader %}
+    {% render_bundle 'user' %}
 {% endblock %}

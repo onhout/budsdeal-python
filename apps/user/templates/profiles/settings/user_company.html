@@ -1,7 +1,6 @@
-{% extends 'user_index.html' %}
-{% load render_bundle from webpack_loader %}
+{% extends 'User_Sidebar.html' %}
 {% block title %}Welcome!{% endblock %}
-{% block user_content %}
+{% block child_content %}
     <div class="col-sm-6 col-sm-offset-3">
         <form class="form" method="post" action="{% url 'save_company_info' %}">
             {% csrf_token %}
@@ -25,4 +24,6 @@
             </div>
         </form>
     </div>
+    {% load render_bundle from webpack_loader %}
+    {% render_bundle 'user' %}
 {% endblock %}

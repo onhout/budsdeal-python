@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'apps.user.apps.UserConfig',
     'apps.products.apps.ProductsConfig',
     'apps.user_messages.apps.MessagesConfig',
+    'apps.order.apps.OrderConfig',
     'webpack_loader',
     'social.apps.django_app.default',
     'social_django',

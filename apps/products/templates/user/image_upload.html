@@ -1,5 +1,6 @@
-{% extends 'user_index.html' %}
-{% block user_content %}
+{% extends 'User_Sidebar.html' %}
+{% block title %}Upload image{% endblock %}
+{% block child_content %}
 
     <button type="button" class="btn btn-primary js-upload-photos {% if item_image.count >= 8 %}disabled{% endif %}">
         <span class="glyphicon glyphicon-cloud-upload"></span> Upload photos
@@ -45,4 +46,6 @@
         </tbody>
     </table>
     <a href="{% url 'list_product' %}" class="btn btn-primary btn-raised">Done</a>
+    {% load render_bundle from webpack_loader %}
+    {% render_bundle 'products' %}
 {% endblock %}

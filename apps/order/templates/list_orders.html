@@ -1,0 +1,9 @@
+{% extends 'User_Sidebar.html' %}
+{% load render_bundle from webpack_loader %}
+{% block title %}Orders{% endblock %}
+
+{% block child_content %}
+
+    <h1>ORDERSssss</h1>
+    {% render_bundle 'order' %}
+{% endblock %}

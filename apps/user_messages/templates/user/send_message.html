@@ -1,6 +1,6 @@
-{% extends 'user_index.html' %}
+{% extends 'User_Sidebar.html' %}
 {% block title %}Send a message to {{ this_user.first_name }}{% endblock %}
-{% block user_content %}
+{% block child_content %}
     <h1>Request for quote about <a href="{% url 'view_product' this_product.id %}">{{ this_product }}</a></h1>
     <hr>
     <form class="form" method="post" action="{% url 'send_message' this_user.profile.social_id this_product.id %}">
@@ -18,4 +18,6 @@
         </div>
         <button type="submit" class="btn btn-raised btn-success">Send</button>
     </form>
+    {% load render_bundle from webpack_loader %}
+    {% render_bundle 'user_messages' %}
 {% endblock %}

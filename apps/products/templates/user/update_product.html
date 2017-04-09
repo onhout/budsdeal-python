@@ -1,5 +1,6 @@
-{% extends 'user_index.html' %}
-{% block user_content %}
+{% extends 'User_Sidebar.html' %}
+{% block title %}Update {{ product }}{% endblock %}
+{% block child_content %}
     <div class="container-fluid">
         <h1 class="text-center">Update Product</h1>
         <hr>
@@ -51,4 +52,6 @@
                     class="fa fa-chevron-right"></i></button>
         </form>
     </div>
+    {% load render_bundle from webpack_loader %}
+    {% render_bundle 'products' %}
 {% endblock %}

@@ -1,5 +1,6 @@
-{% extends 'user_index.html' %}
-{% block user_content %}
+{% extends 'User_Sidebar.html' %}
+{% block title %}User Profile{% endblock %}
+{% block child_content %}
     <h1 class="text-center">Profile for {{ user.get_full_name }}</h1>
     <p class="text-center"> Display Name:{{ user.profile.display_name }}</p>
     <div class="col-sm-6 col-sm-offset-3">
@@ -28,4 +29,6 @@
             </div>
         </form>
     </div>
+    {% load render_bundle from webpack_loader %}
+    {% render_bundle 'user' %}
 {% endblock %}

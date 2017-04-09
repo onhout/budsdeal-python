@@ -10,6 +10,7 @@ module.exports = {
         main: 'main/js/main',
         user: 'user/js/user',
         products: 'products/js/products',
+        order: 'order/js/order',
         user_messages: 'user_messages/js/user_messages',
         vendor: [
             'jquery',

@@ -53,6 +53,18 @@ class Company(models.Model):
         return self.name
 
 
+class Shipping(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='shipping')
+    name = models.CharField(max_length=50)
+    address = models.CharField(max_length=255)
+    address2 = models.CharField(max_length=10, blank=True, null=True)
+    city = models.CharField(max_length=25)
+    state = models.CharField(max_length=2)
+    zip = models.CharField(max_length=10)
+    phone_number = models.CharField(max_length=50)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

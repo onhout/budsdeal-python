@@ -1,0 +1,75 @@
+{% extends 'Nav.html' %}
+{% load render_bundle from webpack_loader %}
+{% block content %}
+    {% url 'user_home'  as user_home %}
+    {% url 'view_inbox_messages'  as view_inbox_messages %}
+    {% url 'user_profile'  as user_profile %}
+    {% url 'user_company'  as user_company %}
+    {% url 'user_company'  as user_company %}
+    {% url 'list_product' as user_products %}
+    {% url 'register_as_seller' as register_as_seller %}
+    {% url 'list_orders' as list_orders %}
+
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li>
+                    <a class="{% ifequal request.path user_home %}active{% endifequal %}"
+                       href="{{ user_home }}">Dashboard</a>
+                </li>
+                <li>
+                    <a class="{% ifequal request.path view_inbox_messages %}active{% endifequal %}"
+                       href="{{ view_inbox_messages }}">Messages
+                        {% if unread_message_count %}
+                            <span class="badge"> {{ unread_message_count }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+                <li>
+                    <a class="{% ifequal request.path user_profile %}active{% endifequal %}"
+                       href="{{ user_profile }}">Profile</a>
+                </li>
+                {% if user.profile.approved_as_seller %}
+                    <li>
+                        <a class="{% ifequal request.path user_company %}active{% endifequal %}"
+                           href="{{ user_company }}">Company</a>
+                    </li>
+                    <li>
+                        <a class="{% ifequal request.path user_products %}active{% endifequal %}"
+                           href="{{ user_products }}">List Products</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a class="{% ifequal request.path register_as_seller %}active{% endifequal %}"
+                           href="{{ register_as_seller }}">Seller</a>
+                    </li>
+                {% endif %}
+                <li>
+                    <a class="{% ifequal request.path list_orders %}active{% endifequal %}"
+                       href="{{ list_orders }}">Orders</a>
+                </li>
+                <li>
+                    <a class=""
+                       href="#">FAVORITES #</a>
+                </li>
+
+                <li>
+                    <a class=""
+                       href="#">FEEDBACKS #</a>
+                </li>
+
+            </ul>
+        </div>
+        <div id="page-content-wrapper">
+            <a href="#" class="visible-xs" id="toggle-sidebar">
+                <i id="bars" class="fa fa-bars fa-2x"></i>
+                <i id="cross" class="fa fa-times fa-2x" style="display: none;"></i>
+            </a>
+            <div class="container-fluid" style="padding: 10px 0 10px 15px">
+                {% block child_content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+<!-- /#sidebar-wrapper -->

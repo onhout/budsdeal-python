@@ -1,7 +1,6 @@
-{% extends 'user_index.html' %}
-{% load render_bundle from webpack_loader %}
+{% extends 'User_Sidebar.html' %}
 {% block title %}Messages{% endblock %}
-{% block user_content %}
+{% block child_content %}
     <h1>{{ inbox_type }} Messages</h1>
     <a href="{% url 'view_inbox_messages' %}" class="btn btn-raised btn-default">Inbox</a>
     <a href="{% url 'view_sent_messages' %}" class="btn btn-raised btn-default">Sent</a>
@@ -62,4 +61,6 @@
 
     {% block message_form %}
     {% endblock %}
+    {% load render_bundle from webpack_loader %}
+    {% render_bundle 'user_messages' %}
 {% endblock %}

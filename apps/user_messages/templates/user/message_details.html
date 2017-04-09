@@ -1,6 +1,6 @@
-{% extends 'user_index.html' %}
+{% extends 'User_Sidebar.html' %}
 {% block title %}Message Details{% endblock %}
-{% block user_content %}
+{% block child_content %}
     <h1>Messages Details</h1>
     <hr>
     <p>Regarding: <a href="{% url 'view_product' message.regard_item_id %}">{{ message.regard_item }}</a></p>
@@ -10,4 +10,6 @@
         <p><a href="{% url 'send_message' message.from_user.profile.social_id message.regard_item.id %}">Reply</a>
         </p>
     {% endif %}
+    {% load render_bundle from webpack_loader %}
+    {% render_bundle 'user_messages' %}
 {% endblock %}

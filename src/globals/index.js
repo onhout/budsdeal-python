@@ -7,4 +7,12 @@ $(function () {
     $(document).on('click', '.mega-dropdown', function (e) {
         e.stopPropagation();
     });
+
+    //USER SIDEBAR
+
+    $('#toggle-sidebar').click(function () {
+        $('#cross').toggle();
+        $('#bars').toggle();
+        $('#wrapper').toggleClass('toggled');
+    });
 });

@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^user/', include('apps.user.urls')),
     url(r'^products/', include('apps.products.urls')),
     url(r'^messages/', include('apps.user_messages.urls')),
+    url(r'^orders/', include('apps.order.urls')),
     url(r'^autocomplete/', views.search_product, name='search_product'),
     url(r'^admin/', admin.site.urls),
     url('', include('social.apps.django_app.urls', namespace='social')),
