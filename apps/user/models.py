@@ -7,10 +7,7 @@ from apps.products.models import Item
 
 
 #
-#
 # # Create your models here.
-#
-#
 
 
 class Profile(models.Model):
@@ -63,6 +60,9 @@ class Shipping(models.Model):
     zip = models.CharField(max_length=10)
     phone_number = models.CharField(max_length=50)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '%s' % self.address
 
 
 @receiver(post_save, sender=User)
