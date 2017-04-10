@@ -1,0 +1,33 @@
+{% extends 'Nav.html' %}
+{% load render_bundle from webpack_loader %}
+{% block content %}
+
+    <div id="wrapper-order">
+        <div id="sidebar-wrapper">
+            <h4 class="text-center">Contact</h4>
+            <div class="thumbnail">
+                <img src="/{{ regard_item.user.profile.profile_photo }}" class="img-responsive img-thumbnail"/>
+                <div class="caption">
+                    <p>
+                        <a href="{% url 'view_profile' regard_item.user.id %}">{{ regard_item.user.get_full_name }}</a>
+                    </p>
+                    <address>
+                        Company name: <br/>
+                        <strong>{{ regard_item.user.company.name }}</strong><br/>
+                    </address>
+                </div>
+            </div>
+        </div>
+        <div id="page-content-wrapper">
+            <a href="#" class="visible-xs" id="toggle-sidebar">
+                <i id="bars" class="fa fa-bars fa-2x"></i>
+                <i id="cross" class="fa fa-times fa-2x" style="display: none;"></i>
+            </a>
+            <div class="container-fluid" style="padding: 10px 0 10px 15px">
+                {% block child_content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+<!-- /#sidebar-wrapper -->

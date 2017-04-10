@@ -14,5 +14,6 @@ $(function () {
         $('#cross').toggle();
         $('#bars').toggle();
         $('#wrapper').toggleClass('toggled');
+        $('#wrapper-order').toggleClass('toggled');
     });
 });

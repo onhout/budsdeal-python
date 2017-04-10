@@ -9,7 +9,6 @@ class Alert {
             'data-dismiss': 'alert',
             'aria-label': 'Close'
         }).append('<span aria-hidden="true">&times;</span>');
-
         return alert.append(closeButton).append(message)
     }
 }

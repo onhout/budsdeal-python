@@ -1,4 +1,4 @@
-{% extends 'User_Sidebar.html' %}
+{% extends 'Order_Sidebar.html' %}
 {% load render_bundle from webpack_loader %}
 {% block title %}Create an order{% endblock %}
 {% block child_content %}
@@ -82,7 +82,8 @@
                     <h3 class="panel-title">Additional information</h3>
                 </div>
                 <div class="panel-body">
-                    Additional Info
+                    <p class="text-muted">Additional terms and info</p>
+                    {{ order_form.additional_info }}
                 </div>
             </div>
         </div>

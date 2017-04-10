@@ -22,6 +22,8 @@ class Order(models.Model):
     item_amount = models.IntegerField()
     shipping_address = models.ForeignKey(Shipping, blank=True, null=True, related_name='shipping_address')
     shipping_method = models.CharField(max_length=255, blank=True, null=True, choices=SHIP_METHODS)
+    payment_method = models.CharField(max_length=255, blank=True, null=True)
+    additional_info = models.TextField()
     order_status = models.CharField(max_length=10, default='pending')
     timestamp = models.DateTimeField(auto_now=True)
 
