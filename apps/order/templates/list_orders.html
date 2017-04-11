@@ -4,6 +4,60 @@
 
 {% block child_content %}
 
-    <h1>ORDERSssss</h1>
+    <h1>Current Orders</h1>
+    {% if buy_order %}
+        <div class="panel panel-primary">
+            <div class="panel-heading">Buying</div>
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Amount</th>
+                        <th>Total Cost</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in buy_order %}
+                        <tr>
+                            <td><a href="{% url 'view_order' order.id %}">{{ order.item }}</a></td>
+                            <td>{{ order.order_status }}</td>
+                            <td>{{ order.item_amount }}</td>
+                            <td>${{ order.total }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+    {% if sell_order %}
+        <div class="panel panel-primary">
+            <div class="panel-heading">Selling</div>
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th>Amount</th>
+                        <th>Total Cost</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in sell_order %}
+                        <tr>
+                            <td><a href="{% url 'view_order' order.id %}">{{ order.item }}</a></td>
+                            <td>{{ order.order_status }}</td>
+                            <td>{{ order.item_amount }}</td>
+                            <td>${{ order.total }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
     {% render_bundle 'order' %}
 {% endblock %}

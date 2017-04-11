@@ -1,9 +1,8 @@
 {% extends 'Order_Sidebar.html' %}
 {% load render_bundle from webpack_loader %}
-{% block title %}Create an order{% endblock %}
+{% block title %}Viewing order{% endblock %}
 {% block child_content %}
-    <h2>Create order for <a href="{% url 'view_product' regard_item.id %}"> {{ regard_item.name }}</a></h2>
-    <form class="form" method="post" action="{% url 'update_or_create_order' %}?item={{ regard_item.id }}">
+    <form class="form" method="post" action="{% url 'update_or_create_order' %}?order={{ order.id }}">
         {% csrf_token %}
         <div class="">
             <div class="panel panel-primary">
@@ -30,13 +29,13 @@
                             <td>{{ order_form.item_amount }}</td>
                             <td>{{ regard_item.weight_unit }}</td>
                             <td class="item_price">{{ regard_item.price }}</td>
-                            <td>$<span class="order_subtotal">0</span></td>
+                            <td>$<span class="order_subtotal">{{ order.total }}</span></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="panel-footer clearfix">
-                    <h4 class="pull-right text-danger">Total: $<span id="order_total">0</span></h4>
+                    <h4 class="pull-right text-danger">Total: $<span id="order_total">{{ order.total }}</span></h4>
                 </div>
             </div>
         </div>
@@ -90,5 +89,6 @@
             <button type="submit" class="btn btn-raised btn-success">Confirm order</button>
         </div>
     </form>
+
     {% render_bundle 'order' %}
 {% endblock %}
