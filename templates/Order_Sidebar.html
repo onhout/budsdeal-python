@@ -2,39 +2,17 @@
 {% load render_bundle from webpack_loader %}
 {% block content %}
 
-    <div id="">
-        <div id="" class="col-md-2">
-            <h4 class="text-center">Contact</h4>
-            <div class="thumbnail">
-                <img src="/{{ regard_item.user.profile.profile_photo }}" class="img-responsive img-thumbnail"/>
-                <div class="caption">
-                    <p>
-                        <a href="{% url 'view_profile' regard_item.user.id %}">{{ regard_item.user.get_full_name }}</a>
-                    </p>
-                    <address>
-                        <p><h5>{{ regard_item.user.company.name }}</h5><br/>
-                        {{ regard_item.user.company.address }}, {{ regard_item.user.company.address2 }}<br/>
-                        {{ regard_item.user.company.city }}, {{ regard_item.user.company.state }} {{ regard_item.user.company.zip }}<br/>
-                        </p>
-                    </address>
-                </div>
-            </div>
+    <div class="col-md-2">
+        {% include 'order_contacts.html' %}
+    </div>
+    <div class="col-md-7">
+        <div class="container-fluid" style="padding: 10px 0 10px 15px">
+            {% block child_content %}
+            {% endblock %}
         </div>
-        <div id="" class="col-md-6">
-            <div class="container-fluid" style="padding: 10px 0 10px 15px">
-                {% block child_content %}
-                {% endblock %}
-            </div>
-        </div>
-        <div id="" class="col-md-4">
-            <h4 class="text-center">Messages</h4>
-            <div id="order_message_container">
-                {% for message in messages %}
-                    {{ message.content }}
-                {% endfor %}
-                {{ message_form.content }} {# TODO man fix this... #}
-            </div>
-        </div>
+    </div>
+    <div class="col-md-3">
+        {% include 'order_messages.html' %}
     </div>
 {% endblock %}
 <!-- /#sidebar-wrapper -->

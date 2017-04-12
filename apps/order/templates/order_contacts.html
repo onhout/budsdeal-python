@@ -1,0 +1,15 @@
+<h4 class="text-center">Contact</h4>
+<div class="thumbnail">
+    <img src="/{{ regard_item.user.profile.profile_photo }}" class="img-responsive img-thumbnail"/>
+    <div class="caption">
+        <p>
+            <a href="{% url 'view_profile' regard_item.user.id %}">{{ regard_item.user.get_full_name }}</a>
+        </p>
+        <address>
+            <p><h5>{{ regard_item.user.company.name }}</h5><br/>
+            {{ regard_item.user.company.address }}, {{ regard_item.user.company.address2 }}<br/>
+            {{ regard_item.user.company.city }}, {{ regard_item.user.company.state }} {{ regard_item.user.company.zip }}<br/>
+            </p>
+        </address>
+    </div>
+</div>
