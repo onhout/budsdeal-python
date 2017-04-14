@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 
 from apps.products.models import Item
 from . import forms, models
+from .decorators import user_has_order
 
 
 # Create your views here.
@@ -23,6 +24,7 @@ def list_orders(request):
 
 
 @login_required
+@user_has_order
 def view_order(request, order_id):
     order = models.Order.objects.get(id=order_id)
     order_form = forms.OrderForm(instance=order)
@@ -52,6 +54,7 @@ def create_order(request, item_id):
 
 
 @login_required
+@user_has_order
 def send_message(request, order_id):
     order = models.Order.objects.get(id=order_id)
     if request.POST and request.user.is_authenticated and order.buyer or order.item.user is request.user:

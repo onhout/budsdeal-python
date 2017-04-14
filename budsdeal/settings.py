@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'names',
     'faker',
+    'channels',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -233,3 +234,13 @@ ES_CLIENT = Elasticsearch(
     ['http://127.0.0.1:9200/'],
     connection_class=RequestsHttpConnection
 )
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+        "ROUTING": "apps.order.routing.channel_routing",
+    },
+}
