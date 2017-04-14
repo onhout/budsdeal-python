@@ -4,9 +4,10 @@
         {{ message.content }}
     {% endfor %}
     {#    <form class="form" method="post" action="{% url 'update_or_create_order' %}?item={{ regard_item.id }}">#}
-        {{ message_form.content }}
-        <div class="clearfix">
-            <button id="send_order_message" class="btn btn-raised btn-info pull-right">Send</button>
-        </div>
+    {{ message_form.content }}
+    <div class="clearfix">
+        <button id="send_order_message" class="btn btn-raised btn-info pull-right">Send</button>
+    </div>
     {#    </form>#}
+    {% include 'order_chats.html' %}
 </div>

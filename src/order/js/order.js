@@ -2,6 +2,7 @@ import "../less/order.less";
 // var Feedback = require('../../globals/Feedback/Feedback.js').default;
 
 $(function () {
+    console.log($('.order_message_container').data('chatid'))
     if ($('.order_message_container').length >= 1) {
         var socket = new WebSocket("ws://" + window.location.host + "/chat?order_id=" +
             $('.order_message_container').data('chatid'));
