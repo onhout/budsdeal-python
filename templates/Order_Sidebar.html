@@ -1,18 +1,17 @@
 {% extends 'Nav.html' %}
 {% load render_bundle from webpack_loader %}
 {% block content %}
-
-    <div class="col-md-2">
+    <div class="{% if order %}col-md-2 col-sm-4 col-lg-2{% else %}col-md-4{% endif %}">
         {% include 'order_contacts.html' %}
     </div>
-    <div class="col-md-7">
-        <div class="container-fluid" style="padding: 10px 0 10px 15px">
-            {% block child_content %}
-            {% endblock %}
+    <div class="{% if order %}col-md-6 col-sm-8 col-lg-6{% else %}col-md-8{% endif %}">
+        {% block child_content %}
+        {% endblock %}
+    </div>
+    {% if order %}
+        <div class="col-md-4 col-sm-12 col-lg-4">
+            {% include 'order_chats.html' %}
         </div>
-    </div>
-    <div class="col-md-3">
-        {% include 'order_messages.html' %}
-    </div>
+    {% endif %}
 {% endblock %}
 <!-- /#sidebar-wrapper -->

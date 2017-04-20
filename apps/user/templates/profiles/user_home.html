@@ -58,7 +58,9 @@
             <div class="panel panel-info">
                 <div class="panel-heading">PENDING ORDERS</div>
                 <div class="panel-body">
-                    NOTHING YET!
+                    <h3 class="text-center">
+                        <a href="{% url 'list_orders' %}">{{ user.pending_order.count }}</a>
+                    </h3>
                 </div>
             </div>
         </div>

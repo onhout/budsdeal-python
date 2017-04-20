@@ -1,0 +1,47 @@
+{% extends 'Nav.html' %}
+{% load render_bundle from webpack_loader %}
+{% block title %}Viewing order{% endblock %}
+{% block content %}
+    <div class="col-md-6 col-md-offset-3">
+        <div id="order_chats" data-chatid="{{ order.id }}" data-sender="{{ user.profile.display_name }}">
+            <div class="panel panel-primary">
+                <div class="panel-heading" id="accordion">
+                    <span class="glyphicon glyphicon-comment"></span> Chat
+                </div>
+                <div class="panel-collapse">
+                    <div class="panel-body" style="overflow: visible!important; height: 100%;">
+                        <ul class="chat">
+                            {% for message in messages %}
+                                <li class="{% if message.sender == user %}right{% else %}left{% endif %} clearfix">
+                                <span class="chat-img pull-{% if message.sender == user %}right{% else %}left{% endif %}">
+                    <img src="/{{ message.sender.profile.profile_photo }}" alt="User Avatar" class="img-circle"
+                         style="width:50px;"/>
+                    </span>
+                                <div class="chat-body clearfix">
+                                    <div class="header">
+                                        {% if message.sender == user %}
+                                            <small class="text-muted">
+                                                <span class="glyphicon glyphicon-time"></span>{{ message.timestamp|date:"m/d/y fA " }}
+                                            </small>
+                                            <strong class="primary-font pull-right ">{{ message.sender.get_full_name }}</strong>
+                                        {% else %}
+                                            <strong class="primary-font">{{ message.sender.get_full_name }}</strong>
+                                            <small class="pull-right text-muted">
+                                                <span class="glyphicon glyphicon-time"></span>{{ message.timestamp|date:"m/d/y fA " }}
+                                            </small>
+                                        {% endif %}
+                                    </div>
+                                    <p>
+                                        {{ message.content }}
+                                    </p>
+                                </div>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% render_bundle 'order' %}
+{% endblock %}

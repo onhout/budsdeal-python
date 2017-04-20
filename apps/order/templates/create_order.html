@@ -1,0 +1,11 @@
+{% extends 'Order_Sidebar.html' %}
+{% load render_bundle from webpack_loader %}
+{% block title %}Create an order{% endblock %}
+{% block child_content %}
+    <h2>Create order for <a href="{% url 'view_product' regard_item.id %}"> {{ regard_item.name }}</a></h2>
+    <form class="form" method="post" action="{% url 'update_or_create_order' %}?item={{ regard_item.id }}">
+        {% csrf_token %}
+        {% include 'order_form.html' %}
+    </form>
+    {% render_bundle 'order' %}
+{% endblock %}

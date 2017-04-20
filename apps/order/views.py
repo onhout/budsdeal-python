@@ -29,15 +29,13 @@ def view_order(request, order_id):
     order = models.Order.objects.get(id=order_id)
     order_form = forms.OrderForm(instance=order)
     primary_photo = order.item.image_item.filter(primary=True)
-    messages = models.Messages.objects.filter(order=order)
-    message_form = forms.MessageForm()
+    messages = models.Messages.objects.filter(order=order).order_by('-timestamp')[:25][::-1]
     return render(request, 'view_order.html', {
         'order': order,
         'regard_item': order.item,
         'primary_photo': primary_photo,
         'order_form': order_form,
-        'messages': messages,
-        'message_form': message_form
+        'messages': messages
     })
 
 
@@ -46,10 +44,29 @@ def create_order(request, item_id):
     regard_item = Item.objects.get(id=item_id)
     primary_photo = regard_item.image_item.filter(primary=True)
     order_form = forms.OrderForm()
-    return render(request, 'create_quote.html', {
+    return render(request, 'create_order.html', {
         'order_form': order_form,
         'regard_item': regard_item,
         'primary_photo': primary_photo
+    })
+
+
+@login_required
+@user_has_order
+def cancel_order(request, order_id):
+    if request.POST and request.user.is_authenticated:
+        order = models.Order.objects.get(id=request.GET.get('order'))
+
+
+@login_required
+@user_has_order
+def view_all_message(request, order_id):
+    order = models.Order.objects.get(id=order_id)
+    messages = models.Messages.objects.filter(order=order).order_by('timestamp')
+    return render(request, 'view_all_message.html', {
+        'order': order,
+        'regard_item': order.item,
+        'messages': messages
     })
 
 
@@ -88,34 +105,11 @@ def update_or_create(request):
                 o_form.buyer = request.user
                 o_form.item = item
                 o_form.save()
-                return redirect('list_orders')
+                return redirect('view_order', order_id=o_form.id)
         except:
             order = models.Order.objects.get(id=request.GET.get('order'))
             order_form = forms.OrderForm(request.POST, instance=order)
             if order_form.is_valid():
                 o_form = order_form.save(commit=False)
                 o_form.save()
-                return redirect('list_orders')
-                #
-                # @login_required
-                # def send_message(request, social_id, item_id):
-                #     user_profile = Profile.objects.get(social_id=social_id)
-                #     this_user = User.objects.get(id=user_profile.user_id)
-                #     regard_item = Item.objects.get(id=item_id)
-                #     if request.POST and request.user.is_authenticated:
-                #         message_form = forms.MessageForm(request.POST)
-                #         if message_form.is_valid():
-                #             form = message_form.save(commit=False)
-                #             form.from_user = request.user
-                #             form.to_user = this_user
-                #             form.regard_item = regard_item
-                #             form.save()
-                #             return redirect('view_sent_messages')
-                #     else:
-                #         message_form = forms.MessageForm(initial={'subject': 'Quote regarding: ' + regard_item.name})
-                #
-                #     return render(request, 'user/send_message.html', {
-                #         'this_product': regard_item,
-                #         'this_user': this_user,
-                #         'message_form': message_form
-                #     })
+                return redirect('view_order', order_id=o_form.id)

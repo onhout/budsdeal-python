@@ -1,19 +1,11 @@
 import "../less/order.less";
 // var Feedback = require('../../globals/Feedback/Feedback.js').default;
+var BudsChat = require('./buds_chat').default;
 
 $(function () {
-    console.log($('.order_message_container').data('chatid'))
-    if ($('.order_message_container').length >= 1) {
-        var socket = new WebSocket("ws://" + window.location.host + "/chat?order_id=" +
-            $('.order_message_container').data('chatid'));
-
-        socket.onmessage = function (e) {
-            $('.order_message_container').append(e.data)
-        };
-
-        // Call onopen directly if socket is already open
-        if (socket.readyState == WebSocket.OPEN) socket.onopen();
-
+    var chat_pane = $('#order_chats');
+    if (chat_pane.length >= 1) {
+        new BudsChat(chat_pane.data('chatid'), chat_pane.data('sender'));
     }
 
 
@@ -26,8 +18,25 @@ $(function () {
         $('#order_total').text(value * unit_price);
     });
 
-
-    $('#send_order_message').click(function () {
-        socket.send("hello world");
-    })
+    // function send_message() {
+    //     socket.send($('#order_message').val())
+    // }
+    //
+    // function reset_field(el){
+    //     el.val('');
+    // }
+    //
+    //
+    // $('#send_order_message').click(function () {
+    //     send_message();
+    //     reset_field($('#order_message'))
+    // });
+    //
+    // $('#order_message').on('keydown', function (e) {
+    //     if (e.which == 13) {
+    //         e.preventDefault();
+    //         send_message();
+    //         reset_field($(this))
+    //     }
+    // });
 });

@@ -1,9 +1,9 @@
-<h4 class="text-center">Contact</h4>
+<h4 class="text-center">Seller</h4>
 <div class="thumbnail">
     <img src="/{{ regard_item.user.profile.profile_photo }}" class="img-responsive img-thumbnail"/>
     <div class="caption">
         <p>
-            <a href="{% url 'view_profile' regard_item.user.id %}">{{ regard_item.user.get_full_name }}</a>
+            <a href="{% url 'view_profile' regard_item.user.profile.display_name %}">{{ regard_item.user.get_full_name }}</a>
         </p>
         <address>
             <p><h5>{{ regard_item.user.company.name }}</h5><br/>
@@ -13,3 +13,22 @@
         </address>
     </div>
 </div>
+{% if order %}
+    <h4 class="text-center">Buyer</h4>
+    <div class="thumbnail">
+        <img src="/{{ order.buyer.profile.profile_photo }}" class="img-responsive img-thumbnail"/>
+        <div class="caption">
+            <p>
+                <a href="{% url 'view_profile' order.buyer.profile.display_name %}">{{ order.buyer.get_full_name }}</a>
+            </p>
+            {% if order.buyer.company.name %}
+                <address>
+                    <p><h5>{{ order.buyer.company.name }}</h5><br/>
+                    {{ order.buyer.company.address }}, {{ order.buyer.company.address2 }}<br/>
+                    {{ order.buyer.company.city }}, {{ order.buyer.company.state }} {{ order.buyer.company.zip }}<br/>
+                    </p>
+                </address>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}

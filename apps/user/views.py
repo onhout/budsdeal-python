@@ -2,10 +2,11 @@ from django.contrib import messages
 from django.contrib.auth import logout as auth_logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.db.models import Sum, F, Avg, Count
+from django.db.models import Sum, F, Avg, Count, Q
 from django.db.models.fields import FloatField
 from django.shortcuts import render, redirect
 
+from apps.order.models import Order
 from apps.products.models import Feedback
 from . import forms as user_forms
 from .models import Profile
@@ -49,7 +50,11 @@ def home(request):
                                                   total=Sum(F('price') * F('count'), output_field=FloatField()))
     item_rating = Feedback.objects.filter(to_item__in=request.user.product.all()).aggregate(avg=Avg('item_rating'),
                                                                                             count=Count('item_rating'))
+    order_count = Order.objects.filter(
+        Q(buyer=request.user, order_status='pending') | Q(item__in=request.user.product.all(),
+                                                          order_status='pending')).aggregate(count=Count('id'))
     request.user.item_rating = item_rating
+    request.user.pending_order = order_count
     return render(request, 'profiles/user_home.html', {
         'products_count': products_count,
         'products_extra_info': products_extra_info,

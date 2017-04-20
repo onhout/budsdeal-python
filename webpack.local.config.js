@@ -21,7 +21,8 @@ module.exports = {
             'slick-carousel',
             'blueimp-file-upload',
             'lodash',
-            'typeahead.js/dist/typeahead.jquery'
+            'typeahead.js/dist/typeahead.jquery',
+            'moment'
         ]
     }, // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
 
@@ -38,7 +39,8 @@ module.exports = {
         new webpack.ProvidePlugin({
             $: 'jquery',             // bootstrap 3.x requires
             jQuery: 'jquery',        // bootstrap 3.x requires
-            Bloodhound: 'typeahead.js/dist/bloodhound'
+            Bloodhound: 'typeahead.js/dist/bloodhound',
+            moment: 'moment'
         }),
         new ExtractTextPlugin('[name]-[hash].css'),
         new webpack.optimize.DedupePlugin(),

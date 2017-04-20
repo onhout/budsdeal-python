@@ -15,8 +15,8 @@
                                 / {{ images_set.0.item.weight_unit }}
                             </p>
                             <a class="btn btn-raised btn-primary"
-                               href="{% url 'send_message' images_set.0.item.user.profile.social_id images_set.0.item.id %}">
-                                Quote
+                               href="{% url 'create_order' images_set.0.item.id %}">
+                                Order
                             </a>
 
                         </div>
