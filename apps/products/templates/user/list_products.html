@@ -37,8 +37,8 @@
                             <td>
                                 <a href="{% url 'update_product' item.id %}" class="btn btn-raised btn-primary">Update
                                     Product</a>
-                                <a href="{% url 'delete_product' item.id %}"
-                                   class="btn btn-raised btn-danger">Delete</a>
+                                <a href="#" data-url="{% url 'delete_product' item.id %}" data-id="{{ item.id }}"
+                                   class="btn btn-raised btn-danger btn-delete">Delete</a>
                             </td>
                         </tr>
                     {% endfor %}
