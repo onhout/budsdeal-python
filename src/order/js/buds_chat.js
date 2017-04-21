@@ -40,10 +40,9 @@ class BudsChat {
         this.inputField.val('')
     };
 
-    send_message() {
-        if (this.inputField.val()) {
-            this.socket.send(this.inputField.val())
-        }
+    send_message(val) {
+        var msg = val || this.inputField.val();
+        this.socket.send(msg)
     };
 
     chat_module(data) {

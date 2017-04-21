@@ -1,0 +1,12 @@
+{% extends 'Order_Sidebar.html' %}
+{% load render_bundle from webpack_loader %}
+{% block title %}Confirmed{% endblock %}
+{% block child_content %}
+    {#    <form class="form" method="post" action="{% url 'update_or_create_order' %}?order={{ order.id }}">#}
+    {#        {% csrf_token %}#}
+    {#        {% include 'order_form.html' %}#}
+    {#    </form>#}
+    BREH
+
+    {% render_bundle 'order' %}
+{% endblock %}

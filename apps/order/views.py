@@ -1,6 +1,7 @@
 import datetime
 
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
@@ -27,23 +28,31 @@ def list_orders(request):
 @user_has_order
 def view_order(request, order_id):
     order = models.Order.objects.get(id=order_id)
-    order_form = forms.OrderForm(instance=order)
+    order_form = forms.OrderForm(instance=order, user=request.user)
     primary_photo = order.item.image_item.filter(primary=True)
     messages = models.Messages.objects.filter(order=order).order_by('-timestamp')[:25][::-1]
-    return render(request, 'view_order.html', {
-        'order': order,
-        'regard_item': order.item,
-        'primary_photo': primary_photo,
-        'order_form': order_form,
-        'messages': messages
-    })
+    if order.order_status == 'confirmed':
+        return render(request, 'confirmed_order.html', {
+            'order': order,
+            'regard_item': order.item,
+            'primary_photo': primary_photo,
+            'messages': messages
+        })
+    else:
+        return render(request, 'view_order.html', {
+            'order': order,
+            'regard_item': order.item,
+            'primary_photo': primary_photo,
+            'order_form': order_form,
+            'messages': messages
+        })
 
 
 @login_required
 def create_order(request, item_id):
     regard_item = Item.objects.get(id=item_id)
     primary_photo = regard_item.image_item.filter(primary=True)
-    order_form = forms.OrderForm()
+    order_form = forms.OrderForm(user=request.user)
     return render(request, 'create_order.html', {
         'order_form': order_form,
         'regard_item': regard_item,
@@ -53,9 +62,26 @@ def create_order(request, item_id):
 
 @login_required
 @user_has_order
+def confirm_order(request, order_id):
+    order = models.Order.objects.get(id=order_id)
+    if request.user.is_authenticated:
+        models.Messages.objects.create(order=order, sender=request.user,
+                                       content="%s has confirmed the order" % request.user.get_full_name())
+        order.order_status = 'confirmed'
+        order.save()
+    return redirect('list_orders')
+
+
+@login_required
+@user_has_order
 def cancel_order(request, order_id):
-    if request.POST and request.user.is_authenticated:
-        order = models.Order.objects.get(id=request.GET.get('order'))
+    order = models.Order.objects.get(id=order_id)
+    if request.user.is_authenticated:
+        models.Messages.objects.create(order=order, sender=request.user,
+                                       content="%s has canceled the order" % request.user.get_full_name())
+        order.order_status = 'canceled'
+        order.save()
+    return redirect('view_order', order_id=order.id)
 
 
 @login_required
@@ -103,6 +129,7 @@ def update_or_create(request):
             if order_form.is_valid():
                 o_form = order_form.save(commit=False)
                 o_form.buyer = request.user
+                o_form.editable = item.user
                 o_form.item = item
                 o_form.save()
                 return redirect('view_order', order_id=o_form.id)
@@ -111,5 +138,12 @@ def update_or_create(request):
             order_form = forms.OrderForm(request.POST, instance=order)
             if order_form.is_valid():
                 o_form = order_form.save(commit=False)
+                models.Messages.objects.create(order=order, sender=request.user,
+                                               content="%s has made changes to the order" % request.user.get_full_name())
+                if order.buyer == request.user:
+                    o_form.editable = order.item.user
+                elif order.item.user == request.user:
+                    o_form.editable = order.buyer
                 o_form.save()
                 return redirect('view_order', order_id=o_form.id)
+        raise PermissionDenied

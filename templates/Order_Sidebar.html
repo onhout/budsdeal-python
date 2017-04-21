@@ -1,14 +1,14 @@
 {% extends 'Nav.html' %}
 {% load render_bundle from webpack_loader %}
 {% block content %}
-    <div class="{% if order %}col-md-2 col-sm-4 col-lg-2{% else %}col-md-4{% endif %}">
+    <div class="{% if order and not order.order_status == 'canceled' %}col-md-2 col-sm-4 col-lg-2{% else %}col-md-4{% endif %}">
         {% include 'order_contacts.html' %}
     </div>
-    <div class="{% if order %}col-md-6 col-sm-8 col-lg-6{% else %}col-md-8{% endif %}">
+    <div class="{% if order and not order.order_status == 'canceled' %}col-md-6 col-sm-8 col-lg-6{% else %}col-md-8{% endif %}">
         {% block child_content %}
         {% endblock %}
     </div>
-    {% if order %}
+    {% if order and not order.order_status == 'canceled' %}
         <div class="col-md-4 col-sm-12 col-lg-4">
             {% include 'order_chats.html' %}
         </div>

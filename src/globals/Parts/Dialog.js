@@ -1,22 +1,6 @@
-class Delete {
-    constructor() {
-        var self = this;
-        var btn_delete = $('.btn-delete');
-        btn_delete.click(function (e) {
-            e.preventDefault();
-            $(this).attr('data-target', '#delete-modal-' + $(this).data('id'));
-            self.create_overlay('Delete',
-                'Are you sure you want to delete?',
-                $(this).data('url'),
-                $(this).data('id'));
-            // $('#delete-modal').modal(options)
-        });
-        btn_delete.attr('data-toggle', 'modal');
-
-
-    }
-
-    create_overlay(title, text, url, id) {
+class Dialog {
+    constructor(title, text, url, id) {
+        this.save_text = 'Yes';
         var modal_title = $('<h4/>', {
             'class': 'modal-title',
             'text': title
@@ -32,14 +16,14 @@ class Delete {
 
         var accept_button = $('<button/>', {
             'class': 'btn btn-primary btn-raised',
-            'text': 'Save Changes'
+            'text': this.save_text
         }).click(function () {
             window.location.href = url;
         });
 
         var modal = $('<div/>', {
             'class': 'modal fade in',
-            'id': 'delete-modal-' + id
+            'id': 'modal-' + id
         })
             .append($('<div/>', {
                 'class': 'modal-dialog'
@@ -71,4 +55,4 @@ class Delete {
     }
 }
 
-export default Delete
+export default Dialog

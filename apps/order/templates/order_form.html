@@ -1,3 +1,9 @@
+{% if order and order.order_status == 'canceled' %}
+    <h4 class="text-danger text-center">THIS ORDER IS CANCELED</h4>
+{% endif %}
+{% if order and order.order_status == 'confirmed' %}
+    <h4 class="text-info text-center">ORDER CONFIRMED</h4>
+{% endif %}
 <div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title">Product information</h3>
@@ -71,7 +77,30 @@
         {{ order_form.additional_info }}
     </div>
 </div>
-<button type="submit" class="btn btn-raised btn-success">Confirm order</button>
-{% if order %}
-    <button type="button" class="btn btn-raised btn-danger pull-right clearfix btn-cancel">Cancel Order</button>
+
+{% if order and order.editable != user %}
+    <p class="text-warning">Waiting for changes...</p>
+{% endif %}
+<button type="submit" class="btn btn-raised btn-success"
+        {% if order.order_status == 'canceled' or order.editable != user and order %}disabled{% endif %}>
+    {% if order %}
+        Make Changes
+    {% else %}
+        Start order
+    {% endif %}
+</button>
+{% if order.item.user == user %}
+    <a href=# data-url="{% url 'confirm_order' order.id %}" data-id="{{ order.id }}"
+       id="finalize-order"
+       class="btn btn-raised btn-primary">
+        Confirm Order
+    </a>
+{% endif %}
+
+{% if order and not order.order_status == 'canceled' %}
+    <button type="button" data-url="{% url 'cancel_order' order.id %}" data-id="{{ order.id }}"
+            class="btn btn-raised btn-danger pull-right clearfix btn-cancel">Cancel Order
+    </button>
+{% elif order and order.order_status == 'canceled' %}
+    <a href="{% url 'view_all_message' order.id %}" target="_blank" class="pull-right clearfix">View all messages</a>
 {% endif %}
