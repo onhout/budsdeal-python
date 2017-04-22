@@ -2,7 +2,7 @@ from django.contrib.auth.admin import User
 from django.contrib.auth.forms import AdminPasswordChangeForm, PasswordChangeForm
 from django.forms import ModelForm
 
-from .models import Profile, Company
+from .models import Profile, Company, Shipping
 
 
 class PasswordChangeCustomForm(PasswordChangeForm):
@@ -51,5 +51,19 @@ class CompanyForm(ModelForm):
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
             self.fields[field].label = 'Company ' + self.fields[field].label
+            if self.fields[field].required:
+                self.fields[field].help_text = '*required'
+
+
+class ShippingAddressForm(ModelForm):
+    class Meta:
+        model = Shipping
+        exclude = ['id', 'updated_at', 'user']
+
+    def __init__(self, *args, **kwargs):
+        super(ShippingAddressForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+            self.fields[field].label = 'Shipping ' + self.fields[field].label
             if self.fields[field].required:
                 self.fields[field].help_text = '*required'

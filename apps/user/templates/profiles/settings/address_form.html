@@ -1,0 +1,14 @@
+<form class="form" method="post"
+      action="{% url 'edit_shipping_address' %}?method=
+              {{ method }}{% if address.id %}&address_id={{ address.id }}{% endif %}">
+    {% csrf_token %}
+    {% if address_form %}
+        {% for fields in address_form %}
+            <div class="form-group">
+                <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
+                {{ fields }}
+                <span class="help-block">{{ fields.help_text }}</span>
+            </div>
+        {% endfor %}
+    {% endif %}
+</form>

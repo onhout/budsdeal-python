@@ -4,12 +4,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db.models import Sum, F, Avg, Count, Q
 from django.db.models.fields import FloatField
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 from apps.order.models import Order
 from apps.products.models import Feedback
 from . import forms as user_forms
-from .models import Profile
+from .models import Profile, Shipping
 
 
 # Create your views here.
@@ -86,10 +87,11 @@ def account_settings_password(request):
 def user_profile(request):
     user_form = user_forms.UserForm(instance=request.user)
     profile_form = user_forms.ProfileForm(instance=request.user.profile)
-
+    shipping_addresses = Shipping.objects.filter(user=request.user)
     return render(request, 'profiles/settings/user_profile.html', {
         'user_form': user_form,
-        'profile_form': profile_form
+        'profile_form': profile_form,
+        'shipping_addresses': shipping_addresses
     })
 
 
@@ -102,8 +104,7 @@ def user_company(request):
             'company_form': company_form
         })
     else:
-        return render(request, 'profiles/user_home.html', {
-        })
+        return render(request, 'profiles/user_home.html', {})
 
 
 @login_required
@@ -133,3 +134,51 @@ def register_as_seller(request):
         return render(request, 'profiles/register_as_seller.html')
     else:
         return redirect('user_home')
+
+
+@login_required
+def add_shipping_template(request):
+    address_form = user_forms.ShippingAddressForm()
+    return render(request, 'profiles/settings/address_form.html', {
+        'address_form': address_form,
+        'method': 'add'
+    })
+
+
+@login_required
+def edit_shipping_template(request, address_id):
+    address = Shipping.objects.get(id=address_id)
+    address_form = user_forms.ShippingAddressForm(instance=address)
+    return render(request, 'profiles/settings/address_form.html', {
+        'address_form': address_form,
+        'address': address,
+        'method': 'update'
+    })
+
+
+@login_required
+def delete_shipping_address(request, address_id):
+    if request.user.is_authenticated and request.user.profile.approved_as_seller:
+        Shipping.objects.get(id=address_id).delete()
+    return redirect('user_profile')
+
+
+@login_required
+def update_shipping_address(request):
+    if request.POST and request.user.is_authenticated:
+        if request.GET.get('method') == 'add':
+            address_form = user_forms.ShippingAddressForm(request.POST)
+            if address_form.is_valid():
+                form = address_form.save(commit=False)
+                form.user = request.user
+                form.save()
+        elif request.GET.get('method') == 'update' and request.GET.get('address_id'):
+            address = Shipping.objects.get(id=request.GET.get('address_id'))
+            address_form = user_forms.ShippingAddressForm(request.POST, instance=address)
+            if address_form.is_valid():
+                address_form.save()
+        data = {'status': 'success'}
+    else:
+        data = {'status': 'unauthorized'}
+
+    return JsonResponse(data)

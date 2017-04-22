@@ -21,11 +21,22 @@ $(function () {
     finalize_btn.click(function (e) {
         e.preventDefault();
         $(this).attr('data-target', '#modal-' + $(this).data('id'));
-        new Dialog('Finalize',
+        var modal = new Dialog('Finalize',
             'Are you sure you want to finalize the order?',
             $(this).data('url'),
             $(this).data('id'));
+        modal.save_text = 'Finalize';
+        modal.run_modal();
     });
     finalize_btn.attr('data-toggle', 'modal');
 
+    var shipping_btn = $('#shipping_btn');
+    $.get('/user/shipping/add/', function (data) {
+        var modal = new Dialog('Add A Shipping', '', '', shipping_btn.data('id'));
+        modal.modal_body = $(data);
+        modal.save_text = 'Submit';
+        modal.run_modal();
+    });
+    shipping_btn.attr('data-target', '#modal-' + shipping_btn.data('id'));
+    shipping_btn.attr('data-toggle', 'modal');
 });

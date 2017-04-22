@@ -2,11 +2,6 @@
 {% load render_bundle from webpack_loader %}
 {% block title %}Confirmed{% endblock %}
 {% block child_content %}
-    {#    <form class="form" method="post" action="{% url 'update_or_create_order' %}?order={{ order.id }}">#}
-    {#        {% csrf_token %}#}
-    {#        {% include 'order_form.html' %}#}
-    {#    </form>#}
-    BREH
-
+    <h1>PURCHASE ORDER</h1>
     {% render_bundle 'order' %}
 {% endblock %}

@@ -51,7 +51,7 @@ class Company(models.Model):
 
 
 class Shipping(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='shipping')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='shipping')
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=255)
     address2 = models.CharField(max_length=10, blank=True, null=True)
