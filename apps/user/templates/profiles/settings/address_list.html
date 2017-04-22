@@ -5,7 +5,7 @@
     <div class="panel-body">
         <a href="#" class="btn btn-primary btn-raised" id="shipping_btn">Add Shipping Address</a>
         <hr>
-        <table class="table table-hover table-stripe">
+        <table class="table table-hover table-stripe" id="address_list">
             <thead>
             <tr>
                 <th>Name</th>
@@ -21,7 +21,7 @@
             {% for shipping in shipping_addresses %}
                 <tr>
                     <td>{{ shipping.name }}</td>
-                    <td>{{ shipping.address }}, {{ shipping.address2 }}</td>
+                    <td>{{ shipping.address }}{% if shipping.address2 %}, {{ shipping.address2 }}{% endif %}</td>
                     <td>{{ shipping.city }}</td>
                     <td>{{ shipping.state }}</td>
                     <td>{{ shipping.zip }}</td>
@@ -38,7 +38,5 @@
             </tbody>
         </table>
     </div>
-    <div class="panel-footer">
-        <div id="add_form"></div>
-    </div>
 </div>
+<div id="add_form"></div>

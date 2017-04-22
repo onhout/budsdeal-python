@@ -32,7 +32,7 @@ $(function () {
 
     var shipping_btn = $('#shipping_btn');
     $.get('/user/shipping/add/', function (data) {
-        var modal = new Dialog('Add A Shipping', '', '', shipping_btn.data('id'));
+        var modal = new Dialog('', '', '', shipping_btn.data('id'));
         modal.modal_body = $(data);
         modal.save_text = 'Submit';
         modal.run_modal();

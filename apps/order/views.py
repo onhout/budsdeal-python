@@ -31,12 +31,14 @@ def view_order(request, order_id):
     order_form = forms.OrderForm(instance=order, user=request.user)
     primary_photo = order.item.image_item.filter(primary=True)
     messages = models.Messages.objects.filter(order=order).order_by('-timestamp')[:25][::-1]
+    shipping_addresses = models.Shipping.objects.filter(user=request.user)
     if order.order_status == 'confirmed':
         return render(request, 'confirmed_order.html', {
             'order': order,
             'regard_item': order.item,
             'primary_photo': primary_photo,
-            'messages': messages
+            'messages': messages,
+            'shipping_addresses': shipping_addresses
         })
     else:
         return render(request, 'view_order.html', {
@@ -44,7 +46,8 @@ def view_order(request, order_id):
             'regard_item': order.item,
             'primary_photo': primary_photo,
             'order_form': order_form,
-            'messages': messages
+            'messages': messages,
+            'shipping_addresses': shipping_addresses
         })
 
 

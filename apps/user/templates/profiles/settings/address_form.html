@@ -1,14 +1,58 @@
-<form class="form" method="post"
-      action="{% url 'edit_shipping_address' %}?method=
-              {{ method }}{% if address.id %}&address_id={{ address.id }}{% endif %}">
+<form class="form" method="post" action="
+{% url 'edit_shipping_address' %}?method={{ method }}{% if address.id %}&address_id={{ address.id }}{% endif %}">
     {% csrf_token %}
     {% if address_form %}
-        {% for fields in address_form %}
-            <div class="form-group">
-                <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>
-                {{ fields }}
-                <span class="help-block">{{ fields.help_text }}</span>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    {{ address_form.name.label_tag }}
+                    {{ address_form.name }}
+                </div>
+                <span class="help-block">{{ address_form.name.help_text }}</span>
             </div>
-        {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ address_form.address.label_tag }}
+                    {{ address_form.address }}
+                </div>
+                <span class="help-block">{{ address_form.address.help_text }}</span>
+                <div class="form-group">
+                    {{ address_form.city.label_tag }}
+                    {{ address_form.city }}
+                </div>
+                <span class="help-block">{{ address_form.city.help_text }}</span>
+                <div class="form-group">
+                    {{ address_form.zip.label_tag }}
+                    {{ address_form.zip }}
+                </div>
+                <span class="help-block">{{ address_form.zip.help_text }}</span>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ address_form.address2.label_tag }}
+                    {{ address_form.address2 }}
+                </div>
+                <span class="help-block">{{ address_form.address2.help_text }}</span>
+                <div class="form-group">
+                    {{ address_form.state.label_tag }}
+                    {{ address_form.state }}
+                </div>
+                <span class="help-block">{{ address_form.state.help_text }}</span>
+                <div class="form-group">
+                    {{ address_form.phone_number.label_tag }}
+                    {{ address_form.phone_number }}
+                </div>
+                <span class="help-block">{{ address_form.phone_number.help_text }}</span>
+            </div>
+        </div>
+        {#        {% for fields in address_form %}#}
+        {#            <div class="form-group">#}
+        {#                <label id={{ fields.id_for_label }} class="control-label">{{ fields.label }}</label>#}
+        {#                {{ fields }}#}
+        {#                <span class="help-block">{{ fields.help_text }}</span>#}
+        {#            </div>#}
+        {#        {% endfor %}#}
     {% endif %}
 </form>

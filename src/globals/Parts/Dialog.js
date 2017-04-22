@@ -57,21 +57,35 @@ class Dialog {
                             if (typeof self.url == 'string' && self.url) {
                                 window.location.href = self.url;
                             } else {
-                                $.ajax({
-                                    type: "POST",
-                                    url: self.modal_body.attr('action'),
-                                    data: self.modal_body.serialize(),
-                                    success: function (data) {
-                                        if (data.status == 'success') {
-                                            location.reload()
-                                        } else {
-                                            alert('An error occurred')
+                                if (self.validate_form(self.modal_body)) {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: self.modal_body.attr('action'),
+                                        data: self.modal_body.serialize(),
+                                        success: function (data) {
+                                            if (data.status == 'success') {
+                                                location.reload()
+                                            } else {
+                                                alert('An error occurred')
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                                } else {
+                                    alert('Please fill out the required field')
+                                }
                             }
                         })))));
         self.modal.appendTo($('body'));
+    }
+
+    validate_form(form) {
+        var valid = true;
+        form.find('.form-group input').each(function () {
+            if ($(this).attr('required') && $(this).val() == '') {
+                valid = false
+            }
+        });
+        return valid;
     }
 }
 

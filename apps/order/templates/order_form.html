@@ -43,24 +43,29 @@
         <h3 class="panel-title">Shipping information</h3>
     </div>
     <div class="panel-body">
-        <div class="col-sm-4">
-            {{ order_form.shipping_method.label_tag }}
-            {{ order_form.shipping_method }}
+        <div class="row">
+            <div class="col-sm-12">
+                {% if shipping_addresses %}
+                    {{ order_form.shipping_address.label_tag }}
+                    {{ order_form.shipping_address }}
+                    <a href="{% url 'user_profile' %}" class="btn btn-info btn-raised">Edit Shipping Addresses</a>
+                {% else %}
+                    {{ order_form.shipping_address.label_tag }}
+                    <a href="#" id="shipping_btn" class="btn btn-info btn-raised">Add Shipping Address</a>
+                {% endif %}
+            </div>
         </div>
-        <div class="col-sm-4">
-            {% if request.user.shipping %}
-                {{ order_form.shipping_address.label_tag }}
-                {{ order_form.shipping_address }}
-                <a href="#" id="shipping_btn" class="btn btn-info btn-raised">Edit Shipping Addresses</a>
-            {% else %}
-                {{ order_form.shipping_address.label_tag }}
-                <a href="#" id="shipping_btn" class="btn btn-info btn-raised">Add Shipping Address</a>
-            {% endif %}
-        </div>
-        <div class="col-sm-4">
-            EXPECTED SHIPMENT DATE?
-        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-6">
+                {{ order_form.shipping_method.label_tag }}
+                {{ order_form.shipping_method }}
+            </div>
 
+            <div class="col-sm-6">
+                EXPECTED SHIPMENT DATE?
+            </div>
+        </div>
     </div>
 </div>
 
