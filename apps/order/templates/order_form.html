@@ -46,12 +46,35 @@
         <div class="row">
             <div class="col-sm-12">
                 {% if shipping_addresses %}
-                    {{ order_form.shipping_address.label_tag }}
-                    {{ order_form.shipping_address }}
-                    <a href="{% url 'user_profile' %}" class="btn btn-info btn-raised">Edit Shipping Addresses</a>
+                    {% if order.buyer == user %}
+                        {{ order_form.shipping_address.label_tag }}
+                        {{ order_form.shipping_address }}
+                        <a href="{% url 'user_profile' %}" class="btn btn-info btn-raised">Manage Shipping Addresses</a>
+                    {% else %}
+                        {{ order_form.shipping_address.label_tag }}
+                        <input type="hidden"
+                               name="{{ order_form.shipping_address.name }}"
+                               value="{{ order_form.shipping_address.value }}"/>
+
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <address>
+                                    <strong>{{ order.shipping_address.name }}</strong><br/>
+                                    {{ order.shipping_address.address }}, {{ order.shipping_address.address2 }}<br/>
+                                    {{ order.shipping_address.city }}, {{ order.shipping_address.state }} {{ order.shipping_address.zip }}<br/>
+                                    Phone: {{ order.shipping_address.phone_number }}
+                                </address>
+                            </div>
+                        </div>
+                    {% endif %}
                 {% else %}
-                    {{ order_form.shipping_address.label_tag }}
-                    <a href="#" id="shipping_btn" class="btn btn-info btn-raised">Add Shipping Address</a>
+                    {% if order.buyer == user %}
+                        {{ order_form.shipping_address.label_tag }}
+                        <a href="#" id="shipping_btn" class="btn btn-info btn-raised">Add Shipping Address</a>
+                    {% else %}
+                        {{ order_form.shipping_address.label_tag }}
+                        <p class="text-info">Buyer has not entered shipping address yet</p>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
@@ -111,5 +134,6 @@
             class="btn btn-raised btn-danger pull-right clearfix btn-cancel">Cancel Order
     </button>
 {% elif order and order.order_status == 'canceled' %}
-    <a href="{% url 'view_all_message' order.id %}" target="_blank" class="pull-right clearfix">View all messages</a>
+    <a href="{% url 'view_all_message' order.id %}" target="_blank" class="pull-right clearfix">View all
+        messages</a>
 {% endif %}

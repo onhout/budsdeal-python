@@ -22,6 +22,9 @@ class OrderForm(ModelForm):
             if instance.order_status == 'canceled' or instance.order_status == 'confirmed' or instance.editable != self.user:
                 for field in self.fields:
                     self.fields[field].widget.attrs['disabled'] = True
+            if instance.buyer != self.user:
+                self.fields['shipping_address'].widget.attrs['disabled'] = True
+
         except:
             pass
 

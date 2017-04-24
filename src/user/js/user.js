@@ -4,21 +4,20 @@ var Dialog = require('../../globals/Parts/Dialog').default;
 
 
 $(function () {
-
-
     var feedback = new Feedback();
 
 
     var shipping_btn = $('#shipping_btn');
-    $.get('/user/shipping/add/', function (data) {
-        var modal = new Dialog('', '', '', shipping_btn.data('id'));
-        modal.modal_body = $(data);
-        modal.save_text = 'Submit';
-        modal.run_modal();
-    });
-    shipping_btn.attr('data-target', '#modal-' + shipping_btn.data('id'));
-    shipping_btn.attr('data-toggle', 'modal');
-
+    if (shipping_btn.length > 0) {
+        $.get('/user/shipping/add/', function (data) {
+            var modal = new Dialog('', '', '', shipping_btn.data('id'));
+            modal.modal_body = $(data);
+            modal.save_text = 'Submit';
+            modal.run_modal();
+        });
+        shipping_btn.attr('data-target', '#modal-' + shipping_btn.data('id'));
+        shipping_btn.attr('data-toggle', 'modal');
+    }
     $('.edit_shipping').click(function (e) {
         e.preventDefault();
         $.get($(this).data('url'), function (data) {
