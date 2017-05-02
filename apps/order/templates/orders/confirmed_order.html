@@ -1,0 +1,153 @@
+{% extends 'Order_Sidebar.html' %}
+{% load render_bundle from webpack_loader %}
+{% block title %}Confirmed{% endblock %}
+{% block child_content %}
+    {% load humanize %}
+    <div class="row">
+        <div class="col-md-6">
+            <h3>{{ regard_item.user.company.name }}</h3>
+        </div>
+        <div class="col-md-6">
+            <h3 class="text-right">Purchase Order</h3>
+            <ul class="list-group">
+                <li class="list-group-item text-right">Date: {{ order.timestamp|date:"F/d/y" }}</li>
+                <li class="list-group-item text-right text-nowrap">Order ID: {{ order.id }}</li>
+                <li class="list-group-item text-right">Morbi leo risus</li>
+                <li class="list-group-item text-right">Porta ac consectetur ac</li>
+                <li class="list-group-item text-right">Vestibulum at eros</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Vendor:</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">Name: {{ regard_item.user.get_full_name }}</li>
+                        <li class="list-group-item">{{ regard_item.user.company.name }}</li>
+                        <li class="list-group-item">
+                            {{ regard_item.user.company.address }}, {{ regard_item.user.company.address2 }}
+                        </li>
+                        <li class="list-group-item">
+                            {{ regard_item.user.company.city }},
+                            {{ regard_item.user.company.state }}{{ regard_item.user.company.zip }}
+                        </li>
+                        <li class="list-group-item">Phone: {{ regard_item.user.company.phone_number }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Ship to:</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">Name: {{ order.shipping_address.name }}</li>
+                        <li class="list-group-item">
+                            {{ order.shipping_address.address }}, {{ order.shipping_address.address2 }}</li>
+                        <li class="list-group-item">
+                            {{ order.shipping_address.city }}, {{ order.shipping_address.state }} {{ order.shipping_address.zip }}
+                        </li>
+                        <li class="list-group-item">Phone: {{ order.shipping_address.phone_number }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Ship Via</th>
+                    <th>Shipping Method</th>
+                    <th>Shipping Terms</th>
+                    <th>Delivery Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ order }}</td>
+                    <td>{{ order.shipping_method }}</td>
+                    <td>{{ order }}</td>
+                    <td>{{ order }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product Name</th>
+                    <th>Description</th>
+                    <th>Qty</th>
+                    <th>Unit Price</th>
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ regard_item.id }}</td>
+                    <td><a href="{% url 'view_product' regard_item.id %}">{{ regard_item.name }}</a></td>
+                    <td>{{ regard_item.description|truncatechars:100 }}</td>
+                    <td>{{ order.item_amount }}</td>
+                    <td>{{ regard_item.price }}</td>
+                    <td>{{ order.total }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Addition Terms:</h3>
+                </div>
+                <div class="panel-body">
+                    {{ order.additional_info }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <table class="table table-striped table-bordered">
+                <tbody>
+                <tr>
+                    <td>Subtotal:</td>
+                    <td class="text-right">{{ totals.subtotal }}</td>
+                </tr>
+                <tr>
+                    <td>Discount:</td>
+                    <td class="text-right">0</td>
+                </tr>
+                <tr>
+                    <td>Tax: ({{ totals.tax_rate }})</td>
+                    <td class="text-right">{{ totals.tax }}</td>
+                </tr>
+                <tr>
+                    <td>Others:</td>
+                    <td class="text-right">0</td>
+                </tr>
+                <tr>
+                    <td>S & H:</td>
+                    <td class="text-right">0</td>
+                </tr>
+                <tr style="font-weight: bold">
+                    <td>TOTAL:</td>
+                    <td class="text-right">{{ totals.grand_total }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% render_bundle 'order' %}
+{% endblock %}

@@ -6,7 +6,6 @@ var Dialog = require('../../globals/Parts/Dialog').default;
 $(function () {
     var feedback = new Feedback();
 
-
     var shipping_btn = $('#shipping_btn');
     if (shipping_btn.length > 0) {
         $.get('/user/shipping/add/', function (data) {

@@ -18,7 +18,7 @@ def list_orders(request):
     own_items = Item.objects.filter(user=request.user)
     sell_order = models.Order.objects.filter(item__in=own_items)
     buy_order = models.Order.objects.filter(buyer=request.user)
-    return render(request, 'list_orders.html', {
+    return render(request, 'orders/list_orders.html', {
         'sell_order': sell_order,
         'buy_order': buy_order
     })
@@ -33,15 +33,22 @@ def view_order(request, order_id):
     messages = models.Messages.objects.filter(order=order).order_by('-timestamp')[:25][::-1]
     shipping_addresses = models.Shipping.objects.filter(user=order.buyer)
     if order.order_status == 'confirmed':
-        return render(request, 'confirmed_order.html', {
+        totalobject = {
+            "subtotal": "$%.2f" % order.total,
+            "tax_rate": "15%",
+            "tax": '$%.2f' % (order.total * 0.15),
+            "grand_total": '$%.2f' % (order.total * 1.15),
+        }
+        return render(request, 'orders/confirmed_order.html', {
             'order': order,
             'regard_item': order.item,
             'primary_photo': primary_photo,
             'messages': messages,
+            'totals': totalobject,
             'shipping_addresses': shipping_addresses
         })
     else:
-        return render(request, 'view_order.html', {
+        return render(request, 'orders/view_order.html', {
             'order': order,
             'regard_item': order.item,
             'primary_photo': primary_photo,
@@ -56,7 +63,7 @@ def create_order(request, item_id):
     regard_item = Item.objects.get(id=item_id)
     primary_photo = regard_item.image_item.filter(primary=True)
     order_form = forms.OrderForm(user=request.user)
-    return render(request, 'create_order.html', {
+    return render(request, 'orders/create_order.html', {
         'order_form': order_form,
         'regard_item': regard_item,
         'primary_photo': primary_photo
@@ -70,6 +77,7 @@ def confirm_order(request, order_id):
     if request.user.is_authenticated:
         models.Messages.objects.create(order=order, sender=request.user,
                                        content="%s has confirmed the order" % request.user.get_full_name())
+        order.confirmed_date = datetime.datetime.now()
         order.order_status = 'confirmed'
         order.save()
     return redirect('list_orders')

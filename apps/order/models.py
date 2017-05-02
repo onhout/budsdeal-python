@@ -29,7 +29,7 @@ class Order(models.Model):
     additional_info = models.TextField(blank=True, null=True)
     order_status = models.CharField(max_length=10, default='pending')
     editable = models.ForeignKey(User, related_name='editable_user')
-    timestamp = models.DateTimeField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now=True)  # LAST UPDATED
 
 
 class Messages(models.Model):

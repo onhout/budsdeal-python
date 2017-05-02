@@ -10,7 +10,7 @@
     </div>
     {% if order and not order.order_status == 'canceled' %}
         <div class="col-md-4 col-sm-12 col-lg-4">
-            {% include 'order_chats.html' %}
+            {% include 'chats/order_chats.html' %}
         </div>
     {% endif %}
 {% endblock %}
