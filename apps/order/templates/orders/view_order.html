@@ -4,7 +4,7 @@
 {% block child_content %}
     <form class="form" method="post" action="{% url 'update_or_create_order' %}?order={{ order.id }}">
         {% csrf_token %}
-        {% include 'chats/order_form.html' %}
+        {% include 'orders/order_form.html' %}
     </form>
 
     {% render_bundle 'order' %}

@@ -5,9 +5,11 @@ from . import models
 
 
 class OrderForm(ModelForm):
+    prefix = 'order_form'
+
     class Meta:
         model = models.Order
-        exclude = ['buyer', 'item', 'order_status', 'timestamp', 'editable']
+        exclude = ['buyer', 'order_status', 'timestamp', 'editable']
         widgets = {
             'additional_info': forms.Textarea(
                 attrs={'placeholder': 'Additional terms and conditions'}
@@ -25,6 +27,29 @@ class OrderForm(ModelForm):
             if instance.buyer != self.user:
                 self.fields['shipping_address'].widget.attrs['disabled'] = True
 
+        except:
+            pass
+
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+
+
+class OrderItemsForm(ModelForm):
+    prefix = 'order_items_form'
+
+    class Meta:
+        model = models.OrderItems
+        fields = ['item_amount']
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(OrderItemsForm, self).__init__(*args, **kwargs)
+        try:
+            instance = getattr(self, 'instance', None)
+            theOrder = models.Order.objects.get(instance.order_id)
+            if theOrder.order_status == 'canceled' or theOrder.order_status == 'confirmed' or theOrder.editable != self.user:
+                for field in self.fields:
+                    self.fields[field].widget.attrs['disabled'] = True
         except:
             pass
 

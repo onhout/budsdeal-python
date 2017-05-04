@@ -20,9 +20,7 @@ class Order(models.Model):
     ]
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buyer')
-    item = models.ForeignKey(Item, related_name='order_item')
     total = models.FloatField(null=True, blank=True)
-    item_amount = models.IntegerField()
     shipping_address = models.ForeignKey(Shipping, blank=True, null=True, related_name='shipping_address')
     shipping_method = models.CharField(max_length=255, blank=True, null=True, choices=SHIP_METHODS)
     payment_method = models.CharField(max_length=255, blank=True, null=True)
@@ -30,6 +28,13 @@ class Order(models.Model):
     order_status = models.CharField(max_length=10, default='pending')
     editable = models.ForeignKey(User, related_name='editable_user')
     timestamp = models.DateTimeField(auto_now=True)  # LAST UPDATED
+
+
+class OrderItems(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='related_order')
+    item = models.ForeignKey(Item, related_name='order_item', blank=True, null=True)
+    item_amount = models.IntegerField(blank=True, null=True)
+    date_added = models.DateTimeField(auto_now_add=True)
 
 
 class Messages(models.Model):
@@ -49,3 +54,4 @@ def create_messages_list(sender, instance, created, **kwargs):
 @receiver(pre_save, sender=Order)
 def add_total(sender, instance, **kwargs):
     instance.total = instance.item_amount * instance.item.price
+    # TODO continue correcting this.

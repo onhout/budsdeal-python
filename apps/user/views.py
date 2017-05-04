@@ -52,8 +52,7 @@ def home(request):
     item_rating = Feedback.objects.filter(to_item__in=request.user.product.all()).aggregate(avg=Avg('item_rating'),
                                                                                             count=Count('item_rating'))
     order_count = Order.objects.filter(
-        Q(buyer=request.user, order_status='pending') | Q(item__in=request.user.product.all(),
-                                                          order_status='pending')).aggregate(count=Count('id'))
+        Q(buyer=request.user, order_status='pending'))
     request.user.item_rating = item_rating
     request.user.pending_order = order_count
     return render(request, 'profiles/user_home.html', {

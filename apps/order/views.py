@@ -16,10 +16,10 @@ from .decorators import user_has_order
 @login_required
 def list_orders(request):
     own_items = Item.objects.filter(user=request.user)
-    sell_order = models.Order.objects.filter(item__in=own_items)
+    # sell_order = models.Order.objects.filter(item__in=own_items)
     buy_order = models.Order.objects.filter(buyer=request.user)
     return render(request, 'orders/list_orders.html', {
-        'sell_order': sell_order,
+        # 'sell_order': sell_order,
         'buy_order': buy_order
     })
 
@@ -29,7 +29,10 @@ def list_orders(request):
 def view_order(request, order_id):
     order = models.Order.objects.get(id=order_id)
     order_form = forms.OrderForm(instance=order, user=request.user)
-    primary_photo = order.item.image_item.filter(primary=True)
+    order_items = models.OrderItems.objects.filter(order=order)
+    for item in order_items:
+        item.form = forms.OrderItemsForm(instance=item)
+        item.primary_photo = item.item.image_item.filter(primary=True)[0].image
     messages = models.Messages.objects.filter(order=order).order_by('-timestamp')[:25][::-1]
     shipping_addresses = models.Shipping.objects.filter(user=order.buyer)
     if order.order_status == 'confirmed':
@@ -41,8 +44,8 @@ def view_order(request, order_id):
         }
         return render(request, 'orders/confirmed_order.html', {
             'order': order,
-            'regard_item': order.item,
-            'primary_photo': primary_photo,
+            'order_items': order_items,
+            'regard_item': order_items[0].item,
             'messages': messages,
             'totals': totalobject,
             'shipping_addresses': shipping_addresses
@@ -50,8 +53,8 @@ def view_order(request, order_id):
     else:
         return render(request, 'orders/view_order.html', {
             'order': order,
-            'regard_item': order.item,
-            'primary_photo': primary_photo,
+            'order_items': order_items,
+            'regard_item': order_items[0].item,
             'order_form': order_form,
             'messages': messages,
             'shipping_addresses': shipping_addresses
@@ -63,8 +66,10 @@ def create_order(request, item_id):
     regard_item = Item.objects.get(id=item_id)
     primary_photo = regard_item.image_item.filter(primary=True)
     order_form = forms.OrderForm(user=request.user)
+    order_item_form = forms.OrderItemsForm()
     return render(request, 'orders/create_order.html', {
         'order_form': order_form,
+        'order_item_form': order_item_form,
         'regard_item': regard_item,
         'primary_photo': primary_photo
     })
@@ -136,13 +141,18 @@ def update_or_create(request):
             if item.user == request.user:
                 return redirect('list_orders')
             else:
-                order_form = forms.OrderForm(request.POST)
-            if order_form.is_valid():
+                order_form = forms.OrderForm(request.POST, prefix='order_form')
+                order_items_form = forms.OrderItemsForm(request.POST, prefix='order_items_form')
+                print(order_items_form)
+            if order_form.is_valid() and order_items_form.is_valid():
                 o_form = order_form.save(commit=False)
+                i_form = order_items_form.save(commit=False)
                 o_form.buyer = request.user
                 o_form.editable = item.user
-                o_form.item = item
+                i_form.item = item
+                i_form.order = o_form
                 o_form.save()
+                i_form.save()
                 return redirect('view_order', order_id=o_form.id)
         except:
             order = models.Order.objects.get(id=request.GET.get('order'))

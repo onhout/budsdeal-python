@@ -9,7 +9,7 @@ $(function () {
         var chat = new BudsChat(chat_pane.data('chatid'), chat_pane.data('sender'));
     }
 
-    $('#id_item_amount').change(function () {
+    $('#id_order_items_form-item_amount').change(function () {
         var unit_price = parseFloat($(this).parents('tr').find('td.item_price').text());
         var value = parseFloat($(this).val());
 
