@@ -6,10 +6,12 @@ class BtnCancel {
         btn_cancel.click(function (e) {
             e.preventDefault();
             $(this).attr('data-target', '#modal-' + $(this).data('id'));
-            var modal = new Dialog('Cancel',
-                'Are you sure you want to cancel?',
-                $(this).data('url'),
-                $(this).data('id'));
+            var modal = new Dialog({
+                modal_title_text: 'Calcen',
+                modal_body_text: 'Are you sure you want to calcen?',
+                url: $(this).data('url'),
+                id: $(this).data('id')
+            });
             modal.run_modal()
         });
         btn_cancel.attr('data-toggle', 'modal');

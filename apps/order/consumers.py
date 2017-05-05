@@ -19,7 +19,7 @@ def ws_connect(message):
 
     order = Order.objects.get(pk=message.channel_session['order_id'])
     # message.channel_session['current_order'] = order
-    if order.buyer == message.user or order.item.user == message.user:
+    if order.buyer == message.user or order.seller == message.user:
         Group("order-%s" % room).add(message.reply_channel)
 
 

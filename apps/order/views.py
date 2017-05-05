@@ -2,10 +2,11 @@ import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
-from apps.products.models import Item
+from apps.products.models import Item, ItemImage
 from . import forms, models
 from .decorators import user_has_order
 
@@ -15,11 +16,10 @@ from .decorators import user_has_order
 
 @login_required
 def list_orders(request):
-    own_items = Item.objects.filter(user=request.user)
-    # sell_order = models.Order.objects.filter(item__in=own_items)
+    sell_order = models.Order.objects.filter(seller=request.user)
     buy_order = models.Order.objects.filter(buyer=request.user)
     return render(request, 'orders/list_orders.html', {
-        # 'sell_order': sell_order,
+        'sell_order': sell_order,
         'buy_order': buy_order
     })
 
@@ -64,6 +64,8 @@ def view_order(request, order_id):
 @login_required
 def create_order(request, item_id):
     regard_item = Item.objects.get(id=item_id)
+    if regard_item.user == request.user:
+        return redirect('/products/list')
     primary_photo = regard_item.image_item.filter(primary=True)
     order_form = forms.OrderForm(user=request.user)
     order_item_form = forms.OrderItemsForm()
@@ -107,7 +109,6 @@ def view_all_message(request, order_id):
     messages = models.Messages.objects.filter(order=order).order_by('timestamp')
     return render(request, 'view_all_message.html', {
         'order': order,
-        'regard_item': order.item,
         'messages': messages
     })
 
@@ -116,7 +117,7 @@ def view_all_message(request, order_id):
 @user_has_order
 def send_message(request, order_id):
     order = models.Order.objects.get(id=order_id)
-    if request.POST and request.user.is_authenticated and order.buyer or order.item.user is request.user:
+    if request.POST and request.user.is_authenticated and order.buyer or order.seller is request.user:
         message_form = forms.MessageForm(request.POST)
         if message_form.is_valid():
             form = message_form.save(commit=False)
@@ -135,7 +136,7 @@ def send_message(request, order_id):
 
 @login_required
 def update_or_create(request):
-    if request.POST and request.user.is_authenticated:
+    if request.method == "POST" and request.user.is_authenticated:
         try:
             item = Item.objects.get(id=request.GET.get('item'))
             if item.user == request.user:
@@ -143,11 +144,11 @@ def update_or_create(request):
             else:
                 order_form = forms.OrderForm(request.POST, prefix='order_form')
                 order_items_form = forms.OrderItemsForm(request.POST, prefix='order_items_form')
-                print(order_items_form)
             if order_form.is_valid() and order_items_form.is_valid():
                 o_form = order_form.save(commit=False)
                 i_form = order_items_form.save(commit=False)
                 o_form.buyer = request.user
+                o_form.seller = item.user
                 o_form.editable = item.user
                 i_form.item = item
                 i_form.order = o_form
@@ -156,15 +157,45 @@ def update_or_create(request):
                 return redirect('view_order', order_id=o_form.id)
         except:
             order = models.Order.objects.get(id=request.GET.get('order'))
-            order_form = forms.OrderForm(request.POST, instance=order)
+            order_items = models.OrderItems.filter(order=order)
+            order_form = forms.OrderForm(request.POST, instance=order, prefix='order_form')
+            order_items_form = forms.OrderItemsForm(request.POST, prefix='order_items_form')
             if order_form.is_valid():
                 o_form = order_form.save(commit=False)
                 models.Messages.objects.create(order=order, sender=request.user,
                                                content="%s has made changes to the order" % request.user.get_full_name())
                 if order.buyer == request.user:
-                    o_form.editable = order.item.user
-                elif order.item.user == request.user:
+                    o_form.editable = order.seller
+                elif order.seller == request.user:
                     o_form.editable = order.buyer
                 o_form.save()
                 return redirect('view_order', order_id=o_form.id)
         raise PermissionDenied
+
+
+@login_required
+def list_seller_products(request, order_id):
+    order = models.Order.objects.get(id=order_id)
+
+    user_product_list = order.seller.product.all()
+    paginator = Paginator(user_product_list, 5)
+    page = request.GET.get('page')
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
+    data = []
+    for item in products:
+        image = ItemImage.objects.filter(item=item, primary=True)
+        print(image)
+        # TODO THERE HAS TO BE A PRIMARY IMAGE
+        data.append({
+            'id': item.id,
+            'name': item.name,
+            'type': item.type,
+            'price': item.price,
+            'categories': item.categories.name,
+        })
+    return JsonResponse({'data': data})

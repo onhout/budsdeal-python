@@ -20,6 +20,7 @@ class Order(models.Model):
     ]
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buyer')
+    seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller')
     total = models.FloatField(null=True, blank=True)
     shipping_address = models.ForeignKey(Shipping, blank=True, null=True, related_name='shipping_address')
     shipping_method = models.CharField(max_length=255, blank=True, null=True, choices=SHIP_METHODS)
@@ -34,6 +35,7 @@ class OrderItems(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='related_order')
     item = models.ForeignKey(Item, related_name='order_item', blank=True, null=True)
     item_amount = models.IntegerField(blank=True, null=True)
+    item_subtotal = models.FloatField(null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
 
@@ -51,7 +53,12 @@ def create_messages_list(sender, instance, created, **kwargs):
         Messages.objects.create(order=instance, sender=instance.buyer, content="I'm interested!")
 
 
-@receiver(pre_save, sender=Order)
-def add_total(sender, instance, **kwargs):
-    instance.total = instance.item_amount * instance.item.price
-    # TODO continue correcting this.
+@receiver(pre_save, sender=OrderItems)
+def add_subtotal(sender, instance, **kwargs):
+    instance.item_subtotal = instance.item_amount * instance.item.price
+    order = Order.objects.get(id=instance.order.id)
+    if not order.total:
+        order.total = instance.item_subtotal
+    else:
+        order.total += instance.item_subtotal
+    order.save()

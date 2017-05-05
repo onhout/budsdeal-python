@@ -1,21 +1,50 @@
 class Dialog {
-    constructor(title, text, url, id) {
+    constructor(data) {
         var self = this;
-        this.id = id;
-        this.url = url;
-        this.save_text = 'Yes';
-        this.modal_body = $('<p/>', {
-            'text': text
-        });
-        this.modal_title = $('<h4/>', {
-            'class': 'modal-title',
-            'text': title
-        });
+        this.id = data.id;
+        this.url = data.url;
+        this.save_button = data.save_button || $('<button/>', {
+                'class': 'btn btn-primary btn-raised',
+                'text': 'Submit'
+            }).click(function () {
+                    if (typeof self.url == 'string' && self.url) {
+                        window.location.href = self.url;
+                    } else {
+                        if (self.validate_form(self.modal_body)) {
+                            $.ajax({
+                                type: "POST",
+                                url: self.modal_body.attr('action'),
+                                data: self.modal_body.serialize(),
+                                success: function (data) {
+                                    if (data.status == 'success') {
+                                        location.reload()
+                                    } else {
+                                        alert('An error occurred')
+                                    }
+                                }
+                            });
+                        } else {
+                            alert('Please fill out the required field')
+                        }
+                    }
+                }
+            );
+        this.modal_body = data.modal_body || $('<p/>', {
+                'text': data.modal_body_text
+            });
+        this.modal_title = data.modal_title || $('<h4/>', {
+                'class': 'modal-title',
+                'text': data.modal_title_text
+            });
 
         this.close_button = $('<button/>', {
             'class': 'btn btn-default btn-raised',
             'data-dismiss': 'modal',
             'text': 'Close'
+        }).click(function (e) {
+            self.modal.on('hidden.bs.modal', function (e) {
+                self.modal.remove();
+            });
         });
     }
 
@@ -23,6 +52,7 @@ class Dialog {
         var self = this;
         self.modal = $('<div/>', {
             'class': 'modal fade in',
+            'data-backdrop': 'static',
             'id': 'modal-' + self.id
         })
             .append($('<div/>', {
@@ -40,7 +70,11 @@ class Dialog {
                             'data-dismiss': 'modal',
                             'aria-hidden': 'true',
                             'text': 'x'
-                        }))
+                        })).click(function (e) {
+                            self.modal.on('hidden.bs.modal', function (e) {
+                                self.modal.remove();
+                            });
+                        })
                         .append(self.modal_title))
                     .append($('<div/>', {
                         'class': 'modal-body'
@@ -50,31 +84,7 @@ class Dialog {
                         'class': 'modal-footer'
                     })
                         .append(self.close_button)
-                        .append($('<button/>', {
-                            'class': 'btn btn-primary btn-raised',
-                            'text': self.save_text
-                        }).click(function () {
-                            if (typeof self.url == 'string' && self.url) {
-                                window.location.href = self.url;
-                            } else {
-                                if (self.validate_form(self.modal_body)) {
-                                    $.ajax({
-                                        type: "POST",
-                                        url: self.modal_body.attr('action'),
-                                        data: self.modal_body.serialize(),
-                                        success: function (data) {
-                                            if (data.status == 'success') {
-                                                location.reload()
-                                            } else {
-                                                alert('An error occurred')
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    alert('Please fill out the required field')
-                                }
-                            }
-                        })))));
+                        .append(self.save_button))));
         self.modal.appendTo($('body'));
     }
 

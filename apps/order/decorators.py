@@ -6,7 +6,7 @@ from .models import Order
 def user_has_order(function):
     def wrap(request, *args, **kwargs):
         order = Order.objects.get(pk=kwargs['order_id'])
-        if order.buyer == request.user or order.item.user == request.user:
+        if order.buyer == request.user or order.seller == request.user:
             return function(request, *args, **kwargs)
         else:
             raise PermissionDenied

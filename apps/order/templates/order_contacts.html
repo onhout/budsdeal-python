@@ -1,19 +1,19 @@
-<h4 class="text-center">Seller</h4>
-<div class="thumbnail">
-    <img src="/{{ regard_item.user.profile.profile_photo }}" class="img-responsive img-thumbnail"/>
-    <div class="caption">
-        <p>
-            <a href="{% url 'view_profile' regard_item.user.profile.display_name %}">{{ regard_item.user.get_full_name }}</a>
-        </p>
-        <address>
-            <p><h5>{{ regard_item.user.company.name }}</h5><br/>
-            {{ regard_item.user.company.address }}, {{ regard_item.user.company.address2 }}<br/>
-            {{ regard_item.user.company.city }}, {{ regard_item.user.company.state }} {{ regard_item.user.company.zip }}<br/>
-            </p>
-        </address>
-    </div>
-</div>
 {% if order %}
+    <h4 class="text-center">Seller</h4>
+    <div class="thumbnail">
+        <img src="/{{ order.seller.profile.profile_photo }}" class="img-responsive img-thumbnail"/>
+        <div class="caption">
+            <p>
+                <a href="{% url 'view_profile' order.seller.profile.display_name %}">{{ order.seller.get_full_name }}</a>
+            </p>
+            <address>
+                <p><h5>{{ order.seller.company.name }}</h5><br/>
+                {{ order.seller.company.address }}, {{ order.seller.company.address2 }}<br/>
+                {{ order.seller.company.city }}, {{ order.seller.company.state }} {{ order.seller.company.zip }}<br/>
+                </p>
+            </address>
+        </div>
+    </div>
     <h4 class="text-center">Buyer</h4>
     <div class="thumbnail">
         <img src="/{{ order.buyer.profile.profile_photo }}" class="img-responsive img-thumbnail"/>
@@ -29,6 +29,22 @@
                     </p>
                 </address>
             {% endif %}
+        </div>
+    </div>
+{% else %}
+    <h4 class="text-center">Seller</h4>
+    <div class="thumbnail">
+        <img src="/{{ regard_item.user.profile.profile_photo }}" class="img-responsive img-thumbnail"/>
+        <div class="caption">
+            <p>
+                <a href="{% url 'view_profile' regard_item.user.profile.display_name %}">{{ regard_item.user.get_full_name }}</a>
+            </p>
+            <address>
+                <p><h5>{{ regard_item.user.company.name }}</h5><br/>
+                {{ regard_item.user.company.address }}, {{ regard_item.user.company.address2 }}<br/>
+                {{ regard_item.user.company.city }}, {{ regard_item.user.company.state }} {{ regard_item.user.company.zip }}<br/>
+                </p>
+            </address>
         </div>
     </div>
 {% endif %}

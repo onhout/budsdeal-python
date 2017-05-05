@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
+from apps.user.models import Shipping
 from . import models
 
 
@@ -9,7 +10,7 @@ class OrderForm(ModelForm):
 
     class Meta:
         model = models.Order
-        exclude = ['buyer', 'order_status', 'timestamp', 'editable']
+        exclude = ['buyer', 'seller', 'order_status', 'timestamp', 'editable']
         widgets = {
             'additional_info': forms.Textarea(
                 attrs={'placeholder': 'Additional terms and conditions'}
@@ -19,6 +20,7 @@ class OrderForm(ModelForm):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super(OrderForm, self).__init__(*args, **kwargs)
+        self.fields['shipping_address'].queryset = Shipping.objects.filter(user=self.user)
         try:
             instance = getattr(self, 'instance', None)
             if instance.order_status == 'canceled' or instance.order_status == 'confirmed' or instance.editable != self.user:

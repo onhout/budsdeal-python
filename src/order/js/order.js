@@ -1,6 +1,7 @@
 import "../less/order.less";
 // var Feedback = require('../../globals/Feedback/Feedback.js').default;
 var BudsChat = require('./buds_chat').default;
+var SellerProductList = require('./seller_products').default;
 var Dialog = require('../../globals/Parts/Dialog').default;
 
 $(function () {
@@ -21,11 +22,12 @@ $(function () {
     finalize_btn.click(function (e) {
         e.preventDefault();
         $(this).attr('data-target', '#modal-' + $(this).data('id'));
-        var modal = new Dialog('Finalize',
-            'Are you sure you want to finalize the order?',
-            $(this).data('url'),
-            $(this).data('id'));
-        modal.save_text = 'Finalize';
+        var modal = new Dialog({
+            modal_title_text: 'Finalize',
+            modal_body_text: 'Are you sure you want to finalize the order?',
+            url: $(this).data('url'),
+            id: $(this).data('id')
+        });
         modal.run_modal();
     });
     finalize_btn.attr('data-toggle', 'modal');
@@ -33,13 +35,32 @@ $(function () {
     var shipping_btn = $('#shipping_btn');
     if (shipping_btn.length > 0) {
         $.get('/user/shipping/add/', function (data) {
-            var modal = new Dialog('', '', '', shipping_btn.data('id'));
-            modal.modal_body = $(data);
-            modal.save_text = 'Submit';
+            var modal = new Dialog({
+                id: shipping_btn.data('id'),
+                modal_body: $(data)
+            });
             modal.run_modal();
         });
         shipping_btn.attr('data-target', '#modal-' + shipping_btn.data('id'));
         shipping_btn.attr('data-toggle', 'modal');
     }
 
+    var add_product_btn = $('#add_product');
+    if (add_product_btn.length > 0) {
+        add_product_btn.click(function (e) {
+            e.preventDefault();
+            var table = new SellerProductList({
+                order_id: $(this).data('order_id')
+            });
+            var modal = new Dialog({
+                modal_title_text: 'Find products',
+                save_button: '<div/>',
+                id: 'add_product',
+                modal_body: table.table
+            });
+            modal.run_modal();
+        });
+        add_product_btn.attr('data-target', '#modal-add_product');
+        add_product_btn.attr('data-toggle', 'modal')
+    }
 });

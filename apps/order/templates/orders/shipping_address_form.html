@@ -1,0 +1,52 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">Shipping information</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12">
+                {% if shipping_addresses and order.buyer == user or not order %}
+                    {{ order_form.shipping_address.label_tag }}
+                    {{ order_form.shipping_address }}
+                    <a href="{% url 'user_profile' %}" class="btn btn-info btn-raised">Manage Shipping Addresses</a>
+                {% elif order.buyer == user and not  shipping_addresses %}
+                    {{ order_form.shipping_address.label_tag }}
+                    <a href="#" id="shipping_btn" class="btn btn-info btn-raised">Add Shipping Address</a>
+                {% endif %}
+
+                {% if order.seller == user and shipping_addresses %}
+                    {{ order_form.shipping_address.label_tag }}
+                    <input type="hidden"
+                           name="{{ order_form.shipping_address.name }}"
+                           value="{{ order_form.shipping_address.value }}"/>
+
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <address>
+                                <strong>{{ order.shipping_address.name }}</strong><br/>
+                                {{ order.shipping_address.address }}, {{ order.shipping_address.address2 }}<br/>
+                                {{ order.shipping_address.city }}, {{ order.shipping_address.state }} {{ order.shipping_address.zip }}<br/>
+                                Phone: {{ order.shipping_address.phone_number }}
+                            </address>
+                        </div>
+                    </div>
+                {% elif order.seller == user and not shipping_addresses %}
+                    {{ order_form.shipping_address.label_tag }}
+                    <p class="text-info">Buyer has not entered shipping address yet</p>
+                {% endif %}
+
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-sm-6">
+                {{ order_form.shipping_method.label_tag }}
+                {{ order_form.shipping_method }}
+            </div>
+
+            <div class="col-sm-6">
+                EXPECTED SHIPMENT DATE?
+            </div>
+        </div>
+    </div>
+</div>

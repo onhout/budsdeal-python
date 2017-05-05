@@ -9,9 +9,10 @@ $(function () {
     var shipping_btn = $('#shipping_btn');
     if (shipping_btn.length > 0) {
         $.get('/user/shipping/add/', function (data) {
-            var modal = new Dialog('', '', '', shipping_btn.data('id'));
-            modal.modal_body = $(data);
-            modal.save_text = 'Submit';
+            var modal = new Dialog({
+                id: shipping_btn.data('id'),
+                modal_body: $(data),
+            });
             modal.run_modal();
         });
         shipping_btn.attr('data-target', '#modal-' + shipping_btn.data('id'));
