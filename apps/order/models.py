@@ -22,7 +22,7 @@ class Order(models.Model):
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buyer')
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller')
     total = models.FloatField(null=True, blank=True)
-    shipping_address = models.ForeignKey(Shipping, blank=True, null=True, related_name='shipping_address')
+    shipping_address = models.ForeignKey(Shipping, related_name='shipping_address')
     shipping_method = models.CharField(max_length=255, blank=True, null=True, choices=SHIP_METHODS)
     payment_method = models.CharField(max_length=255, blank=True, null=True)
     additional_info = models.TextField(blank=True, null=True)
@@ -34,7 +34,7 @@ class Order(models.Model):
 class OrderItems(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='related_order')
     item = models.ForeignKey(Item, related_name='order_item', blank=True, null=True)
-    item_amount = models.IntegerField(blank=True, null=True)
+    item_amount = models.IntegerField()
     item_subtotal = models.FloatField(null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
 

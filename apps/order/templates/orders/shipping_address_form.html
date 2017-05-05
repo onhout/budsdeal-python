@@ -5,16 +5,18 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
-                {% if shipping_addresses and order.buyer == user or not order %}
-                    {{ order_form.shipping_address.label_tag }}
-                    {{ order_form.shipping_address }}
-                    <a href="{% url 'user_profile' %}" class="btn btn-info btn-raised">Manage Shipping Addresses</a>
-                {% elif order.buyer == user and not  shipping_addresses %}
-                    {{ order_form.shipping_address.label_tag }}
-                    <a href="#" id="shipping_btn" class="btn btn-info btn-raised">Add Shipping Address</a>
+                {% if order and order.buyer == user or not order %}
+                    {% if shipping_addresses %}
+                        {{ order_form.shipping_address.label_tag }}
+                        {{ order_form.shipping_address }}
+                        <a href="{% url 'user_profile' %}" class="btn btn-info btn-raised">Manage Shipping Addresses</a>
+                    {% else %}
+                        {{ order_form.shipping_address.label_tag }}
+                        <a href="#" id="shipping_btn" class="btn btn-info btn-raised">Add Shipping Address</a>
+                    {% endif %}
                 {% endif %}
 
-                {% if order.seller == user and shipping_addresses %}
+                {% if order.seller == user and order.shipping_addresses %}
                     {{ order_form.shipping_address.label_tag }}
                     <input type="hidden"
                            name="{{ order_form.shipping_address.name }}"
@@ -30,7 +32,7 @@
                             </address>
                         </div>
                     </div>
-                {% elif order.seller == user and not shipping_addresses %}
+                {% elif order.seller == user and not order.shipping_addresses %}
                     {{ order_form.shipping_address.label_tag }}
                     <p class="text-info">Buyer has not entered shipping address yet</p>
                 {% endif %}

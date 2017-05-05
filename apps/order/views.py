@@ -69,11 +69,13 @@ def create_order(request, item_id):
     primary_photo = regard_item.image_item.filter(primary=True)
     order_form = forms.OrderForm(user=request.user)
     order_item_form = forms.OrderItemsForm()
+    shipping_addresses = models.Shipping.objects.filter(user=request.user)
     return render(request, 'orders/create_order.html', {
         'order_form': order_form,
         'order_item_form': order_item_form,
         'regard_item': regard_item,
-        'primary_photo': primary_photo
+        'primary_photo': primary_photo,
+        'shipping_addresses': shipping_addresses
     })
 
 
@@ -142,7 +144,7 @@ def update_or_create(request):
             if item.user == request.user:
                 return redirect('list_orders')
             else:
-                order_form = forms.OrderForm(request.POST, prefix='order_form')
+                order_form = forms.OrderForm(request.POST, user=request.user, prefix='order_form')
                 order_items_form = forms.OrderItemsForm(request.POST, prefix='order_items_form')
             if order_form.is_valid() and order_items_form.is_valid():
                 o_form = order_form.save(commit=False)

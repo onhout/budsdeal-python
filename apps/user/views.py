@@ -157,7 +157,7 @@ def edit_shipping_template(request, address_id):
 
 @login_required
 def delete_shipping_address(request, address_id):
-    if request.user.is_authenticated and request.user.profile.approved_as_seller:
+    if request.user.is_authenticated:
         Shipping.objects.get(id=address_id).delete()
     return redirect('user_profile')
 
@@ -179,5 +179,4 @@ def update_shipping_address(request):
         data = {'status': 'success'}
     else:
         data = {'status': 'unauthorized'}
-
     return JsonResponse(data)

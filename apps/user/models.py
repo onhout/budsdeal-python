@@ -62,7 +62,7 @@ class Shipping(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return '%s' % self.address
+        return '%s - %s' % (self.user.get_full_name(), self.address)
 
 
 @receiver(post_save, sender=User)
