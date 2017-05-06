@@ -29,7 +29,7 @@
 
             {% endfor %}
             {% if item.user != user %}
-                <p class="text-center"><a href="{% url 'send_message' item.user.profile.social_id item.id %}"
+                <p class="text-center"><a href="{% url 'create_order' item.id %}"
                                           class="btn btn-raised btn-primary"> BEGIN ORDER </a></p>
             {% endif %}
             <p>Type: {{ item.type }}</p>

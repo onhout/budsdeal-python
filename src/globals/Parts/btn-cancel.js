@@ -7,8 +7,8 @@ class BtnCancel {
             e.preventDefault();
             $(this).attr('data-target', '#modal-' + $(this).data('id'));
             var modal = new Dialog({
-                modal_title_text: 'Calcen',
-                modal_body_text: 'Are you sure you want to calcen?',
+                modal_title_text: 'Cancel',
+                modal_body_text: 'Are you sure you want to cancel?',
                 url: $(this).data('url'),
                 id: $(this).data('id')
             });

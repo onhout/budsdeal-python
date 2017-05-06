@@ -41,14 +41,11 @@ class Dialog {
             'class': 'btn btn-default btn-raised',
             'data-dismiss': 'modal',
             'text': 'Close'
-        }).click(function (e) {
-            self.modal.on('hidden.bs.modal', function (e) {
-                self.modal.remove();
-            });
         });
     }
 
-    run_modal() {
+    run_modal(data) {
+        var _data = data || {size: 'md'};
         var self = this;
         self.modal = $('<div/>', {
             'class': 'modal fade in',
@@ -56,7 +53,7 @@ class Dialog {
             'id': 'modal-' + self.id
         })
             .append($('<div/>', {
-                'class': 'modal-dialog'
+                'class': 'modal-dialog modal-' + _data.size
             })
                 .append($('<div/>', {
                     'class': 'modal-content'
@@ -70,11 +67,7 @@ class Dialog {
                             'data-dismiss': 'modal',
                             'aria-hidden': 'true',
                             'text': 'x'
-                        })).click(function (e) {
-                            self.modal.on('hidden.bs.modal', function (e) {
-                                self.modal.remove();
-                            });
-                        })
+                        }))
                         .append(self.modal_title))
                     .append($('<div/>', {
                         'class': 'modal-body'
@@ -86,6 +79,9 @@ class Dialog {
                         .append(self.close_button)
                         .append(self.save_button))));
         self.modal.appendTo($('body'));
+        self.modal.on('hidden.bs.modal', function (e) {
+            self.modal.remove();
+        });
     }
 
     validate_form(form) {

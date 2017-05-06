@@ -30,9 +30,14 @@ def view_order(request, order_id):
     order = models.Order.objects.get(id=order_id)
     order_form = forms.OrderForm(instance=order, user=request.user)
     order_items = models.OrderItems.objects.filter(order=order)
+    # OrderItemsFormSet = forms.OrderItemsFormSet(instance=order)
+    # print(OrderItemsFormSet)
+    order_items.forms = forms.OrderItemsFormSet(queryset=order_items)
+    # TODO FIX THIS ALGO
     for item in order_items:
-        item.form = forms.OrderItemsForm(instance=item)
+        # item.form = forms.OrderItemsForm(instance=item, user=request.user)
         item.primary_photo = item.item.image_item.filter(primary=True)[0].image
+
     messages = models.Messages.objects.filter(order=order).order_by('-timestamp')[:25][::-1]
     shipping_addresses = models.Shipping.objects.filter(user=order.buyer)
     if order.order_status == 'confirmed':
@@ -68,7 +73,7 @@ def create_order(request, item_id):
         return redirect('/products/list')
     primary_photo = regard_item.image_item.filter(primary=True)
     order_form = forms.OrderForm(user=request.user)
-    order_item_form = forms.OrderItemsForm()
+    order_item_form = forms.OrderItemsForm(user=request.user)
     shipping_addresses = models.Shipping.objects.filter(user=request.user)
     return render(request, 'orders/create_order.html', {
         'order_form': order_form,
@@ -145,7 +150,7 @@ def update_or_create(request):
                 return redirect('list_orders')
             else:
                 order_form = forms.OrderForm(request.POST, user=request.user, prefix='order_form')
-                order_items_form = forms.OrderItemsForm(request.POST, prefix='order_items_form')
+                order_items_form = forms.OrderItemsForm(request.POST, prefix='order_items_form', user=request.user)
             if order_form.is_valid() and order_items_form.is_valid():
                 o_form = order_form.save(commit=False)
                 i_form = order_items_form.save(commit=False)
@@ -190,14 +195,18 @@ def list_seller_products(request, order_id):
         products = paginator.page(paginator.num_pages)
     data = []
     for item in products:
-        image = ItemImage.objects.filter(item=item, primary=True)
-        print(image)
-        # TODO THERE HAS TO BE A PRIMARY IMAGE
+        try:
+            image = ItemImage.objects.filter(item=item, primary=True)[0].image
+        except:
+            image = ''
+
         data.append({
             'id': item.id,
             'name': item.name,
             'type': item.type,
+            'weight_unit': item.weight_unit,
             'price': item.price,
             'categories': item.categories.name,
+            'primary_photo': str(image)
         })
     return JsonResponse({'data': data})

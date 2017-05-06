@@ -16,7 +16,7 @@
                     {% endif %}
                 {% endif %}
 
-                {% if order.seller == user and order.shipping_addresses %}
+                {% if order.seller == user and order.shipping_address %}
                     {{ order_form.shipping_address.label_tag }}
                     <input type="hidden"
                            name="{{ order_form.shipping_address.name }}"
@@ -32,7 +32,7 @@
                             </address>
                         </div>
                     </div>
-                {% elif order.seller == user and not order.shipping_addresses %}
+                {% elif order.seller == user and not order.shipping_address %}
                     {{ order_form.shipping_address.label_tag }}
                     <p class="text-info">Buyer has not entered shipping address yet</p>
                 {% endif %}

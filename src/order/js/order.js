@@ -50,15 +50,18 @@ $(function () {
         add_product_btn.click(function (e) {
             e.preventDefault();
             var table = new SellerProductList({
-                order_id: $(this).data('order_id')
+                order_id: $(this).data('order_id'),
+                table_list: $('#order_list tbody')
             });
             var modal = new Dialog({
-                modal_title_text: 'Find products',
+                modal_title_text: 'More products from seller',
                 save_button: '<div/>',
                 id: 'add_product',
                 modal_body: table.table
             });
-            modal.run_modal();
+            modal.run_modal({
+                size: 'lg'
+            });
         });
         add_product_btn.attr('data-target', '#modal-add_product');
         add_product_btn.attr('data-toggle', 'modal')

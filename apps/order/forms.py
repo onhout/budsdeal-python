@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import ModelForm
+from django.forms import ModelForm, modelformset_factory
 
 from apps.user.models import Shipping
 from . import models
@@ -56,6 +56,9 @@ class OrderItemsForm(ModelForm):
 
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
+
+
+OrderItemsFormSet = modelformset_factory(models.OrderItems, form=OrderItemsForm, extra=0)
 
 
 class MessageForm(ModelForm):

@@ -18,30 +18,33 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                {% if order_items %}
-                    {% for item in order_items %}
+            {% if order_items %}
+
+                {% for item in order_items %}
+                    <tr>
                         <td>
                             <img src="/{{ item.primary_photo }}" class="img-responsive img-rounded"/>
                             <p><a href="{% url 'view_product' item.item.id %}">{{ item.item.name }}</a></p>
                         </td>
-                        <td>{{ item.form.item_amount }}</td>
+                        <td>{{ order_items.forms }}</td>
                         <td>{{ item.item.weight_unit }}</td>
                         <td class="item_price">{{ item.item.price }}</td>
                         <td class="hidden-xs">$<span class="order_subtotal">{{ order.total }}</span></td>
-                    {% endfor %}
-                {% else %}
-                    <td>
-                        <img src="/{{ primary_photo.0.image }}" class="img-responsive img-rounded"/>
-                        <p><a href="{% url 'view_product' regard_item.id %}">{{ regard_item.name }}</a></p>
-                    </td>
-                    <td>{{ order_item_form.item_amount }}</td>
-                    <td>{{ regard_item.weight_unit }}</td>
-                    <td class="item_price">{{ regard_item.price }}</td>
-                    <td class="hidden-xs">$<span class="order_subtotal">{{ order.total }}</span></td>
-                {% endif %}
+                    </tr>
+                {% endfor %}
 
-            </tr>
+            {% else %}
+                <td>
+                    <img src="/{{ primary_photo.0.image }}" class="img-responsive img-rounded"/>
+                    <p><a href="{% url 'view_product' regard_item.id %}">{{ regard_item.name }}</a></p>
+                </td>
+                <td>{{ order_item_form.item_amount }}</td>
+                <td>{{ regard_item.weight_unit }}</td>
+                <td class="item_price">{{ regard_item.price }}</td>
+                <td class="hidden-xs">$<span class="order_subtotal">{{ order.total }}</span></td>
+            {% endif %}
+
+
             </tbody>
         </table>
     </div>
