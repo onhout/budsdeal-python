@@ -32,11 +32,13 @@ def view_order(request, order_id):
     order_items = models.OrderItems.objects.filter(order=order)
     # OrderItemsFormSet = forms.OrderItemsFormSet(instance=order)
     # print(OrderItemsFormSet)
-    order_items.forms = forms.OrderItemsFormSet(queryset=order_items)
+    order_items_forms = forms.OrderItemsFormSet(queryset=order_items)
+    for item in order_items_forms:
+        item.instance.primary_photo = item.instance.item.image_item.filter(primary=True)[0].image
     # TODO FIX THIS ALGO
-    for item in order_items:
-        # item.form = forms.OrderItemsForm(instance=item, user=request.user)
-        item.primary_photo = item.item.image_item.filter(primary=True)[0].image
+    # for item in order_items:
+    #     # item.form = forms.OrderItemsFormSet(queryset=item)
+    #     item.primary_photo = item.item.image_item.filter(primary=True)[0].image
 
     messages = models.Messages.objects.filter(order=order).order_by('-timestamp')[:25][::-1]
     shipping_addresses = models.Shipping.objects.filter(user=order.buyer)
@@ -49,7 +51,8 @@ def view_order(request, order_id):
         }
         return render(request, 'orders/confirmed_order.html', {
             'order': order,
-            'order_items': order_items,
+            # 'order_items': order_items,
+            'order_items_forms': order_items_forms,
             'regard_item': order_items[0].item,
             'messages': messages,
             'totals': totalobject,
@@ -58,7 +61,8 @@ def view_order(request, order_id):
     else:
         return render(request, 'orders/view_order.html', {
             'order': order,
-            'order_items': order_items,
+            # 'order_items': order_items,
+            'order_items_forms': order_items_forms,
             'regard_item': order_items[0].item,
             'order_form': order_form,
             'messages': messages,
