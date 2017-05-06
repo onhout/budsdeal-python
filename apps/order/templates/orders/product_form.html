@@ -19,7 +19,9 @@
             </thead>
             <tbody>
             {% if order_items_forms %}
+                {{ order_items_forms.management_form }}
                 {% for form in order_items_forms %}
+
                     <tr>
                         <td>
                             <img src="/{{ form.instance.primary_photo }}" class="img-responsive img-rounded"/>
@@ -27,7 +29,7 @@
                                 <a href="{% url 'view_product' form.instance.item.id %}">{{ form.instance.item.name }}</a>
                             </p>
                         </td>
-                        <td>{{ form.item_amount }}</td>
+                        <td>{{ form.id }}{{ form.item_amount }}</td>
                         <td>{{ form.instance.item.weight_unit }}</td>
                         <td class="item_price">{{ form.instance.item.price }}</td>
                         <td class="hidden-xs">$<span class="order_subtotal">{{ form.instance.item_subtotal }}</span>

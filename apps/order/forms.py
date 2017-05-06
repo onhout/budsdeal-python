@@ -20,19 +20,18 @@ class OrderForm(ModelForm):
     def __init__(self, *args, **kwargs):
         this_user = kwargs.pop('user', None)
         super(OrderForm, self).__init__(*args, **kwargs)
+        self.fields['shipping_address'].queryset = Shipping.objects.filter(user=this_user)
         try:
             instance = getattr(self, 'instance', None)
             if instance.order_status == 'canceled' or instance.order_status == 'confirmed' or instance.editable != this_user:
                 for field in self.fields:
                     self.fields[field].widget.attrs['disabled'] = True
             if instance.buyer != this_user:
-                self.fields['shipping_address'].widget.attrs['disabled'] = True
+                del self.fields['shipping_address']
         except:
             pass
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
-
-        self.fields['shipping_address'].queryset = Shipping.objects.filter(user=this_user)
 
 
 class OrderItemsForm(ModelForm):

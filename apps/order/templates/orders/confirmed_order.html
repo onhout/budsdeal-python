@@ -26,14 +26,13 @@
                 </div>
                 <div class="panel-body">
                     <ul class="list-group">
-                        <li class="list-group-item">Name: {{ order.seller.get_full_name }}</li>
                         <li class="list-group-item">{{ order.seller.company.name }}</li>
                         <li class="list-group-item">
                             {{ order.seller.company.address }}, {{ order.seller.company.address2 }}
                         </li>
                         <li class="list-group-item">
                             {{ order.seller.company.city }},
-                            {{ order.seller.company.state }}{{ order.seller.company.zip }}
+                            {{ order.seller.company.state }} {{ order.seller.company.zip }}
                         </li>
                         <li class="list-group-item">Phone: {{ order.seller.company.phone_number }}</li>
                     </ul>
@@ -47,7 +46,7 @@
                 </div>
                 <div class="panel-body">
                     <ul class="list-group">
-                        <li class="list-group-item">Name: {{ order.shipping_address.name }}</li>
+                        <li class="list-group-item">{{ order.shipping_address.name }}</li>
                         <li class="list-group-item">
                             {{ order.shipping_address.address }}, {{ order.shipping_address.address2 }}</li>
                         <li class="list-group-item">
@@ -95,20 +94,23 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>{{ regard_item.id }}</td>
-                    <td><a href="{% url 'view_product' regard_item.id %}">{{ regard_item.name }}</a></td>
-                    <td>{{ regard_item.description|truncatechars:100 }}</td>
-                    <td>{{ order.item_amount }}</td>
-                    <td>{{ regard_item.price }}</td>
-                    <td>{{ order.total }}</td>
-                </tr>
+                {% for item in order_items_forms %}
+                    <tr>
+                        <td>{{ item.instance.item.id }}</td>
+                        <td><a href="{% url 'view_product' item.instance.item.id %}">{{ item.instance.item.name }}</a>
+                        </td>
+                        <td>{{ item.instance.item.description|truncatechars:100 }}</td>
+                        <td>{{ item.instance.item_amount }}</td>
+                        <td>{{ item.instance.item.price }}</td>
+                        <td>{{ item.instance.item_subtotal }}</td>
+                    </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title">Addition Terms:</h3>
@@ -118,7 +120,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-5">
             <table class="table table-striped table-bordered">
                 <tbody>
                 <tr>

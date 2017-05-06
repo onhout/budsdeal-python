@@ -56,9 +56,3 @@ def create_messages_list(sender, instance, created, **kwargs):
 @receiver(pre_save, sender=OrderItems)
 def add_subtotal(sender, instance, **kwargs):
     instance.item_subtotal = instance.item_amount * instance.item.price
-    order = Order.objects.get(id=instance.order.id)
-    if not order.total:
-        order.total = instance.item_subtotal
-    else:
-        order.total += instance.item_subtotal
-    order.save()

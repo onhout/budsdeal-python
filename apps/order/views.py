@@ -29,17 +29,12 @@ def list_orders(request):
 def view_order(request, order_id):
     order = models.Order.objects.get(id=order_id)
     order_form = forms.OrderForm(instance=order, user=request.user)
-    order_items = models.OrderItems.objects.filter(order=order)
-    # OrderItemsFormSet = forms.OrderItemsFormSet(instance=order)
-    # print(OrderItemsFormSet)
-    order_items_forms = forms.OrderItemsFormSet(queryset=order_items)
+    order_items_forms = forms.OrderItemsFormSet(queryset=models.OrderItems.objects.filter(order=order))
+    total = 0
     for item in order_items_forms:
         item.instance.primary_photo = item.instance.item.image_item.filter(primary=True)[0].image
-    # TODO FIX THIS ALGO
-    # for item in order_items:
-    #     # item.form = forms.OrderItemsFormSet(queryset=item)
-    #     item.primary_photo = item.item.image_item.filter(primary=True)[0].image
-
+    # total += item.instance.item_subtotal
+    # order.total = total
     messages = models.Messages.objects.filter(order=order).order_by('-timestamp')[:25][::-1]
     shipping_addresses = models.Shipping.objects.filter(user=order.buyer)
     if order.order_status == 'confirmed':
@@ -53,7 +48,6 @@ def view_order(request, order_id):
             'order': order,
             # 'order_items': order_items,
             'order_items_forms': order_items_forms,
-            'regard_item': order_items[0].item,
             'messages': messages,
             'totals': totalobject,
             'shipping_addresses': shipping_addresses
@@ -63,7 +57,7 @@ def view_order(request, order_id):
             'order': order,
             # 'order_items': order_items,
             'order_items_forms': order_items_forms,
-            'regard_item': order_items[0].item,
+            'regard_item': order_items_forms[0].instance.item,
             'order_form': order_form,
             'messages': messages,
             'shipping_addresses': shipping_addresses
@@ -168,10 +162,9 @@ def update_or_create(request):
                 return redirect('view_order', order_id=o_form.id)
         except:
             order = models.Order.objects.get(id=request.GET.get('order'))
-            order_items = models.OrderItems.filter(order=order)
-            order_form = forms.OrderForm(request.POST, instance=order, prefix='order_form')
-            order_items_form = forms.OrderItemsForm(request.POST, prefix='order_items_form')
-            if order_form.is_valid():
+            order_form = forms.OrderForm(request.POST, user=request.user, instance=order, prefix='order_form')
+            order_items_forms = forms.OrderItemsFormSet(request.POST)
+            if order_form.is_valid() and order_items_forms.is_valid():
                 o_form = order_form.save(commit=False)
                 models.Messages.objects.create(order=order, sender=request.user,
                                                content="%s has made changes to the order" % request.user.get_full_name())
@@ -179,7 +172,14 @@ def update_or_create(request):
                     o_form.editable = order.seller
                 elif order.seller == request.user:
                     o_form.editable = order.buyer
+                total = 0
+                for f in order_items_forms:
+                    cd = f.cleaned_data
+                    total += cd.get('item_amount') * f.instance.item.price
+
+                o_form.total = total
                 o_form.save()
+                order_items_forms.save()
                 return redirect('view_order', order_id=o_form.id)
         raise PermissionDenied
 
