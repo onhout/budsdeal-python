@@ -30,11 +30,8 @@ def view_order(request, order_id):
     order = models.Order.objects.get(id=order_id)
     order_form = forms.OrderForm(instance=order, user=request.user)
     order_items_forms = forms.OrderItemsFormSet(queryset=models.OrderItems.objects.filter(order=order))
-    total = 0
     for item in order_items_forms:
         item.instance.primary_photo = item.instance.item.image_item.filter(primary=True)[0].image
-    # total += item.instance.item_subtotal
-    # order.total = total
     messages = models.Messages.objects.filter(order=order).order_by('-timestamp')[:25][::-1]
     shipping_addresses = models.Shipping.objects.filter(user=order.buyer)
     if order.order_status == 'confirmed':
@@ -163,7 +160,8 @@ def update_or_create(request):
         except:
             order = models.Order.objects.get(id=request.GET.get('order'))
             order_form = forms.OrderForm(request.POST, user=request.user, instance=order, prefix='order_form')
-            order_items_forms = forms.OrderItemsFormSet(request.POST)
+            order_items_forms = forms.OrderItemsFormSet(request.POST,
+                                                        queryset=models.OrderItems.objects.filter(order=order))
             if order_form.is_valid() and order_items_forms.is_valid():
                 o_form = order_form.save(commit=False)
                 models.Messages.objects.create(order=order, sender=request.user,
@@ -185,9 +183,9 @@ def update_or_create(request):
 
 
 @login_required
+@user_has_order
 def list_seller_products(request, order_id):
     order = models.Order.objects.get(id=order_id)
-
     user_product_list = order.seller.product.all()
     paginator = Paginator(user_product_list, 5)
     page = request.GET.get('page')
@@ -208,9 +206,32 @@ def list_seller_products(request, order_id):
             'id': item.id,
             'name': item.name,
             'type': item.type,
+            'min_count': item.min_count,
             'weight_unit': item.weight_unit,
             'price': item.price,
-            'categories': item.categories.name,
             'primary_photo': str(image)
         })
     return JsonResponse({'data': data})
+
+
+@login_required
+@user_has_order
+def add_to_order(request, order_id):
+    order = models.Order.objects.get(id=order_id)
+    if request.method == "POST" and request.GET.get('item_id'):
+        item = Item.objects.get(id=request.GET.get('item_id'))
+        order_item_form = forms.OrderItemsForm(request.POST,
+                                               prefix='order_items_form',
+                                               user=request.user)
+        if order_item_form.is_valid():
+            form = order_item_form.save(commit=False)
+            form.item = item
+            form.order = order
+            form.save()
+            models.Messages.objects.create(order=order, sender=request.user,
+                                           content="%s added %s to the order" % (
+                                           request.user.get_full_name(), item.name))
+
+            data = {"status": "success"}
+            return JsonResponse(data)
+        return JsonResponse({"status": "failed"})

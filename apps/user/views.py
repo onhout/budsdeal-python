@@ -48,7 +48,7 @@ def home(request):
     user_products = request.user.product
     products_count = user_products.count()
     products_extra_info = user_products.aggregate(Sum('view_count'),
-                                                  total=Sum(F('price') * F('count'), output_field=FloatField()))
+                                                  total=Sum(F('price') * F('min_count'), output_field=FloatField()))
     item_rating = Feedback.objects.filter(to_item__in=request.user.product.all()).aggregate(avg=Avg('item_rating'),
                                                                                             count=Count('item_rating'))
     order_count = Order.objects.filter(

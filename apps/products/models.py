@@ -45,7 +45,7 @@ class Item(models.Model):
     type = models.CharField(max_length=10, choices=TYPE)
     brand = models.CharField(max_length=150, blank=True, null=True)
     price = models.DecimalField(max_digits=9, decimal_places=2)
-    count = models.IntegerField()
+    min_count = models.IntegerField()
     weight_unit = models.CharField(max_length=10, choices=WEIGHT_UNIT)
     categories = models.ForeignKey(Category, related_name='categories')
     description = models.TextField(blank=True)

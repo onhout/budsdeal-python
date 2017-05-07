@@ -14,7 +14,7 @@
                     <th class="hidden-xs hidden-sm">Type</th>
                     <th class="hidden-xs hidden-sm">Brand</th>
                     <th class="hidden-xs">Price</th>
-                    <th class="hidden-xs hidden-sm">Unit</th>
+                    <th class="hidden-xs hidden-sm">Minimum Order</th>
                     <th class="hidden-xs hidden-sm">Description</th>
                     <th>Actions</th>
                 </tr>
@@ -32,7 +32,7 @@
                             <td class="hidden-xs hidden-sm">{{ item.type | capfirst }}</td>
                             <td class="hidden-xs hidden-sm">{{ item.brand | capfirst }}</td>
                             <td class="hidden-xs">${{ item.price }}</td>
-                            <td class="hidden-xs hidden-sm">{{ item.count }} {{ item.weight_unit }}</td>
+                            <td class="hidden-xs hidden-sm">{{ item.min_count }} {{ item.weight_unit }}</td>
                             <td class="hidden-xs hidden-sm">{{ item.description|truncatechars:20 }}</td>
                             <td>
                                 <a href="{% url 'update_product' item.id %}" class="btn btn-raised btn-primary">Update

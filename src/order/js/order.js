@@ -4,19 +4,30 @@ var BudsChat = require('./buds_chat').default;
 var SellerProductList = require('./seller_products').default;
 var Dialog = require('../../globals/Parts/Dialog').default;
 
+
 $(function () {
     var chat_pane = $('#order_chats');
+
+    function calculate_total() {
+        var total = 0;
+        $.each($('.order_subtotal'), function (i, v) {
+            total += parseFloat($(v).text())
+        });
+        $('#order_total').text(total.toFixed(1));
+    }
+
     if (chat_pane.length >= 1) {
         var chat = new BudsChat(chat_pane.data('chatid'), chat_pane.data('sender'));
     }
 
-    $('#id_order_items_form-item_amount').change(function () {
+    $('[id$="item_amount"]').change(function () {
         var unit_price = parseFloat($(this).parents('tr').find('td.item_price').text());
         var value = parseFloat($(this).val());
-
         $(this).parents('tr').find('.order_subtotal').text(value * unit_price);
-        $('#order_total').text(value * unit_price);
+        calculate_total();
     });
+    calculate_total();
+
 
     var finalize_btn = $('#finalize-order');
     finalize_btn.click(function (e) {

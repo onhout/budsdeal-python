@@ -3,7 +3,7 @@
         <h3 class="panel-title">Product information</h3>
     </div>
     <div class="panel-body">
-        {% if order %}
+        {% if order and order.editable == user %}
             <a href="#" class="btn btn-success btn-raised" id="add_product"
                data-order_id="{{ order.id }}">Add Product</a>
         {% endif %}
@@ -31,7 +31,7 @@
                         </td>
                         <td>{{ form.id }}{{ form.item_amount }}</td>
                         <td>{{ form.instance.item.weight_unit }}</td>
-                        <td class="item_price">{{ form.instance.item.price }}</td>
+                        <td class="item_price">${{ form.instance.item.price }}</td>
                         <td class="hidden-xs">$<span class="order_subtotal">{{ form.instance.item_subtotal }}</span>
                         </td>
                     </tr>
