@@ -15,6 +15,7 @@
                 <th>Weight Unit</th>
                 <th>Unit Price</th>
                 <th class="hidden-xs">Total</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -31,8 +32,12 @@
                         </td>
                         <td>{{ form.id }}{{ form.item_amount }}</td>
                         <td>{{ form.instance.item.weight_unit }}</td>
-                        <td class="item_price">${{ form.instance.item.price }}</td>
+                        <td>$<span class="item_price">{{ form.instance.item.price }}</span></td>
                         <td class="hidden-xs">$<span class="order_subtotal">{{ form.instance.item_subtotal }}</span>
+                        </td>
+                        <td>
+                            <a href="{% url 'remove_from_order' order.id %}?item_id={{ form.instance.item.id }}"
+                               class="btn btn-danger btn-raised">Remove</a>
                         </td>
                     </tr>
                 {% endfor %}

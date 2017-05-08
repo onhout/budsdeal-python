@@ -1,5 +1,7 @@
 import datetime
+import json
 
+from channels import Group
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -83,12 +85,20 @@ def create_order(request, item_id):
 @user_has_order
 def confirm_order(request, order_id):
     order = models.Order.objects.get(id=order_id)
-    if request.user.is_authenticated:
-        models.Messages.objects.create(order=order, sender=request.user,
-                                       content="%s has confirmed the order" % request.user.get_full_name())
+    if request.user.is_authenticated and order.order_status == 'pending':
         order.confirmed_date = datetime.datetime.now()
         order.order_status = 'confirmed'
         order.save()
+        Group("order-%s" % order_id).send({
+            "text": json.dumps({
+                "display_name": request.user.profile.display_name,
+                "profile_pic": '/%s' % request.user.profile.profile_photo,
+                "full_name": request.user.get_full_name(),
+                "msg": "%s has confirmed the order" % request.user.get_full_name()
+            })
+        })
+        models.Messages.objects.create(order=order, sender=request.user,
+                                       content="%s has confirmed the order" % request.user.get_full_name())
     return redirect('list_orders')
 
 
@@ -96,7 +106,15 @@ def confirm_order(request, order_id):
 @user_has_order
 def cancel_order(request, order_id):
     order = models.Order.objects.get(id=order_id)
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and order.order_status == 'pending':
+        Group("order-%s" % order_id).send({
+            "text": json.dumps({
+                "display_name": request.user.profile.display_name,
+                "profile_pic": '/%s' % request.user.profile.profile_photo,
+                "full_name": request.user.get_full_name(),
+                "msg": "%s has canceled the order" % request.user.get_full_name()
+            })
+        })
         models.Messages.objects.create(order=order, sender=request.user,
                                        content="%s has canceled the order" % request.user.get_full_name())
         order.order_status = 'canceled'
@@ -164,6 +182,14 @@ def update_or_create(request):
                                                         queryset=models.OrderItems.objects.filter(order=order))
             if order_form.is_valid() and order_items_forms.is_valid():
                 o_form = order_form.save(commit=False)
+                Group("order-%s" % order.id).send({
+                    "text": json.dumps({
+                        "display_name": request.user.profile.display_name,
+                        "profile_pic": '/%s' % request.user.profile.profile_photo,
+                        "full_name": request.user.get_full_name(),
+                        "msg": "%s has made changes to the order" % request.user.get_full_name()
+                    })
+                })
                 models.Messages.objects.create(order=order, sender=request.user,
                                                content="%s has made changes to the order" % request.user.get_full_name())
                 if order.buyer == request.user:
@@ -186,7 +212,9 @@ def update_or_create(request):
 @user_has_order
 def list_seller_products(request, order_id):
     order = models.Order.objects.get(id=order_id)
-    user_product_list = order.seller.product.all()
+    order_items = models.OrderItems.objects.filter(order=order)
+    id_to_exclude = [o.item.id for o in order_items]
+    user_product_list = order.seller.product.exclude(id__in=id_to_exclude)
     paginator = Paginator(user_product_list, 5)
     page = request.GET.get('page')
     try:
@@ -228,10 +256,40 @@ def add_to_order(request, order_id):
             form.item = item
             form.order = order
             form.save()
+            Group("order-%s" % order.id).send({
+                "text": json.dumps({
+                    "display_name": request.user.profile.display_name,
+                    "profile_pic": '/%s' % request.user.profile.profile_photo,
+                    "full_name": request.user.get_full_name(),
+                    "msg": "%s added %s to the order" % (request.user.get_full_name(), item.name)
+                })
+            })
             models.Messages.objects.create(order=order, sender=request.user,
                                            content="%s added %s to the order" % (
-                                           request.user.get_full_name(), item.name))
+                                               request.user.get_full_name(), item.name))
 
             data = {"status": "success"}
             return JsonResponse(data)
         return JsonResponse({"status": "failed"})
+
+
+@login_required
+@user_has_order
+def remove_from_order(request, order_id):
+    order = models.Order.objects.get(id=order_id)
+    if request.GET.get('item_id'):
+        item = Item.objects.get(id=request.GET.get('item_id'))
+        models.OrderItems.objects.get(order=order, item=item).delete()
+        Group("order-%s" % order.id).send({
+            "text": json.dumps({
+                "display_name": request.user.profile.display_name,
+                "profile_pic": '/%s' % request.user.profile.profile_photo,
+                "full_name": request.user.get_full_name(),
+                "msg": "%s removed %s from the order" % (request.user.get_full_name(), item.name)
+            })
+        })
+        models.Messages.objects.create(order=order, sender=request.user,
+                                       content="%s removed %s from the order" % (
+                                           request.user.get_full_name(), item.name))
+
+    return redirect('view_order', order_id=order_id)

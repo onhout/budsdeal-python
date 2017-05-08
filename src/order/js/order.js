@@ -21,11 +21,12 @@ $(function () {
     }
 
     $('[id$="item_amount"]').change(function () {
-        var unit_price = parseFloat($(this).parents('tr').find('td.item_price').text());
+        var unit_price = parseFloat($(this).parents('tr').find('td > span.item_price').text());
         var value = parseFloat($(this).val());
         $(this).parents('tr').find('.order_subtotal').text(value * unit_price);
         calculate_total();
     });
+
     calculate_total();
 
 

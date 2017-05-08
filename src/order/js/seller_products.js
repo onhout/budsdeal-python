@@ -79,17 +79,6 @@ class SellerProductList {
         })
     }
 
-    // append_to_list(v, data) {
-    //     var self = this;
-    //     self.table_list.append($('<tr/>')
-    //         .append('<td><img src="/' + v.primary_photo + '" class="img-rounded" style="max-height: 56px">' +
-    //             '<a href="/products/view/' + v.id + '" target="_blank"><p>' + v.name + '</p></a></td>')
-    //         .append(self.construct_form(data))
-    //         .append('<td>' + v.weight_unit + '</td>' +
-    //             '<td>' + v.price + '</td>' +
-    //             '<td class="hidden-xs">$<span class="order_subtotal">' + data.item_subtotal + '</span></td>'));
-    // }
-
     add_item(order_id, item, callback) {
         $.post('/orders/item/add/' + order_id + '?item_id=' + item.id,
             {
@@ -100,27 +89,6 @@ class SellerProductList {
                 callback(data)
             })
     }
-
-    // construct_form(data) {
-    //     var total_form = $('#id_form-TOTAL_FORMS');
-    //     var total_form_count = total_form.val();
-    //     total_form.val(parseInt(total_form_count) + 1);
-    //     var table_data = $('<td/>');
-    //     return table_data.append($('<input/>', {
-    //         id: 'id_form-' + total_form_count + '-id',
-    //         name: 'form-' + total_form_count + '-id',
-    //         type: 'hidden',
-    //         value: data.form_id
-    //     })).append($('<div/>', {
-    //         class: 'form-group'
-    //     }).append($('<input/>', {
-    //         class: 'form-control',
-    //         id: 'id_form-' + total_form_count + '-item_amount',
-    //         name: 'form-' + total_form_count + '-item_amount',
-    //         type: 'number',
-    //         value: data.item_amount
-    //     })))
-    // }
 }
 
 export default SellerProductList
