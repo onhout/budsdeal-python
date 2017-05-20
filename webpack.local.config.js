@@ -11,7 +11,6 @@ module.exports = {
         user: 'user/js/user',
         products: 'products/js/products',
         order: 'order/js/order',
-        user_messages: 'user_messages/js/user_messages',
         vendor:[
             'jquery',
             'globals/index.less',

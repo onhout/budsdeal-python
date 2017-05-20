@@ -18,14 +18,6 @@
                        href="{{ user_home }}">Dashboard</a>
                 </li>
                 <li>
-                    <a class="{% ifequal request.path view_inbox_messages %}active{% endifequal %}"
-                       href="{{ view_inbox_messages }}">Messages
-                        {% if unread_message_count %}
-                            <span class="badge"> {{ unread_message_count }}</span>
-                        {% endif %}
-                    </a>
-                </li>
-                <li>
                     <a class="{% ifequal request.path user_profile %}active{% endifequal %}"
                        href="{{ user_profile }}">Profile</a>
                 </li>
