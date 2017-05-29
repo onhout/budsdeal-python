@@ -21,7 +21,8 @@ module.exports = {
             'blueimp-file-upload',
             'lodash',
             'typeahead.js/dist/typeahead.jquery',
-            'moment'
+            'moment',
+            'eonasdan-bootstrap-datetimepicker',
         ]
     }, // entry point of our app. assets/js/index.js should require other js modules and dependencies it needs
 

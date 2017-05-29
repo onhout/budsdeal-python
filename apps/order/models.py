@@ -13,10 +13,14 @@ from apps.user.models import Shipping
 
 class Order(models.Model):
     SHIP_METHODS = [
-        ('pick', 'pick'),
-        ('one', 'one'),
-        ('shipping', 'shipping'),
-        ('method', 'method'),
+        ('2-day', '2 Days Rushed Shipping'),
+        ('3-day', '3 Days Priority Shipping'),
+        ('5-day', '5 Days Standard Shipping'),
+        ('self', 'Self Provided Shipping'),
+    ]
+    PAYMENT_METHODS = [
+        ('e-check', 'E-Check'),
+        ('credit-card', 'Credit Card'),
     ]
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buyer')
@@ -24,7 +28,8 @@ class Order(models.Model):
     total = models.FloatField(null=True, blank=True)
     shipping_address = models.ForeignKey(Shipping, related_name='shipping_address')
     shipping_method = models.CharField(max_length=255, blank=True, null=True, choices=SHIP_METHODS)
-    payment_method = models.CharField(max_length=255, blank=True, null=True)
+    expected_shipping_date = models.DateTimeField(blank=True, null=True)
+    payment_method = models.CharField(max_length=255, blank=True, null=True, choices=PAYMENT_METHODS)
     additional_info = models.TextField(blank=True, null=True)
     order_status = models.CharField(max_length=10, default='pending')
     editable = models.ForeignKey(User, related_name='editable_user')

@@ -15,7 +15,8 @@
                 <th>Weight Unit</th>
                 <th>Unit Price</th>
                 <th class="hidden-xs">Total</th>
-                <th>Action</th>
+                {% if order_items_forms %}
+                    <th>Action</th>{% endif %}
             </tr>
             </thead>
             <tbody>
@@ -49,7 +50,7 @@
                 </td>
                 <td>{{ order_item_form.item_amount }}</td>
                 <td>{{ regard_item.weight_unit }}</td>
-                <td class="item_price">{{ regard_item.price }}</td>
+                <td>$<span class="item_price">{{ regard_item.price }}</span></td>
                 <td class="hidden-xs">$<span class="order_subtotal">{{ order.total }}</span></td>
             {% endif %}
 

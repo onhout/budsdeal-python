@@ -57,6 +57,7 @@ $(function () {
         shipping_btn.attr('data-toggle', 'modal');
     }
 
+
     var add_product_btn = $('#add_product');
     if (add_product_btn.length > 0) {
         add_product_btn.click(function (e) {
@@ -78,4 +79,17 @@ $(function () {
         add_product_btn.attr('data-target', '#modal-add_product');
         add_product_btn.attr('data-toggle', 'modal')
     }
+
+    var orderPicker = $('#datetimepicker');
+    if (orderPicker.length > 0) {
+        var date_storage = $('#id_order_form-expected_shipping_date').val();
+
+        orderPicker.datetimepicker({
+            format: 'MM/DD/YYYY',
+        });
+
+        orderPicker.data("DateTimePicker").date(new moment(date_storage));
+    }
+
+
 });

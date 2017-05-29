@@ -74,7 +74,7 @@
                     <td>{{ order }}</td>
                     <td>{{ order.shipping_method }}</td>
                     <td>{{ order }}</td>
-                    <td>{{ order }}</td>
+                    <td>{{ order.expected_shipping_date|date:"SHORT_DATE_FORMAT" }}</td>
                 </tr>
                 </tbody>
             </table>
