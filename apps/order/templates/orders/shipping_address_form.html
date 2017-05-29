@@ -12,7 +12,8 @@
                         <a href="{% url 'user_profile' %}" class="btn btn-info btn-raised">Manage Shipping Addresses</a>
                     {% else %}
                         {{ order_form.shipping_address.label_tag }}
-                        <a href="#" id="shipping_btn" class="btn btn-info btn-raised">Add Shipping Address</a>
+                        <a href="#" id="shipping_btn"
+                           class="btn btn-info btn-raised">Add Shipping Address</a>
                     {% endif %}
                 {% endif %}
 

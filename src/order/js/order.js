@@ -49,14 +49,25 @@ $(function () {
         $.get('/user/shipping/add/', function (data) {
             var modal = new Dialog({
                 id: shipping_btn.data('id'),
-                modal_body: $(data)
+                modal_body: $(data),
             });
             modal.run_modal();
         });
         shipping_btn.attr('data-target', '#modal-' + shipping_btn.data('id'));
         shipping_btn.attr('data-toggle', 'modal');
     }
-
+    shipping_btn.click(function (e) {
+        e.preventDefault();
+        $.get('/user/shipping/add/', function (data) {
+            var modal = new Dialog({
+                id: shipping_btn.data('id'),
+                modal_body: $(data)
+            });
+            modal.run_modal();
+        });
+        shipping_btn.attr('data-target', '#modal-' + shipping_btn.data('id'));
+        shipping_btn.attr('data-toggle', 'modal');
+    });
 
     var add_product_btn = $('#add_product');
     if (add_product_btn.length > 0) {
