@@ -10,7 +10,7 @@ constantly==15.1.0
 daphne==1.2.0
 defusedxml==0.5.0rc1
 dj-database-url==0.4.1
-Django==1.10.5
+Django==1.11.28
 django-appconf==1.0.2
 django-extensions==1.7.7
 django-filter==1.0.1
